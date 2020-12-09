@@ -1,8 +1,7 @@
 <?php require APPROOT .'/views/inc/header.php';?>
-<main role="main">
 
-<div class="jumbotron"style="background-color: #FEDA75;;">
-<h1 class="display-5"><?php echo $data['title']; ?></h1>
+<div class="jumbotron text-center">
+<h1>Camagru</h1>
   <p class="lead"></p>
       <?php if(isset($_SESSION['username'])): ?>
       <a class="btn btn-outline-success btn-lg" href="<?php echo URLROOT;?>/posts/image" role="button">Add Photo</a>
@@ -13,7 +12,7 @@
 </div>
 
 <div class="album py-5 bg-light">
-  <div class="container">
+  <div class="container  pb-cmnt-container">
       
     <div class="row justify-content-start">
      <?php foreach($data['posts'] as $post)   : ?>
@@ -64,8 +63,8 @@
                   
               </div>
               <div class="row justify-content-start">
-                     <div class="container">
-                  <div class="actionBox" style="margin-left:38px;">
+                     <div class="container pb-cmnt-container">
+                  <div class="actionBox" >
                        <?php if(isset($_SESSION['id'])) : ?>
                             <form class="form-inline" role="form">
                         <?php else : ?>
@@ -82,7 +81,7 @@
                                         ?>
                                     <li>
                                         <div class="commentText">
-                                            <span class="date sub-text"><?php echo $comment->username;?></span><p data-iid="<?php echo $post->imgid; ?>"><?php echo htmlspecialchars($comment->comment);?></p><span class="date sub-text">on <?php echo $comment->cmntdate;?></span>
+                                            <span class="date sub-text"><?php echo $comment->username;?></span><p data-id="<?php echo $post->imgid; ?>"><?php echo htmlspecialchars($comment->comment);?></p><span class="date sub-text">on <?php echo $comment->cmntdate;?></span>
 
                                         </div>
                                     </li>
@@ -100,14 +99,14 @@
     <div >
         <nav aria-label="Page navigation example">
           <ul class="pagination flex-wrap justify-content-center">
-            <li class="page-item"><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
+            <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
             echo $_GET['page'] - 1;
             else{
                 echo $_GET['page'];}?>">Previous</a></li>
             <?php for($i = 1; $i <= $data['nbrPages']; $i++) { ?>
-            <li class="page-item "><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
+            <li class="page-item "><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
             <?php }?>
-            <li class="page-item"><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
+            <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
             else{
                 echo $_GET['page'];}?>">Next</a></li>
           </ul>

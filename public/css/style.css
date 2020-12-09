@@ -5,14 +5,20 @@
 li {
     display: block;
   }
+ 
+ 
+  body
+  {
+      background-image: url('../imgs/back.jpg');
   
- img{
+  }
+   img{
      width: 200px;
      height: 200px;
  }
 
  #imagefilter{
-     position: relative;
+     position: absolute;
      width: 400px;
      height: 300px;
     
@@ -62,7 +68,8 @@ li {
 .commentList {
     padding:0;
     list-style:none;
-    max-height:200px;
+    max-height:100px;
+    max-width: 100px;
     overflow:auto;
 }
 .commentList li {
@@ -82,7 +89,17 @@ li {
     font-size:11px;
 }
 .actionBox {
-    border-top:1px dotted #bbb;
+    border-top:1px dotted rgb(184, 164, 164);
     padding:10px;
+}
+h6
+{
+    font-family: monospace;
+
+}
+nav
+{
+    height: auto;
+    width: auto;
 }
 

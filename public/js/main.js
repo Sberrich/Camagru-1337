@@ -9,7 +9,43 @@ document.getElementById('btn').addEventListener('click', function(){
        var likes = document.getElementsByName("liket");
        var show = document.getElementsByName("commentbtn");
        var comment = document.getElementsByName("cmntbtn");
-      
+       var btnStart = document.getElementById( "btn-start" ); 
+
+       btnStart.addEventListener( "click", function(){
+        check = true;
+        var video = document.getElementById('video'),
+            canvas = document.getElementById('canvas');
+         if (canvas == null)
+            return;
+         var   w = canvas.width,
+            h = canvas.height,
+            context = canvas.getContext('2d'),
+            imagefile = document.getElementById('upFile'),
+            stick = 'none',
+            width = window.innerWidth,
+            height = window.innerHeight,
+            vendorUrl = window.URL || window.webkitURL;
+            context.strokeRect(0, 0, w, h);
+     
+     
+        navigator.getMedia =    navigator.getUserMedia ||
+                                navigator.webkitGetUserMedia ||
+                                navigator.mozGetUserMedia ||
+                                navigator.msGetUserMedia;
+     
+        navigator.getMedia({
+            video: true,
+            audio: false
+        }, function(stream){
+            video.srcObject = stream;
+            if(video.play())
+                document.getElementById('capture').disabled = false;
+     
+        }, function(error){
+     
+        });
+        
+
        //like
        for (var i=0; i < likes.length; i++) {
            likes[i].onclick = function(event) 
@@ -21,11 +57,11 @@ document.getElementById('btn').addEventListener('click', function(){
                        var userid = (event.target && event.target.getAttribute('data-userid'));
                         if(userid == "")
                        {
-                           window.location.href = "http://192.168.99.100:8088/Camagru/users/login";
+                           window.location.href = "http://localhost/Camagru/users/login";
                        }
                        var xhttp = new XMLHttpRequest();
                        var params = "imgid="+imgid+"&userid="+userid;
-                       xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/addlikes');
+                       xhttp.open('POST', 'http://localhost/Camagru/Posts/addlikes');
                        xhttp.withCredentials = true;
                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                        xhttp.onreadystatechange = function(){
@@ -45,7 +81,7 @@ document.getElementById('btn').addEventListener('click', function(){
                        
                        var xhttp = new XMLHttpRequest();
                        var params = "imgid="+imgid+"&userid="+userid;
-                       xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/dellikes');
+                       xhttp.open('POST', 'http://localhost/Camagru/Posts/dellikes');
                        xhttp.withCredentials = true;
                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                        xhttp.onreadystatechange = function(){
@@ -66,14 +102,14 @@ document.getElementById('btn').addEventListener('click', function(){
                        var userid = (event.target && event.target.getAttribute('data-userid'));
                        if(userid == "")
                        { 
-                           window.location.replace("http://192.168.99.100:8088/Camagru/users/login");
+                           window.location.replace("http://localhost/Camagru/users/login");
                        }
                        var test = (event.target && event.target.parentElement);
                        var val = test.firstElementChild;
                        var cmnt = document.querySelector('p[data-iid="' + imgid + '"]');
                        var xhttp = new XMLHttpRequest();
                            var params = "imgid="+imgid+"&userid="+userid+"&comment="+val.value;  
-                       xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/addComments');
+                       xhttp.open('POST', 'http://localhost/Camagru/Posts/addComments');
                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                        xhttp.onreadystatechange = function(){
                            if (this.readyState == 4 && this.status == 200){
@@ -89,39 +125,7 @@ document.getElementById('btn').addEventListener('click', function(){
        
    });  
   
-   (function(){
-       var video = document.getElementById('video'),
-           canvas = document.getElementById('canvas');
-        if (canvas == null)
-           return;
-        var   w = canvas.width,
-           h = canvas.height,
-           context = canvas.getContext('2d'),
-           imagefile = document.getElementById('upFile'),
-           stick = 'none',
-           width = window.innerWidth,
-           height = window.innerHeight,
-           vendorUrl = window.URL || window.webkitURL;
-           context.strokeRect(0, 0, w, h);
-    
-    
-       navigator.getMedia =    navigator.getUserMedia ||
-                               navigator.webkitGetUserMedia ||
-                               navigator.mozGetUserMedia ||
-                               navigator.msGetUserMedia;
-    
-       navigator.getMedia({
-           video: true,
-           audio: false
-       }, function(stream){
-           video.srcObject = stream;
-           if(video.play())
-               document.getElementById('capture').disabled = false;
-    
-       }, function(error){
-    
-       });
-       
+   
        var imgfilter = document.getElementById("img_filter");
        var radio = document.getElementsByName('stickers');
        for (var i = 0, length = radio.length; i < length; i++)
@@ -129,7 +133,7 @@ document.getElementById('btn').addEventListener('click', function(){
            radio[i].onclick = function() {
             imgfilter.style.display = 'block';
            imgfilter.src = this.value;
-           stick = imgfilter.src.replace("http://192.168.99.100:8088/Camagru", "..");
+           stick = imgfilter.src.replace("http://localhost/Camagru", "..");
          
          
        }
@@ -215,7 +219,7 @@ document.getElementById('btn').addEventListener('click', function(){
         var canvasData = canvas.toDataURL("image/png");
         var params = "image64="+canvasData+"&imagesticker="+stick;
         var xhttp = new XMLHttpRequest();
-        xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/takeImage');
+        xhttp.open('POST', 'http://localhost/Camagru/Posts/takeImage');
        
         xhttp.withCredentials = true;
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -229,5 +233,6 @@ document.getElementById('btn').addEventListener('click', function(){
        xhttp.send(params);
         
     }
+
 
     })();

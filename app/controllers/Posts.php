@@ -18,7 +18,7 @@
             $likes = $this->postModel->getlikes();
             $comments = $this->postModel->getComments();
             $data = [
-                'title'=>'Camagru '. $_SESSION['username'].'',
+                'title'=>'Camagru ',
                 'posts' => $posts['post'],
                 'nbrPages' => $posts['nbrPages'],
                 'likes' => $likes,
@@ -140,11 +140,11 @@
                     $usr = $this->postModel->user_by_email($_POST['imgid']);
                     $to  = $usr->email;
                     $notif = $usr->notification ;
-                    $subject = 'Camagru notification';
-                    $message = '<p>One of your photo was Commented </p>';
-                    $headers = 'MIME-Version: 1.0'."\r\n";
-                    $headers .= 'Content-type: text/html; charset=iso-8859-1'."\r\n";
-                    $headers .= 'To: ' . $to."\r\n";
+                    $subject = "Notification A New Comment On Your Photo";
+                    $message='Hello ,your friend '.$_SESSION['username'].' add a new comment on your photo';
+                    $headers = 'From: no-reply@camagru.com' . "\r\n" .
+                                'Reply-To: no-reply@camagru.com' . "\r\n" .
+                                'X-Mailer: PHP/' . phpversion();
                     if(!isset($_SESSION['id'])){
                         redirect("users/login");
                     }

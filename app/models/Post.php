@@ -4,6 +4,8 @@ class Post{
     protected $limit;
     public function __construct()
     {
+        $start = '';
+        $per_page = '';
         $this->db = new Database;
         $this->limit = ' LIMIT '. $start.','.$per_page;
     }
