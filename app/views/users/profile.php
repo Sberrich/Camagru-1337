@@ -52,7 +52,7 @@ for(var i=0; i < delimg.length; i++){
             if(confirm("Are you sure you want to delete this Photo??"))
             {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open('POST', 'http://localhost/Camagru/Posts/delImage');
+                xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/delImage');
                 xhttp.withCredentials = true;
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.onreadystatechange = function(){

@@ -12,7 +12,9 @@
     crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet">
      <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style.css">    
-    <title><?php echo SITENAME;?></title>
+     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+     <title><?php echo SITENAME;?></title>
 </head>
 <body>
 <?php require APPROOT . '/views/inc/navbar.php';?>

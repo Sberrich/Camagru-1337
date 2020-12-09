@@ -1,10 +1,10 @@
 <?php require APPROOT .'/views/inc/header.php'; ?>
     <div class="row">
-        <div class="col-md-6 mx-auto">
+        <div class="col-md-8 mx-auto">
             <div class="card card-body bg-light mt-5">
             <?php echo flash("register_success"); ?>
-                <h2>Login <i class="fa fa-sign-in" aria-hidden="true"></i></h2>
-                <p>Please fill in your informations to Login!</p>
+                <h2 class="text-center">Login</h2>
+                <p class="text-center">Please fill in your informations to Login!</p>
                 <form action="<?php echo URLROOT;?>/users/login" method="POST">
                     <div class="form-group">
                         <label for="username">Username: <sup>*</sup></label>

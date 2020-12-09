@@ -61,7 +61,7 @@
                         <head>
                         </head>
                         <body>
-                            <p>To active your account click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'">Here</a></p>
+                            <p>To active your account click <a href="http://192.168.99.100:8088/Camagru/users/confirm/?token='. $token .'">Here</a></p>
                         </body>
                         </html>
                     ';
