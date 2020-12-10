@@ -12,7 +12,7 @@
                             <video id="video" width="400" height="300" ></video>
                         </div>
                         <div class="actions">
-                            <button class="btn btn-outline-info" id="capture" role="button" disabled><i class="fa fa-camera" aria-hidden="true"></i></button>
+                            <button class="btn btn-outline-info" id="capture" role="button"><i class="fa fa-camera" aria-hidden="true"></i></button>
                             <input type="file" name="upFile" id="upFile" accept=".png,.gif,.jpg,.jpeg">
                         </div>
                     </div>

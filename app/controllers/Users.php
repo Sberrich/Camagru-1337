@@ -61,7 +61,7 @@
                         <head>
                         </head>
                         <body>
-                            <p>To active your account click <a href="http://192.168.99.100:8088/Camagru/users/confirm/?token='. $token .'">Here</a></p>
+                            <p>To active your account click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'">Here</a></p>
                         </body>
                         </html>
                     ';
@@ -207,7 +207,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://192.168.99.100:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>
