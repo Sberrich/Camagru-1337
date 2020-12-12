@@ -1,96 +1,146 @@
-(function(){
-    var video = document.getElementById('video');
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-    var photo = document.getElementById('img_filter');
-    var name = 'none';
+// Buttons to Start and Stop the stream and to clear and save Images
+var start = document.getElementById("btn-start");
+var capture = document.getElementById("capture");
+var stopit = document.getElementById("btn-stop");
+var save = document.getElementById("save");
+var trash = document.getElementById("clear");
+var checker = false;
+
+//////////////////Start The Studio Stream////////////////////
+start.addEventListener("click", function()
+{
+    checker = true;
+    var video = document.getElementById("video");
+
     navigator.getMedia = navigator.getUserMedia ||
-                         navigator.webkitGetUserMedia ||
-                         navigator.mozGetUserMedia ||
-                         navigator.msGetUserMedia;
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia;
+    
     navigator.getMedia({
-        video: true,
-        audio: false
-    },
-    function(stream){
+    video: true,
+    audio: false
+    }, function(stream){
         video.srcObject = stream;
-        video.play();
-        document.getElementById('capture').addEventListener('click', function(){
-            var radios = document.getElementsByName('stickers');
-            for (var i = 0, length = radios.length; i < length; i++)
-            {
-                if (radios[i].checked)
-                {
-                    name = radios[i].value;
-                    break;
-                }
-            }
-            if (name != 'none')
-            {
-                context.drawImage(video, 0, 0, 400, 300);
-                var data = canvas.toDataURL('image/png');
-                photo.setAttribute('src', data);
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', 'http://localhost/Camagru/Posts/takeImage');
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function() {
-                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                        console.log(this.responseText);
-                        location.reload();
-                    }
-                }
-                xhr.send('image64=' + encodeURIComponent(data) + '&imagesticker=' + name);
-            }
-            else {
-                alert("Choose a sticker");
-                document.getElementById('capture').disabled = true;
-            }
-        })
-    },
-    function(error){
-        console.log(error);
+        video.play()
+    }, function(error){
+    
     });
-})();
 
-function no_Sticker(){
-    var radios = document.getElementsByName('stickers');
-    for (var i = 0, length = radios.length; i < length; i++)
+});
+
+
+
+//////////////////stop The Studio Stream ////////////////////
+stopit.addEventListener("click", function()
+{
+    checker = true;
+    var video = document.getElementById("video");
+
+    navigator.getMedia = navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia;
+    
+    navigator.getMedia({
+    video: true,
+    audio: false
+    }, function(stream){
+        video.srcObject = stream;
+        video.stop()
+    }, function(error){
+    
+    });
+
+});
+//////////////////Capture Canvas///////////////////////
+capture.addEventListener("click",function()
+{
+    if(document.getElementById('img_filter').src !="")
     {
-        if (radios[i].checked)
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext('2d');
+        if(canvas.width != 400 || canvas.height != 300)
         {
-            radios[i].checked = false;
-            break;
+            window.location.reload(true);
         }
-    }
-}
+        context.drawImage(video, 0, 0, canvas.width,canvas.height);
+        trash.disabled = false;
 
-function upload_to_server() {
-    var file    = document.querySelector('input[type=file]').files[0];
-    var reader  = new FileReader();
-    var name = 'none';
-    reader.onloadend = function () {
-        var radios = document.getElementsByName('stickers');
-        for (var i = 0, length = radios.length; i < length; i++) {
-            if (radios[i].checked) {
-                name = radios[i].value;
-                break;
-            }
-        }
-        if (name != 'none')
-        {
-            var data = this.result;
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'camera/upload_image');
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    console.log(this.responseText);
-                }
-            }
-            xhr.send('image64=' + encodeURIComponent(data) + '&imagesticker=' + name);
-        }
+    }else
+    {
+        alert("You Should Take A sticker");
     }
-    if (file) {
-        reader.readAsDataURL(file);
+});
+
+capture.addEventListener('mouseout', function(ev){
+    if (document.getElementById('canvas').style.visibility == 'visible') {
+      document.getElementById('canvas').style.backgroundColor = '#EFEFEF';
+    }
+    ev.preventDefault();
+  }, false);
+
+capture.addEventListener('mouseover', function(ev){
+    if (document.getElementById('camera').style.visibility == 'visible') {
+      document.getElementById('camera-area').style.backgroundColor = 'white';
+    }
+    ev.preventDefault();
+  }, false);
+
+
+/////////////////////Take A stickers//////////////////
+var emoji;
+var stick = "none";
+var filters = document.getElementById('img_filter');
+var stickers = document.getElementsByName('stickers');
+for(var i = 0; i < stickers.length; i++)
+{
+    stickers[i].onclick = function(event)
+    {
+        if(canvas.toDataURL() !== document.getElementById('canvas2').toDataURL())
+        {
+            emoji = this.value;
+            filters.src = emoji;
+        }
+        if(checker)
+        {
+
+            filters.style.display = 'block';
+            emoji = this.value;
+            filters.src = emoji;
+        }
     }
 }
+///////////////////////Save Images ////////////////////////
+save.addEventListener("click", function()
+{
+    if(canvas.toDataURL() !== document.getElementById('canvas2').toDataURL())
+    {
+        var datacanva = canvas.toDataURL("image/png");
+        var val = "image="+datacanva+"&imagesticker="+emoji;
+        var ajax = new XMLHttpRequest();
+
+        ajax.open("POST","http://localhost/Camagru/Posts/takeImage");
+        ajax.withCredentials = true;
+        ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        ajax.onreadystatechange = function()
+        {
+          if (this.readyState == 4 && this.status == 200)
+          { 
+            
+          }
+        }
+        ajax.send(val);
+        window.location.reload(true);
+ }
+    
+});
+
+
+/////////////////////////upload///////////////////////////
+/////////////////////////////Clear ///////////////////
+
+trash.addEventListener("click", function(){
+
+    context.clearRect(0, 0, canvas.width,canvas.height)
+});

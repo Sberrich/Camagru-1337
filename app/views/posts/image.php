@@ -1,8 +1,9 @@
 <?php require APPROOT .'/views/inc/header.php'; ?>
-    <a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-light"><i class="fa fa-backward"></i> Back</a><br>
-    <br>
     <div class="container take-pic">
         <h2 class="text-center text-muted">Welcome To Camagru Studio</h2>
+        <a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-outline-info"><i class="fa fa-backward"></i> Back</a><br>
+         <button id="btn-start" type="button" class="btn btn-outline-success">Start Streaming</button>
+         <button id="btn-stop" type="button" class="btn btn-outline-danger">Stop Streaming</button>
         <div class="d-flex flex-column">
             <div class="row" id="imageHolder">
                 <div class="col-md-9 camera">
@@ -19,7 +20,9 @@
                 </div>
                 <div class="col-md-9 preview">  
                     <canvas id="canvas" width="400" height="300"></canvas>
+                    <canvas id="canvas2" width="400" height="300"></canvas>   
                 </div>
+
                 <!-- Filters Block -->
                 <div class="col-md-3">   
                     <div data-spy="scroll"  style="overflow-x: auto; border:2px groove black; width: 200px; height: 300px; float: left; display: block;">     
@@ -56,8 +59,8 @@
                             <br> 
                             <div class="row" id="finishActions">
                                 <form action="<?php echo URLROOT;?>/posts/image" method="POST">
-                                    <button class="btn btn-outline-primary btn-lg" id="up" role="button" disabled><i class="fa fa-picture-o" aria-hidden="true"></i></button>
-                                    <button class="btn btn-outline-danger btn-lg" id="clear" role="button" disabled><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-primary btn-lg" id="save" role="button" ><i class="fa fa-picture-o" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-danger btn-lg" id="clear" role="button" ><i class="fa fa-trash" aria-hidden="true"></i></button>
                                 </form>
                             </div>
                         </div>
@@ -65,7 +68,7 @@
                 </div>
             </div>
         </div>
-        
+
         
     </div>
 

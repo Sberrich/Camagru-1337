@@ -147,3 +147,6 @@ document.getElementById('btn').addEventListener('click', function(){
     }
 
     })();
+
+    //////////////////////////////Upload/////////////////////////////
+    

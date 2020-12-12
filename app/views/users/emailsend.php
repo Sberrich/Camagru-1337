@@ -7,7 +7,8 @@
        <div class="elementor-image">
 		 <img width="427" height="567"
          src="https://myhappyforce.com/wp-content/uploads/2020/05/hf_agree.png" 
-         sizes="(max-width: 427px) 100vw, 427px" ><img width="427" height="567" ></div>
+         sizes="(max-width: 427px) 100vw, 427px" ><img width="427" height="567" >
+         </div>
     </div>
 </div>
 

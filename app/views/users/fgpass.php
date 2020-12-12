@@ -21,7 +21,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="submit" value="send " class="btn btn-outline-success btn-block">
+                            <input type="submit" value="send " class="btn btn-primary btn-block py-2">
                         </div>
                     </div>
                 </form>

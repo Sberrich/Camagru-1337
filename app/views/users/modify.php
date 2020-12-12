@@ -49,7 +49,7 @@
             </div> 
           <div class="row">
             <div class="col">
-              <input type="submit" value="Modify" class="btn btn-danger btn-block">
+              <input type="submit" value="Modify" class="btn btn-primary btn-block py-2">
             </div>
             </div>
             

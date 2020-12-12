@@ -20,7 +20,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="submit" value="Login" class="btn btn-dark btn-block">
+                            <input type="submit" value="Login" class="btn btn-primary btn-block py-2">
                         </div>
                         <div class="col">
                             <div class="row"><a href="<?php echo URLROOT;?>/users/register" class="btn btn-light btn-block"> No account? Register</a></div>

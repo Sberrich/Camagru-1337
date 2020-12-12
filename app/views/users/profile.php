@@ -5,7 +5,7 @@
 <h1 class="display-4"><?php echo $data['title']; ?></h1>
   <p class="lead"></p>
   <hr class="my-4"><p></p>
-      <a class="btn-outline-info btn-lg" href="<?php echo URLROOT;?>/users/modify" role="button">Edit Profile</a>
+      <a class="btn-outline-primary btn-lg" href="<?php echo URLROOT;?>/users/modify" role="button">Edit Profile</a>
     <a class="btn-outline-success btn-lg" href="<?php echo URLROOT;?>/posts/Image" role="button">Add Photo</a>
     
 </div>

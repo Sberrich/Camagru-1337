@@ -1,17 +1,21 @@
 <?php
   class Pages extends Controller {
     public function __construct(){
+     $this->postModel = $this->model('Post');
     }
     public function index()
     {
-      $data = [
-        'title' => 'Welcome to Camagru',
-        'description' => 'this small web application allowing you to make basic photo editing using your webcam and some predefined images.',
-        'enjoy' => 'Enjoy it !'
-      ];
-      $this->view('pages/index', $data);
+            $posts = $this->postModel->getImage();
+            $likes = $this->postModel->getlikes();
+            $comments = $this->postModel->getComments();
+            $data = [
+                'title'=>'Camagru '. $_SESSION['username'].'',
+                'posts' => $posts,
+                'likes' => $likes,
+                'comments' => $comments
+            ];
      
-      
+      $this->view('pages/index', $data);
     }
     public function about(){
       $data = ['title'=>'Samir Berrichi'];

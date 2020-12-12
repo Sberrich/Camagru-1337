@@ -71,35 +71,37 @@
         
         public function takeImage()
         {
-            if(isset($_POST['image64']) && isset($_POST['imagesticker']))
-            {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $upload_dir = "../public/imgs/";
-                $img = $_POST['image64'];
-                $img = str_replace('data:image/png;base64,', '', $img);
-                $img = str_replace(' ', '+', $img);
-                $data = base64_decode($img);
-                $file = $upload_dir . time().'.png';
-                file_put_contents($file, $data);
-                chmod($file, 0777);
-                $sourceImage = str_replace(URLROOT, '..',  $_POST['imagesticker']);
-                list($srcWidth, $srcHeight) = getimagesize($sourceImage);
-                $src = imagecreatefrompng($sourceImage);
-                $dest = imagecreatefrompng($file);
-                imagecopyresized($dest, $src, 0, 0, 0, 0, 200, 200, $srcWidth, $srcHeight);
-                imagepng($dest, $file, 9);
-                move_uploaded_file($dest, $file);
-                $dt = ['userid' => $_SESSION['id'],
-                'imgurl' => $file          
-                ];
-                if (!empty($data)) {
-                    if ($this->postModel->addImage($dt) == true) {
-                        $this->postModel->getImage();
-                    }
-                
-                }
+                if(isset($_POST['image64']) && isset($_POST['imagesticker']))
+                {
+                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                        $upload_dir = "../public/imgs/";
+                        $img = $_POST['image64'];
+                        $img = str_replace('data:image/png;base64,', '', $img);
+                        $img = str_replace(' ', '+', $img);
+                        $data = base64_decode($img);
+                        $file = $upload_dir . time().'.png';
+                        file_put_contents($file, $data);
+                        chmod($file, 0777);
+                        $sourceImage = str_replace(URLROOT, '..',  $_POST['imagesticker']);
+                        list($srcWidth, $srcHeight) = getimagesize($sourceImage);
+                        $src = imagecreatefrompng($sourceImage);
+                        $dest = imagecreatefrompng($file);
+                        imagecopyresized($dest, $src, 0, 0, 0, 0, 200, 200, $srcWidth, $srcHeight);
+                        imagepng($dest, $file, 9);
+                        move_uploaded_file($dest, $file);
+                    
+                        $dt = ['userid' => $_SESSION['id'],
+                        'imgurl' => $file          
+                            ];
+                        if (!empty($data)) {
+                                if ($this->postModel->addImage($dt) == true) {
+                                    $this->postModel->getImage();
+                            }
+                    
+                 }
+               
+               
             }
-         
         }
         public function addlikes()
         {
