@@ -7,7 +7,7 @@ var trash = document.getElementById("clear");
 var checker = false;
 
 //////////////////Start The Studio Stream////////////////////
-start.addEventListener("click", function()
+start.addEventListener("click", function(event)
 {
     checker = true;
     var video = document.getElementById("video");
@@ -32,7 +32,7 @@ start.addEventListener("click", function()
 
 
 //////////////////stop The Studio Stream ////////////////////
-stopit.addEventListener("click", function()
+stopit.addEventListener("click", function(event)
 {
     checker = true;
     var video = document.getElementById("video");
@@ -54,7 +54,7 @@ stopit.addEventListener("click", function()
 
 });
 //////////////////Capture Canvas///////////////////////
-capture.addEventListener("click",function()
+capture.addEventListener("click",function(event)
 {
     if(document.getElementById('img_filter').src !="")
     {

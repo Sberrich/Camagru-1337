@@ -1,142 +1,160 @@
 <?php
-    class Users extends Controller{
-        public function __construct(){
+    class Users extends Controller
+    {
+        // Construct
+        public function __construct()
+        {
             $this->userModel = $this->model('User');
             $this->postModel = $this->model('Post');
-          
         }
         //Register Method
         public function register()
         {      
             //Check If the User is login or not
-            if($this->isloggedIn())
+            if(!$this->isloggedIn())
             {
+                //check for post
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
+                {
+                    // Proccess Form
+                            $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
+
+                    //Sanitize Post Data
+                            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                    //Init Data
+                            $data =['username' => trim($_POST['username']),
+                                'password' => trim($_POST['password']),
+                                'confirm_password' => trim($_POST['confirm_password']),
+                                'email' => trim($_POST['email']),
+                                'token' => $token,
+                                'username_err' => '',
+                                'email_err' => '',
+                                'password_err' => '',
+                                'confirm_password_err' => ''
+                            ];
+                    //validate username
+                        if(empty($data['username']))
+                        {
+                            $data['username_err'] = 'The Username Field is required.';
+                        }
+                        elseif(!ctype_alnum($data['username']) && !empty($data['username']))
+                        {
+                            $data['username_err'] = 'Please Enter Alphanumeric Username';
+                        }
+                        elseif($this->userModel->findUser($data['username']))
+                        {
+                            $data['username_err'] = 'Username Already Exist';
+                        }
+                    //validate Password
+                        if(empty($data['password']))
+                        {
+                            $data['password_err'] = 'The Password Field is required.';
+                        }
+                        elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password']))
+                        {
+                            $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
+                        }
+                    //Confirm Password
+                        if(empty($data['confirm_password']))
+                        {
+                            $data['confirm_password_err'] = 'Please confirm Password';
+                        }
+                        elseif($_POST['password'] != $_POST['confirm_password'])
+                        {
+                            $data['confirm_password_err'] = 'Passwords not match';
+                        }
+                    //validate Email
+                        if(empty($data['email']))
+                        {
+                            $data['email_err'] = 'The Email Field is required.';
+                        }
+                        elseif($this->userModel->findUserByEmail($data['email']))
+                        {
+                            $data['email_err'] = 'Email Already Exist';
+                        }
+                    // Make sure Errors fileds are empty
+                        if(empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['email_err']))
+                        {
+                        //Hash Password
+                            $data['password'] = hash('whirlpool', $data['password']);
+                        //Send Validation Mail
+                            $to  = $data['email'];
+                            $subject = 'Confirm Account';
+                            $message = '
+                            <html>
+                                <meta charset="UTF-8">
+                                <body style= " background-color: lightblue;">
+                                    <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
+                                    <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                </body>
+                            </html>                    
+                            ';
+                            $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
+                            mail($to, $subject, $message , $headers);
+                            //Register User
+                                if($this->userModel->register($data))
+                                {
+                                    flash('register_success', 'Check Your Email Please To Confirm Your Account!');
+                                    redirect('users/login');
+                                }
+                                else
+                                {
+                                    die('Something went wrong');
+                                }
+                        }else{
+                            // Load view with errors
+                                $this->view('users/register', $data);
+                            }
+                }else{
+                        //Init Data
+                            $data =['username' => '',
+                                'password' => '',
+                                'email' => '',
+                                'confirm_password' => '',
+                                'username_err' => '',
+                                'email_err' => '',
+                                'password_err' => '',
+                                'confirm_password_err' => ''
+                            ];
+                        //Load View
+                        $this->view('users/register', $data);
+                    }
+               
+            }
+            else{
                 redirect('pages/index');
             }
-                //check for post
-            if($_SERVER['REQUEST_METHOD'] == 'POST')
-            {
-                // Proccess Form
-                $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
-
-                //Sanitize Post Data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                //Init Data
-                $data =['username' => trim($_POST['username']),
-                    'password' => trim($_POST['password']),
-                    'confirm_password' => trim($_POST['confirm_password']),
-                    'email' => trim($_POST['email']),
-                    'token' => $token,
-                    'username_err' => '',
-                    'email_err' => '',
-                    'password_err' => '',
-                    'confirm_password_err' => ''
-                ];
-                //validate username
-                    if(empty($data['username']))
+                
+        }
+        //Confirm Acounts
+        public function confirm()
+        {
+                $data =['token' => $_GET['token']];
+                $row = $this->userModel->getUserByToken($data['token']);
+                if(isset($_GET['token']) && $_GET['token'] != "")
+                {
+                    if($_GET['token'] == $row->token)
                     {
-                        $data['username_err'] = 'The Username Field is required.';
+                        $page = ['title' => "Thank You"];
+                        $this->view("users/confirm", $page);
+                        $data = ['token' => $_GET['token']];
+                        $this->userModel->confirm($data);
                     }
-                    elseif(!ctype_alnum($data['username']) && !empty($data['username']))
-                    {
-                        $data['username_err'] = 'Please Enter Alphanumeric Username';
-                    }
-                    elseif($this->userModel->findUser($data['username']))
-                    {
-                        $data['username_err'] = 'Username Already Exist';
-                    }
-
-                 //validate Password
-                    if(empty($data['password']))
-                    {
-                        $data['password_err'] = 'The Password Field is required.';
-                    }
-                    elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password']))
-                    {
-                        $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
-                    }
-
-                 //Confirm Password
-                    if(empty($data['confirm_password']))
-                    {
-                        $data['confirm_password_err'] = 'Please confirm Password';
-                    }
-                    elseif($_POST['password'] != $_POST['confirm_password'])
-                    {
-                        $data['confirm_password_err'] = 'Passwords not match';
-                    }
-
-                //validate Email
-                    if(empty($data['email']))
-                    {
-                        $data['email_err'] = 'The Email Field is required.';
-                    }
-                    elseif($this->userModel->findUserByEmail($data['email']))
-                    {
-                        $data['email_err'] = 'Email Already Exist';
-                    }
-
-                // Make sure Errors fileds are empty
-                    if(empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['email_err']))
-                    {
-                        //Hash Password
-                        $data['password'] = hash('whirlpool', $data['password']);
-
-                        //Send Validation Mail
-                        $to  = $data['email'];
-                        $subject = 'Confirm Account';
-                        $message = '
-                        <html>
-                            <meta charset="UTF-8">
-                            <body style= " background-color: lightblue;">
-                                <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
-                                <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
-                            </body>
-                         </html>                    
-                        ';
-                        $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
-                        mail($to, $subject, $message , $headers);
-
-                        //Register User
-                             if($this->userModel->register($data))
-                             {
-                                 flash('register_success', 'Check Your Email Please To Confirm Your Account!');
-                                 redirect('users/login');
-                             }
-                             else
-                             {
-                                die('Something went wrong');
-                             }
-                    }else{
-                        // Load view with errors
-                            $this->view('users/register', $data);
-                        }
-                }else
-                     {
-                    //Init Data
-                        $data =['username' => '',
-                            'password' => '',
-                            'email' => '',
-                            'confirm_password' => '',
-                            'username_err' => '',
-                            'email_err' => '',
-                            'password_err' => '',
-                            'confirm_password_err' => ''
-                        ];
-                    //Load View
-                    $this->view('users/register', $data);
-                     }
-     }
-    //Login Method
+                    else
+                    redirect('users/token');
+                }
+                else
+                    $this->view("users/login");
+        }
+        //Login Method
         public function login()
         {    
-            if($this->isloggedIn())
-                redirect('pages/index');
-
-                //Check the Post
-                 if($_SERVER['REQUEST_METHOD'] == 'POST')
+            if(!$this->isloggedIn())
+            {
+                  //Check the Post
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                  {
                         // sanitize the Post Data
                         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -152,13 +170,12 @@
                         if(empty($data['username'])){
                             $data['username_err'] = 'Please enter Username';
                         }
-
                         //validate Password
                         if(empty($data['password'])){
                             $data['password_err'] = 'Please enter Password';
-                        }elseif(strlen($_POST['password']) < 6|| ctype_lower($_POST['password'])) {
-                        $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
-                        }
+                          }elseif(strlen($_POST['password']) < 6|| ctype_lower($_POST['password'])) {
+                                      $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
+                             }
 
                         //validate and check For Username
                         if($this->userModel->findUser($data['username']) == false)
@@ -192,7 +209,7 @@
                             $this->view('users/login', $data);
                         }
 
-                    }else{
+                }else{
                         //Init Data
                         $data =['username' => '',
                             'password' => '',
@@ -202,11 +219,15 @@
                         ];
                         //Load View
                         $this->view('users/login', $data);
-                    }
-                 }  
-                // Logout Method
-                public function logout()
-                {
+                 }
+            }else{
+                redirect('pages/index');
+            }
+         
+        }
+        // Logout Method
+        public function logout()
+        {
                     unset($_SESSION['id']);
                     unset($_SESSION['username']);
                     unset($_SESSION['email']);
@@ -234,10 +255,9 @@
                     redirect('pages/index');
                 }
 
-        public function fgpass()
-        {
-              if($this->isloggedIn())
-                redirect('pages/index');
+        
+                public function fgpass()
+            {   
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $data =[
@@ -254,6 +274,14 @@
                 if(empty($data['email_err']))
                 {
                         $row = $this->userModel->getUserByEmail($data['email']);
+                        if($row->token == "")
+                        {
+                            $token1 = substr(md5(openssl_random_pseudo_bytes(20)), 10);
+                            $data['token'] = $token1;
+                            $this->userModel->updateTokenbyemail($data);
+                            $row = $this->userModel->getUserByEmail($data['email']);                           
+                        }
+
                         $token = $row->token;
                         $to  = $data['email'];
                         $subject = 'Recover account';
@@ -284,82 +312,72 @@
                     'email_err' => ''];
                 $this->view('users/fgpass', $data);
             
-                }
-                
+                }     
         }
-        
+        // Change Pass
         public function changepass()
         {
-           
-            if(isset($_GET['token'])){
-                 $token = $_GET['token'];
-             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            
-                   
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $data =[
-                    'password' => trim($_POST['password']),
-                    'confirm_password' => trim($_POST['confirm_password']),
-                    'token' => $token,
-                    'password_err' => '',
-                    'confirm_password_err' => ''
-                ];
-                  if(empty($data['password'])){
-                    $data['password_err'] = 'Please enter Password';
-                }elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password'])){
-                    $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
-                }
-
-                if(empty($data['confirm_password'])){
-                    $data['confirm_password_err'] = 'Please confirm Password';
-                }elseif($_POST['password'] != $_POST['confirm_password']){
-                    $data['confirm_password_err'] = 'Passwords not match';
-                }
-                  if(empty($data['password_err']) && empty($data['confirm_password_err'])){
-                    $data['password'] = hash('whirlpool', $data['password']);
-                   
-                    if($this->userModel->changepass($data)){
-                       
-                        flash('changepass_success', 'You Password Changed');
-                        redirect('users/login');
-                      } else {
-                        die('Something went wrong');
-                      }
-                }else{
-                     
+            if($_GET['token'] == "") $this->view('users/login');
+             else{
+                    $data =['token' => $_GET['token']];
+                    $row = $this->userModel->getUserByToken($data['token']);
+                    if($_GET['token'] == $row->token)
+                    {
+                        $token = $_GET['token'];
+                        if($_SERVER['REQUEST_METHOD'] == 'POST')
+                        {
+                            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                            $data =[
+                                    'password' => trim($_POST['password']),
+                                    'confirm_password' => trim($_POST['confirm_password']),
+                                    'token' => $token,
+                                    'password_err' => '',
+                                    'confirm_password_err' => ''
+                                    ];
+                            if(empty($data['password'])){
+                            $data['password_err'] = 'Please enter Password';
+                            }elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password'])){
+                            $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
+                                }
+                            if(empty($data['confirm_password'])){
+                                $data['confirm_password_err'] = 'Please confirm Password';
+                            }elseif($_POST['password'] != $_POST['confirm_password']){
+                                $data['confirm_password_err'] = 'Passwords not match';
+                                }
+                                if(empty($data['password_err']) && empty($data['confirm_password_err'])){
+                                $data['password'] = hash('whirlpool', $data['password']);
+                        
+                                if($this->userModel->changepass($data)){
+                            
+                                flash('changepass_success', 'You Password Changed');
+                                redirect('users/login');
+                            } else {
+                                die('Something went wrong');
+                                }
+                        }else{
+                            
+                            $this->view('users/changepass', $data);
+                        }
+                        }else{
+                    $data =[
+                        'password' => '',
+                        'confirm_password' => '',
+                        'password_err' => '',
+                        'confirm_password_err' => ''
+                    ];
                     $this->view('users/changepass', $data);
+                    }
+                    }else
+                redirect('users/token'); 
                 }
             }
-                else{
-                $data =[
-                    'password' => '',
-                    'confirm_password' => '',
-                    'password_err' => '',
-                    'confirm_password_err' => ''
-                ];
-                $this->view('users/changepass', $data);
-             }
-            }
-        }
-        
-        public function confirm(){
-            $page = ['title' => "Congratulations!"];
-            
-            $this->view("users/confirm", $page);
-            if(isset($_GET['token']))
-            {
-                $data = ['token' => $_GET['token']];
-                $this->userModel->confirm($data);
-            }
-        }
-        
-         public function emailsend(){
+        //Email Send
+        public function emailsend(){
             $page = ['title' => "Congratulations!"];
             
             $this->view("users/emailsend", $page);
         }
-        
-        
+        //Profile//
         public function profile()
         {
             $posts = $this->postModel->getImagesbyUsr($_SESSION['id']);
@@ -369,123 +387,130 @@
             ];
             $this->view("users/profile", $data);
         }
-
-
-
-
-  // Modify
-  public function modify()
-  {
-      // Check for POST
-      if ($_SERVER['REQUEST_METHOD'] == 'POST')
-      {
-         //Sanitize Post Data
-         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        
-         //init Data
-        $data = [
-            'id' => $_SESSION['id'],
-            'username' => trim($_POST['username']),
-            'email' => trim($_POST['email']),
-            'password' => trim($_POST['password']),
-            'confirm_password' => trim($_POST['confirm_password']),
-            'username_err' => '',
-            'email_err' => '',
-            'password_err' => '',
-            'confirm_password_err' => '',
-            'notif' =>  $_POST['notif']
-        ]; 
-
-        //Validate Username
-            if($this->userModel->findUser($data['username'])) {
-                $data['username_err'] = 'Name  is already taken';
-             }elseif(!ctype_alnum($data['username']) && !empty($data['username']))
-             {
-                    $data['username_err'] = 'The Username Field is required.';
-            }
-
-        //validate Email
-           if($this->userModel->findUserByEmail($data['email'])) {
-                  $data['email_err'] = 'Email is already taken';
-           }
-           //valide Password And Confirm Password
-            if ($data['password'] && $data['confirm_password'])
-            {
-                if (strlen($data['password']) < 6 || ctype_lower($_POST['password']))
-                {
-                    $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
-                } elseif (empty($data['confirm_password']))
-                 {
-                    $data['confirm_password_err'] = 'Please confirm password';
-                 } elseif ($data['password'] != $data['confirm_password']) {
-                    $data['confirm_password_err'] = 'Passwords do not match';
-                }
-            }
-
-            //Notif Check
-            if(!empty($data['notif']))
-            {
-                $data['notif'] = 1;
-                $_SESSION['notification'] = 1;
-            
-            }
-            else{
-                $data['notif'] = 0;
-                $_SESSION['notification'] = 0;
+         // Modify
+        public function modify()
+        {
+            // Check for POST
+                if ($_SERVER['REQUEST_METHOD'] == 'POST')
+                    {
+                //Sanitize Post Data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 
-            }
-            //Make Sure Errors Are Empty
+                //init Data
+                $data = [
+                    'id' => $_SESSION['id'],
+                    'username' => trim($_POST['username']),
+                    'email' => trim($_POST['email']),
+                    'password' => trim($_POST['password']),
+                    'confirm_password' => trim($_POST['confirm_password']),
+                    'username_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                    'notif' =>  $_POST['notif']
+                ]; 
 
-            if (empty($data['email_err']) && empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']))
-            {                        
-                if (!(empty($data['password']))) {
-                    $data['password'] = hash('whirlpool', $data['password']);
-             }if(empty($data['email_err']))
-             {
-                     $row = $this->userModel->getUserByEmail($data['email']);
-                     $subject = 'Modify account';
-                     $message = '
-                     <html>
-                     <meta charset="UTF-8">
-                        <body style= " background-color: lightblue;">
-                        <h1 style="text-align: center;text-transform: uppercase;">Camagru Notification</h1>
-                       <h2>Your account details has been successfully updated;</h2>
-                       <span style="font-size:100px;>&#129488;&#128248;</span>
-                       </body>
-                     </html>                    
-                      ';
-                      $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
-                      mail($to, $subject, $message , $headers);
-                     if(mail($to, $subject, $message , $headers))
-                         redirect('users/emailsend');
-                 }
-            if ($this->userModel->modify($data)) {
-                flash('modify_success', 'Your account is modified');
-                redirect('users/modify');
+                //Validate Username
+                    if($this->userModel->findUser($data['username'])) {
+                        $data['username_err'] = 'Name  is already taken';
+                    }elseif(!ctype_alnum($data['username']) && !empty($data['username']))
+                    {
+                            $data['username_err'] = 'The Username Field is required.';
+                    }
+
+                //validate Email
+                if($this->userModel->findUserByEmail($data['email'])) {
+                        $data['email_err'] = 'Email is already taken';
+                }
+                //valide Password And Confirm Password
+                    if ($data['password'] && $data['confirm_password'])
+                    {
+                        if (strlen($data['password']) < 6 || ctype_lower($_POST['password']))
+                        {
+                            $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
+                        } elseif (empty($data['confirm_password']))
+                        {
+                            $data['confirm_password_err'] = 'Please confirm password';
+                        } elseif ($data['password'] != $data['confirm_password']) {
+                            $data['confirm_password_err'] = 'Passwords do not match';
+                        }
+                    }
+
+                    //Notif Check
+                    if(!empty($data['notif']))
+                    {
+                        $data['notif'] = 1;
+                        $_SESSION['notification'] = 1;
+                    
+                    }
+                    else{
+                        $data['notif'] = 0;
+                        $_SESSION['notification'] = 0;
+                        
+                    }
+                    //Make Sure Errors Are Empty
+
+                    if (empty($data['email_err']) && empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']))
+                    {                        
+                        if (!(empty($data['password']))) {
+                            $data['password'] = hash('whirlpool', $data['password']);
+                    }if(empty($data['email_err']))
+                    {
+                            $row = $this->userModel->getUserByEmail($data['email']);
+                            $subject = 'Modify account';
+                            $message = '
+                            <html>
+                            <meta charset="UTF-8">
+                                <body style= " background-color: lightblue;">
+                                <h1 style="text-align: center;text-transform: uppercase;">Camagru Notification</h1>
+                            <h2>Your account details has been successfully updated;</h2>
+                            <span style="font-size:100px;>&#129488;&#128248;</span>
+                            </body>
+                            </html>                    
+                            ';
+                            $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
+                            mail($to, $subject, $message , $headers);
+                            if(mail($to, $subject, $message , $headers))
+                                redirect('users/emailsend');
+                        }
+                    if ($this->userModel->modify($data)) {
+                        flash('modify_success', 'Your account is modified');
+                        redirect('users/modify');
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    if(isset($_SESSION['id']))
+                            $this->view('users/modify', $data);
+                    else
+                            $this->view('pages/index');
+                }
             } else {
-                die('Something went wrong');
-            }
-        } else {
-            if(isset($_SESSION['id']))
+                $data = [
+                    'username' => '',
+                    'email' => '',
+                    'password' => '',
+                    'confirm_password' => '',
+                    'username_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                ];
+                if(isset($_SESSION['id']))
                     $this->view('users/modify', $data);
-            else
+                else
                     $this->view('pages/index');
+            }
         }
-    } else {
-        $data = [
-            'username' => '',
-            'email' => '',
-            'password' => '',
-            'confirm_password' => '',
-            'username_err' => '',
-            'email_err' => '',
-            'password_err' => '',
-            'confirm_password_err' => '',
-        ];
-        if(isset($_SESSION['id']))
-            $this->view('users/modify', $data);
-        else
-            $this->view('pages/index');
-    }
-} 
-    }
+        // Token  
+        public function token()
+        {
+            
+            $page = ['title' => "Sorry"];
+            
+            $this->view("users/token", $page);
+        
+        }
+    }  
+?>
+    

@@ -9,7 +9,7 @@
             $likes = $this->postModel->getlikes();
             $comments = $this->postModel->getComments();
             $data = [
-                'title'=>'Camagru '. $_SESSION['username'].'',
+                'title'=>'Camagru ',
                 'posts' => $posts,
                 'likes' => $likes,
                 'comments' => $comments

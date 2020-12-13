@@ -1,18 +1,31 @@
 <?php
+ /*
+  * PDO Database Class
+  * Connect to database
+  * Create prepared statements
+  * Bind values
+  * Return rows and results
+  */
     class Database{
         private $host = DB_HOST;
         private $usr = DB_USER;
         private $pass = DB_PASS;
         private $dbname = DB_NAME;
+        /* database_handler*/
         private $cn;
         private $req;
         private $error;
 
         public function __construct()
         {
+            // Set DSN (database source name)
             $chaine = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+            $options = array(
+                PDO::ATTR_PERSISTENT => true,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            );
             try{
-                $this->cn = new PDO($chaine, $this->usr, $this->pass);
+                $this->cn = new PDO($chaine, $this->usr, $this->pass, $options);
             }catch (PDOException $e){
                 $this->error = $e->getMessage();
                 echo $this->error;

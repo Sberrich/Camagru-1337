@@ -24,18 +24,46 @@
       {
         $this->db->query('SELECT * FROM user WHERE username = :username');
         $this->db->bind(':username', $username);
-
+        
         $row = $this->db->single();
-
+        
         $hashed_password = $row->password;
         $hash = hash('whirlpool', $password);
         if($hash == $hashed_password){
-           return $row;
-      } else {
-        return false;
+          return $row;
+        } else {
+          return false;
+        }
+        
       }
-
+      public function findUser($username)
+      {
+          $this->db->query('SELECT * FROM user WHERE username = :username');
+          $this->db->bind(':username', $username);
+          $row = $this->db->single();
+          if($this->db->rowCount() > 0){
+              return true;
+          }else{
+            return false;
+          }
       }
+      
+      public function getUserByToken($token)
+      {
+          $this->db->query('SELECT * FROM user WHERE token = :token');
+          $this->db->bind(':token', $token);
+          $row = $this->db->single();
+          return $row;
+      }
+      public function updateTokenbyemail($data){
+        $this->db->query('UPDATE user SET token = :token WHERE email = :email');
+        $this->db->bind(':token', $data['token']);
+        $this->db->bind(':email', $data['email']);
+        if($this->db->execute())
+             return true;
+        else
+             return false;
+     }
       public function findUserByEmail($email)
       {
             $this->db->query('SELECT * FROM user WHERE email = :email');
@@ -64,21 +92,14 @@
             $this->db->bind(':password', $pass);
             $this->db->bind(':token', $token);
             if($this->db->execute())
+            {
+                $this->db->query('UPDATE user3 SET token = null WHERE token= :token');
+                $this->db->bind(':token', $token);
+                if($this->db->execute()) return true;
                 return true;
+            }
             else
                 return false;
-        }
-        
-        public function findUser($username)
-        {
-            $this->db->query('SELECT * FROM user WHERE username = :username');
-            $this->db->bind(':username', $username);
-            $row = $this->db->single();
-            if($this->db->rowCount() > 0){
-                return true;
-            }else{
-              return false;
-            }
         }
         
         public function checkuserconfirmed($username)
@@ -113,6 +134,9 @@
             $this->db->bind(':token', $token);
             if($this->db->execute())
             {
+              $this->db->query('UPDATE user SET token = null WHERE token= :token');
+              $this->db->bind(':token', $token);
+              if($this->db->execute()) return true;
                 return true;
             }
             else{
