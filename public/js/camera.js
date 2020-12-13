@@ -73,31 +73,15 @@ capture.addEventListener("click",function(event)
     }
 });
 
-capture.addEventListener('mouseout', function(ev){
-    if (document.getElementById('canvas').style.visibility == 'visible') {
-      document.getElementById('canvas').style.backgroundColor = '#EFEFEF';
-    }
-    ev.preventDefault();
-  }, false);
-
-capture.addEventListener('mouseover', function(ev){
-    if (document.getElementById('camera').style.visibility == 'visible') {
-      document.getElementById('camera-area').style.backgroundColor = 'white';
-    }
-    ev.preventDefault();
-  }, false);
-
-
 /////////////////////Take A stickers//////////////////
 var emoji;
-var stick = "none";
 var filters = document.getElementById('img_filter');
 var stickers = document.getElementsByName('stickers');
 for(var i = 0; i < stickers.length; i++)
 {
     stickers[i].onclick = function(event)
     {
-        if(canvas.toDataURL() !== document.getElementById('canvas2').toDataURL())
+        if(canvas.toDataURL() !== document.getElementById('canvas').toDataURL())
         {
             emoji = this.value;
             filters.src = emoji;
@@ -114,13 +98,13 @@ for(var i = 0; i < stickers.length; i++)
 ///////////////////////Save Images ////////////////////////
 save.addEventListener("click", function()
 {
-    if(canvas.toDataURL() !== document.getElementById('canvas2').toDataURL())
+    if(canvas.toDataURL() !== document.getElementById('canvas').toDataURL())
     {
         var datacanva = canvas.toDataURL("image/png");
-        var val = "image="+datacanva+"&imagesticker="+emoji;
+        var val = "image64="+datacanva+"&imagesticker="+emoji;
         var ajax = new XMLHttpRequest();
 
-        ajax.open("POST","http://localhost/Camagru/Posts/takeImage");
+        ajax.open("POST","http://192.168.99.101:8088/Camagru/Posts/takeImage");
         ajax.withCredentials = true;
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.onreadystatechange = function()
@@ -138,6 +122,9 @@ save.addEventListener("click", function()
 
 
 /////////////////////////upload///////////////////////////
+
+
+
 /////////////////////////////Clear ///////////////////
 
 trash.addEventListener("click", function(){

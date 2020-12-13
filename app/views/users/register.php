@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card card-body mt-5 register" >
-                         <img src="https://res.cloudinary.com/mhmd/image/upload/v1569543678/form_d9sh6m.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+                         <img src="../public/imgs/register.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
                          <h1 class="text-center">Create an Account</h1>
                          <p class="font-italic text-center text-muted mb-0">Please fill out this from to Register with us!</p>
                          <br>

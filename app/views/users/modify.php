@@ -1,32 +1,56 @@
 <?php require APPROOT.'/views/inc/header.php'; ?>
 <a href="<?php echo URLROOT; ?>/users/profile" class="btn btn-light"><i class="fa fa-backward"></i> Back</a><br>
   <div class="row">
-    <div class="col-md-6 mx-auto">
-      <div class="card card-body bg-light mt-5">
-          <?php echo flash("modify_success"); ?>
-        <h2>Modify An Account</h2>
-        <p>Please fill out this form to modify your compte</p>
+    <div class="col-md-8 mx-auto">
+      <div class="card card-body mt-5 register">
+          <img src="../public/imgs/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+          <h2 class="text-center display-5">Modify An Account</h2>
+          <p>Please fill out this form to modify your compte</p>
         <form action="<?php echo URLROOT; ?>/users/modify" method="post">
-          <div class="form-group">
-            <label for="uname">New User Name: </label>
-            <input type="text" name="username" class="form-control form-control-lg <?php echo (!empty($data['username_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['username']; ?>">
-            <span class="invalid-feedback"><?php echo $data['username_err']; ?></span>
+          <!-- Username -->
+          <div class="input-group-prepend d-flex flex-column mb-3 <?php echo (!empty($data['username_err']))? 'is-invalid' : ''; ?>">
+                            <div class="d-flex flex-row input-holder">
+                                <span class="icon input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-user text-muted"></i>
+                                </span>
+                                <input type="text"  placeholder="New User Name" name="username" class="input form-control bg-white border-md border-left-0 pl-3" value="<?php echo $data['username']; ?>">
+                            </div>
+                            <span class="invalid-feedback"><?php echo $data['username_err']; ?></span>
           </div>
-          <div class="form-group">
-            <label for="email">New Email: </label>
-            <input type="email" name="email" class="form-control form-control-lg <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['email']; ?>" >
-            <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
+          <!-- Email Address -->
+          <div class="input-group-prepend d-flex flex-column mb-3  <?php echo (!empty($data['email_err']))? 'is-invalid' : ''; ?>">
+                            <div class="d-flex flex-row input-holder">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-envelope text-muted"></i>
+                                </span>
+                                <input type="email"  placeholder="New Email Address" name="email" class="form-control bg-white border-left-0 border-md" 
+                                value="<?php echo $data['email']; ?>">
+                            </div>
+                            <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
+           </div>
+          <!-- Password -->
+          <div class="input-group-prepend d-flex flex-column mb-3  <?php echo (!empty($data['password_err']))? 'is-invalid' : ''; ?>">
+                            <div class="d-flex flex-row input-holder">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-lock text-muted"></i>
+                                </span>
+                                <input type="password"  name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md" value="<?php echo $data['password']; ?>">
+                            </div>
+
+                             <span class="invalid-feedback"><?php echo $data['password_err']; ?></span>
           </div>
-          <div class="form-group">
-            <label for="password">New Password:</label>
-            <input type="password" name="password" class="form-control form-control-lg <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['password']; ?>">
-            <span class="invalid-feedback"><?php echo $data['password_err']; ?></span>
-          </div>
-          <div class="form-group">
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" name="confirm_password" class="form-control form-control-lg <?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['confirm_password']; ?>">
-            <span class="invalid-feedback"><?php echo $data['confirm_password_err']; ?></span>
-          </div><div class="col-md-6">
+          <!-- Password Confirmation -->
+          <div class="input-group-prepend d-flex flex-column mb-3  <?php echo (!empty($data['confirm_password_err']))? 'is-invalid' : ''; ?>">
+                            <div class="d-flex flex-row input-holder">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-lock text-muted"></i>
+                                </span>
+                                <input type="password"  placeholder="Confirm Password" name="confirm_password" class="form-control bg-white border-left-0 border-md" 
+                                value="<?php echo $data['confirm_password']; ?>">
+                            </div>
+                             <span class="invalid-feedback"><?php echo $data['confirm_password_err']; ?></span>
+            </div>
+          <div class="col-md-6">
                         <p class="mb-2">Password requirements</p>
                         <p class="small text-muted mb-2">To create a new password, you have to meet all of the following requirements:</p>
                         <ul class="small text-muted pl-4 mb-0">
@@ -36,8 +60,8 @@
                         </ul>
                     </div>
           <div class="row">
-            <div class="col">
-               <p>Send Email Notification :</p>
+              <div class="col">
+                <p>Send Email Notification :</p>
             </div>
               <div class="col">
             <?php if($_SESSION['notification'] == 1): ?>

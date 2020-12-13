@@ -20,12 +20,8 @@
         {
             // Set DSN (database source name)
             $chaine = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
-            $options = array(
-                PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            );
             try{
-                $this->cn = new PDO($chaine, $this->usr, $this->pass, $options);
+                $this->cn = new PDO($chaine, $this->usr, $this->pass);
             }catch (PDOException $e){
                 $this->error = $e->getMessage();
                 echo $this->error;

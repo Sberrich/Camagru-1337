@@ -87,7 +87,7 @@
                                 <body style= " background-color: lightblue;">
                                     <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                     <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.101:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                                 </body>
                             </html>                    
                             ';
@@ -234,30 +234,30 @@
                     unset($_SESSION['notification']);
                     session_destroy();
                     redirect('users/login');
-                }
-                // check if user login or not
-                public function isloggedIn(){
-                    if(isset($_SESSION['id']))
-                    {
-                        return true;
-                    }
-                    else{
+        }
+        // check if user login or not
+        public function isloggedIn()
+        {
+             if(isset($_SESSION['id']))
+            {
+                  return true;
+            }else{
                         return false;
-                    }
                 }
-                //Create User Session
-                public function createUserSession($user)
-                {
-                    $_SESSION['id'] = $user->id;
-                    $_SESSION['username'] = $user->username;
-                    $_SESSION['email'] = $user->email;
-                    $_SESSION['notification'] = $user->notification;
-                    redirect('pages/index');
-                }
-
-        
-                public function fgpass()
-            {   
+        }
+        //Create User Session
+        public function createUserSession($user)
+        {
+            $_SESSION['id'] = $user->id;
+            $_SESSION['username'] = $user->username;
+            $_SESSION['email'] = $user->email;
+            $_SESSION['notification'] = $user->notification;
+            redirect('pages/index');
+                   
+        }
+        //FG
+        public function fgpass()
+        {   
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $data =[
@@ -290,7 +290,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://192.168.99.101:8088/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>
@@ -474,7 +474,6 @@
                                 redirect('users/emailsend');
                         }
                     if ($this->userModel->modify($data)) {
-                        flash('modify_success', 'Your account is modified');
                         redirect('users/modify');
                     } else {
                         die('Something went wrong');
@@ -496,11 +495,12 @@
                     'password_err' => '',
                     'confirm_password_err' => '',
                 ];
+                }
                 if(isset($_SESSION['id']))
                     $this->view('users/modify', $data);
                 else
                     $this->view('pages/index');
-            }
+            
         }
         // Token  
         public function token()

@@ -1,8 +1,9 @@
 <?php
 
     //DB Prams 
-    $DB_HOST = 'http://localhost';
+    $DB_HOST = 'mysql:3306';
     $DB_USER = 'root';
-    $DB_PASS = '';
+    $DB_PASS = 'tiger';
     $DB_NAME = 'camagru';
-    $DB_DSN = 'mysql:host=http://localhost:3306';
+    $HOST = 'http://192.168.99.101';
+    $DB_DSN = 'mysql:host='.$HOST.':3306';
