@@ -1,7 +1,6 @@
 <?php
 class Setup extends Controller
 {
-
 	public function index()
 	{
 		try {

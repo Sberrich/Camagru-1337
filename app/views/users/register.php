@@ -1,4 +1,5 @@
 <?php require APPROOT .'/views/inc/header.php'; ?>
+<div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card card-body mt-5 register" >
@@ -70,10 +71,10 @@
                             <li>At least one number</li>
                         </ul>
                     </div>
-
                     </from>
             </div>      
         </div>
     </div>
+</div>
                         
 <?php require APPROOT .'/views/inc/footer.php'; ?>

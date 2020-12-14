@@ -44,7 +44,8 @@
 			//iF Not 
 			if (!$methodExist || in_array($this->currentMethod, $this->NotAllowedMethods))
 			{
-				redirect('pages/error');
+				include(APPROOT.'/views/pages/notfound.php');
+				die();
 			}
 			// Call a callback with array of params
 			call_user_func_array([$this->currentController, $this->currentMethod], $this->params);	

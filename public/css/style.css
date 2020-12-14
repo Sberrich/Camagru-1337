@@ -6,10 +6,10 @@ li {
     display: block;
   }
  
-img{
-     width: 200px;
-     height: 200px;
- }
+  img{
+    width: 200px;
+    height: 200px;
+}
 
 .camera {
     width: 100%;
@@ -159,8 +159,51 @@ nav
     flex-direction: row;
     
 }
-
 .take-pic .preview {
     position: relative;
     text-align: center;
 }
+
+.footer
+{
+    color: #ffff;
+    background-color: #151414;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.footer-social-link ul
+{
+    padding: 0;
+}
+.footer-social-link ul li {
+    margin-right: 15px;
+}
+
+.footer-info-text {
+    text-align: center;
+    margin-top: 20px;
+}
+.dk-footer-box-info {
+    background-color: #1f1f1f;
+    padding: 40px;
+}
+
+.copyright-menu ul li {
+    margin-right: 15px;
+}
+
+.copyright {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #1f1f1f;
+}
+
+
+
+
+
+
+
+

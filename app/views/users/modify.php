@@ -1,4 +1,5 @@
 <?php require APPROOT.'/views/inc/header.php'; ?>
+<div class="container">
 <a href="<?php echo URLROOT; ?>/users/profile" class="btn btn-light"><i class="fa fa-backward"></i> Back</a><br>
   <div class="row">
     <div class="col-md-8 mx-auto">
@@ -84,4 +85,5 @@
       </div>
     </div>
   </div>
+</div>
 <?php require APPROOT.'/views/inc/footer.php'; ?>

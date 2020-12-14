@@ -22,7 +22,7 @@
                         file_put_contents($file, $data);
                         chmod($file, 0777);
                         //str_replace(URLROOT, '..',
-                        $sourceImage =  $_POST['imagesticker']);
+                        $sourceImage =  $_POST['imagesticker'];
                         list($srcWidth, $srcHeight) = getimagesize($sourceImage);
                         $src = imagecreatefrompng($sourceImage);
                         $dest = imagecreatefrompng($file);
@@ -155,11 +155,7 @@
                    {
                         return true;
                        
-                   }
-                
-                 
-                
-               
+                   }   
             }
         }
         public function delComments()

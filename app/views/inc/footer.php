@@ -1,43 +1,43 @@
-  </body>
-    <script src="<?php echo URLROOT;?>/js/camera.js"></script>
 <!-- Footer -->
-<footer class="page-footer font-small special-color-dark pt-4">
-
-  <!-- Footer Elements -->
-  <div class="container">
-
-    <!-- Social buttons -->
-    <ul class="list-unstyled list-inline text-center">
-      <li class="list-inline-item">
-        <a class="btn-floating btn-fb mx-1">
-          <i class="fab fa-facebook-f"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-tw mx-1">
-          <i class="fab fa-twitter"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-gplus mx-1">
-          <i class="fab fa-google-plus-g"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-li mx-1">
-          <i class="fab fa-linkedin-in"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-dribbble mx-1">
-          <i class="fab fa-dribbble"> </i>
-        </a>
-      </li>
-    </ul>
+<footer class="footer">
+  <div class="container footer-head">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- footer Info -->
+        <div class="dk-footer-box-info">
+          <a href="#" class="logo">
+          <img src="../public/imgs/viewsvg/logo.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+          </a>
+          <h2 class="footer-info-text">Welcome To Camagru</h2>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="#">sberrich</a>
+  <div class="copyright">
+    <div class="container">
+      <div class="d-flex flex-row justify-content-between">
+        <div class="">
+          <span>Copyright © 2020, All Right Reserved Sberrich</span>
+        </div>
+        <div class="">
+          <div class="copyright-menu">
+            <ul class="d-flex flex-row">
+              <li>
+                <a href="<?php echo URLROOT;?>/Posts/index">Home</a>
+              </li>
+              <li>
+                <a href="<?php echo URLROOT;?>/Posts/index">Terms</a>
+              </li>
+              <li>
+                <a href="<?php echo URLROOT;?>/pages/about">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>
+
+
 </html>

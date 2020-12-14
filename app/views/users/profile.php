@@ -1,4 +1,5 @@
 <?php require APPROOT .'/views/inc/header.php';?>
+<div class="container">
 <main role="main">
   <div class="jumbotron">
         <img src="../public/imgs/viewsvg/profile.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
@@ -9,4 +10,5 @@
   <div class="album py-5 bg-light"> 
   </div>
 </main>
+</div>
 <?php require APPROOT . '/views/inc/footer.php';?>

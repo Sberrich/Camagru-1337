@@ -1,4 +1,5 @@
 <?php require APPROOT .'/views/inc/header.php'; ?>
+<div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card card-body mt-5 register">
@@ -12,7 +13,7 @@
                                 <span class="icon input-group-text bg-white px-4 border-md border-right-0">
                                     <i class="fa fa-user text-muted"></i>
                                 </span>
-                                <input type="text"  placeholder="First Name" name="username" class="input form-control bg-white border-md border-left-0 pl-3" value="<?php echo $data['username']; ?>">
+                                <input type="text"  placeholder="UserName" name="username" class="input form-control bg-white border-md border-left-0 pl-3" value="<?php echo $data['username']; ?>">
                         </div>
                         <span class="invalid-feedback"><?php echo $data['username_err']; ?></span>
                     </div>
@@ -40,4 +41,5 @@
             </div>
         </div>
     </div>
+</div>
 <?php require APPROOT .'/views/inc/footer.php'; ?>
