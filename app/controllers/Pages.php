@@ -1,25 +1,29 @@
 <?php
-  class Pages extends Controller {
-    public function __construct(){
-     $this->postModel = $this->model('Post');
+  //Class Pages 
+  class Pages extends Controller
+  {
+    public function __construct()
+    {
     }
+    //Index Method
     public function index()
     {
-            $posts = $this->postModel->getImage();
-            $likes = $this->postModel->getlikes();
-            $comments = $this->postModel->getComments();
             $data = [
-                'title'=>'Camagru ',
-                'posts' => $posts,
-                'likes' => $likes,
-                'comments' => $comments
+                'title'=>'Welcome to Camagru ',
+                'description' => 'this small web application allowing you to make basic photo editing using your webcam and some predefined images.'
             ];
      
       $this->view('pages/index', $data);
     }
-    public function about(){
+    //About Method
+    public function about()
+    {
       $data = ['title'=>'Samir Berrichi'];
       $this->view('pages/about', $data);
     }
-    
+    //Not Found Method
+    public function error()
+    {
+      $this->view('pages/notfound');
+    }
   }

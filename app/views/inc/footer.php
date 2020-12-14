@@ -1,5 +1,7 @@
+  </body>
+    <script src="<?php echo URLROOT;?>/js/camera.js"></script>
 <!-- Footer -->
-<footer class="page-footer font-small bg-color-info pt-4">
+<footer class="page-footer font-small special-color-dark pt-4">
 
   <!-- Footer Elements -->
   <div class="container">
@@ -32,19 +34,10 @@
         </a>
       </li>
     </ul>
-    <!-- Social buttons -->
-
   </div>
-  <!-- Footer Elements -->
-
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="#">Sberrich</a>
+    <a href="#">sberrich</a>
   </div>
-  <!-- Copyright -->
-
 </footer>
-<!-- Footer -->
-    <script src="<?php echo URLROOT;?>/js/camera.js"></script>
-  </body>
 </html>

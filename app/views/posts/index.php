@@ -2,7 +2,7 @@
 
 <div class="jumbotron text-center">
 <h1 class="text-center display-5">Camagru</h1>
-<img src="../public/imgs/home.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+<img src="../public/imgs/viewsvg/home.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
   <p class="lead"></p>
       <?php if(isset($_SESSION['username'])): ?>
       <a class="btn btn-outline-success btn-lg" href="<?php echo URLROOT;?>/posts/image" role="button">Add Photo</a>
@@ -100,14 +100,14 @@
     <div >
         <nav aria-label="Page navigation example">
           <ul class="pagination flex-wrap justify-content-center">
-            <li class="page-item"><a class="page-link" href="http://192.168.99.101:8088/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
+            <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
             echo $_GET['page'] - 1;
             else{
                 echo $_GET['page'];}?>">Previous</a></li>
             <?php for($i = 1; $i <= $data['nbrPages']; $i++) { ?>
-            <li class="page-item "><a class="page-link" href="http://192.168.99.101:8088/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
+            <li class="page-item "><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
             <?php }?>
-            <li class="page-item"><a class="page-link" href="http://192.168.99.101:8088/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
+            <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
             else{
                 echo $_GET['page'];}?>">Next</a></li>
           </ul>

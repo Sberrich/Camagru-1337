@@ -104,7 +104,7 @@ save.addEventListener("click", function()
         var val = "image64="+datacanva+"&imagesticker="+emoji;
         var ajax = new XMLHttpRequest();
 
-        ajax.open("POST","http://192.168.99.101:8088/Camagru/Posts/takeImage");
+        ajax.open("POST","http://localhost/Camagru/Posts/takeImage");
         ajax.withCredentials = true;
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.onreadystatechange = function()

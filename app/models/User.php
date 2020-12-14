@@ -36,7 +36,7 @@
         }
         
       }
-      public function findUser($username)
+      public function findUserByUsername($username)
       {
           $this->db->query('SELECT * FROM user WHERE username = :username');
           $this->db->bind(':username', $username);

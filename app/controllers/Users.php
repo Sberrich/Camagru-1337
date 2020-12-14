@@ -5,23 +5,20 @@
         public function __construct()
         {
             $this->userModel = $this->model('User');
-            $this->postModel = $this->model('Post');
         }
         //Register Method
         public function register()
         {      
-            //Check If the User is login or not
+            //Check If the User is login or Not
             if(!$this->isloggedIn())
             {
-                //check for post
+                //Check For post
                 if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
-                    // Proccess Form
+                    // Proccess Form Generate A token
                             $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
-
                     //Sanitize Post Data
                             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
                     //Init Data
                             $data =['username' => trim($_POST['username']),
                                 'password' => trim($_POST['password']),
@@ -42,7 +39,7 @@
                         {
                             $data['username_err'] = 'Please Enter Alphanumeric Username';
                         }
-                        elseif($this->userModel->findUser($data['username']))
+                        elseif($this->userModel->findUserByUsername($data['username']))
                         {
                             $data['username_err'] = 'Username Already Exist';
                         }
@@ -87,7 +84,7 @@
                                 <body style= " background-color: lightblue;">
                                     <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                     <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.101:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                                 </body>
                             </html>                    
                             ';
@@ -121,32 +118,9 @@
                         //Load View
                         $this->view('users/register', $data);
                     }
-               
             }
-            else{
-                redirect('pages/index');
-            }
-                
-        }
-        //Confirm Acounts
-        public function confirm()
-        {
-                $data =['token' => $_GET['token']];
-                $row = $this->userModel->getUserByToken($data['token']);
-                if(isset($_GET['token']) && $_GET['token'] != "")
-                {
-                    if($_GET['token'] == $row->token)
-                    {
-                        $page = ['title' => "Thank You"];
-                        $this->view("users/confirm", $page);
-                        $data = ['token' => $_GET['token']];
-                        $this->userModel->confirm($data);
-                    }
-                    else
-                    redirect('users/token');
-                }
-                else
-                    $this->view("users/login");
+            else
+                redirect('pages/index');      
         }
         //Login Method
         public function login()
@@ -178,7 +152,7 @@
                              }
 
                         //validate and check For Username
-                        if($this->userModel->findUser($data['username']) == false)
+                        if($this->userModel->findUserByUsername($data['username']) == false)
                         {
                             $data['username_err'] = 'No User Found';
                             
@@ -199,7 +173,7 @@
                              if($loggedInUser)
                             {
                                 //create session
-                                $this->createUserSession($loggedInUser);
+                               $this->createUserSession($loggedInUser);
                             }else{
                                 $data['password_err'] = "Password incorrect";
                                 $this->view('users/login', $data);
@@ -220,10 +194,29 @@
                         //Load View
                         $this->view('users/login', $data);
                  }
-            }else{
+            }else
                 redirect('pages/index');
-            }
          
+        }
+        //Confirm Acounts
+        public function confirm()
+        {
+                $data =['token' => $_GET['token']];
+                $row = $this->userModel->getUserByToken($data['token']);
+                if(isset($_GET['token']) && $_GET['token'] != "")
+                {
+                    if($_GET['token'] == $row->token)
+                    {
+                        $page = ['title' => "Thank You"];
+                        $this->view("users/confirm", $page);
+                        $data = ['token' => $_GET['token']];
+                        $this->userModel->confirm($data);
+                    }
+                    else
+                    redirect('users/token');
+                }
+                else
+                    $this->view("users/login");
         }
         // Logout Method
         public function logout()
@@ -242,40 +235,31 @@
             {
                   return true;
             }else{
-                        return false;
+                  return false;
                 }
         }
-        //Create User Session
-        public function createUserSession($user)
-        {
-            $_SESSION['id'] = $user->id;
-            $_SESSION['username'] = $user->username;
-            $_SESSION['email'] = $user->email;
-            $_SESSION['notification'] = $user->notification;
-            redirect('pages/index');
-                   
-        }
-        //FG
+        //Forgot Password Method
         public function fgpass()
-        {   
+        {   //check For the Post
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $data =[
                     'email' => trim($_POST['email']),
                     'email_err' => '' 
                 ];
+                //validate Email
                 if(empty($data['email'])){
                     $data['email_err'] = 'Please enter email';
                 }
                 elseif($this->userModel->findUserByEmail($data['email']) == false){
                     $data['email_err'] = 'Email Not Found';
                 }
-                    
                 if(empty($data['email_err']))
                 {
-                        $row = $this->userModel->getUserByEmail($data['email']);
-                        if($row->token == "")
-                        {
+                    $row = $this->userModel->getUserByEmail($data['email']);
+                    if($row->token == "")
+                    {
+                            //Generate A new Token
                             $token1 = substr(md5(openssl_random_pseudo_bytes(20)), 10);
                             $data['token'] = $token1;
                             $this->userModel->updateTokenbyemail($data);
@@ -290,7 +274,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://192.168.99.101:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>
@@ -317,77 +301,83 @@
         // Change Pass
         public function changepass()
         {
+            //check For the token
             if($_GET['token'] == "") $this->view('users/login');
-             else{
-                    $data =['token' => $_GET['token']];
-                    $row = $this->userModel->getUserByToken($data['token']);
+            else
+            {
+                $data =['token' => $_GET['token']];
+                $row = $this->userModel->getUserByToken($data['token']);
                     if($_GET['token'] == $row->token)
                     {
                         $token = $_GET['token'];
                         if($_SERVER['REQUEST_METHOD'] == 'POST')
                         {
                             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                            $data =[
+                            $data  =[
                                     'password' => trim($_POST['password']),
                                     'confirm_password' => trim($_POST['confirm_password']),
                                     'token' => $token,
                                     'password_err' => '',
                                     'confirm_password_err' => ''
-                                    ];
-                            if(empty($data['password'])){
-                            $data['password_err'] = 'Please enter Password';
-                            }elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password'])){
-                            $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
-                                }
-                            if(empty($data['confirm_password'])){
+                                 ];
+                            if(empty($data['password']))
+                            {
+                                $data['password_err'] = 'Please enter Password';
+                            }
+                            elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password']))
+                            {
+                                 $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
+                            }
+                            if(empty($data['confirm_password']))
+                            {
                                 $data['confirm_password_err'] = 'Please confirm Password';
-                            }elseif($_POST['password'] != $_POST['confirm_password']){
+                            }
+                            elseif($_POST['password'] != $_POST['confirm_password'])
+                            {
                                 $data['confirm_password_err'] = 'Passwords not match';
-                                }
-                                if(empty($data['password_err']) && empty($data['confirm_password_err'])){
+                            }
+                            if(empty($data['password_err']) && empty($data['confirm_password_err']))
+                            {
                                 $data['password'] = hash('whirlpool', $data['password']);
                         
-                                if($this->userModel->changepass($data)){
-                            
-                                flash('changepass_success', 'You Password Changed');
-                                redirect('users/login');
-                            } else {
-                                die('Something went wrong');
+                                if($this->userModel->changepass($data))
+                                {
+                                     flash('changepass_success', 'You Password Changed');
+                                     redirect('users/login');
                                 }
-                        }else{
-                            
+                                else
+                                {
+                                    die('Something went wrong');
+                                }
+                            }
+                            else
+                            {
+                                  $this->view('users/changepass', $data);
+                            }
+                        }else
+                        {
+                         $data =[
+                                'password' => '',
+                                 'confirm_password' => '',
+                                 'password_err' => '',
+                                 'confirm_password_err' => ''
+                                 ];
                             $this->view('users/changepass', $data);
                         }
-                        }else{
-                    $data =[
-                        'password' => '',
-                        'confirm_password' => '',
-                        'password_err' => '',
-                        'confirm_password_err' => ''
-                    ];
-                    $this->view('users/changepass', $data);
                     }
-                    }else
-                redirect('users/token'); 
+                    else
+                    {
+                    redirect('users/token');
+                    }
                 }
-            }
+                        
+        }
         //Email Send
         public function emailsend(){
             $page = ['title' => "Congratulations!"];
-            
             $this->view("users/emailsend", $page);
         }
-        //Profile//
-        public function profile()
-        {
-            $posts = $this->postModel->getImagesbyUsr($_SESSION['id']);
-            $data = ['title' => $_SESSION['username'],
-                     'posts' => $posts
-                
-            ];
-            $this->view("users/profile", $data);
-        }
-         // Modify
+        // Modify
         public function modify()
         {
             // Check for POST
@@ -510,6 +500,18 @@
             
             $this->view("users/token", $page);
         
+        }
+        //Create User Session
+        public function createUserSession($user)
+        {
+          $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
+          $_SESSION['token'] = $token;
+
+          $_SESSION['id'] = $user->id;
+          $_SESSION['username'] = $user->username;
+          $_SESSION['email'] = $user->email;
+          $_SESSION['notification'] = $user->notification;
+          redirect('pages/index');          
         }
     }  
 ?>

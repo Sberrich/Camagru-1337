@@ -9,20 +9,18 @@ class Post{
         $this->db = new Database;
         $this->limit = ' LIMIT '. $start.','.$per_page;
     }
+    public function save($data){
+       
+    $this->db->query('INSERT INTO `Img` (`user_id`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
+    $this->db->bind(':user_id', $data['user_id']);
+    $this->db->bind(':imgurl', $data['imgurl']);
 
-    public function addImage($info){
-      $userid = $info['userid'];
-      $pic = $info['imgurl'];
-      echo $pic;
-      $this->db->query('INSERT INTO `Img`(`userid`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
-      $this->db->bind(':userid', $userid);
-      $this->db->bind(':imgurl', $pic);
-      
-      if ($this->db->execute())
-          return (true);
-      else
-          return (false);
-  }
+    if($this->db->execute()){
+        return true;
+    }else {
+        return false;
+    }
+}
     
     public function delImage($imgid, $userid)
     {

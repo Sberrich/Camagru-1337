@@ -1,13 +1,46 @@
 <?php
     class Posts extends Controller{
-     
-        private $page;
         public function __construct()
         {
             $this->postModel = $this->model('Post');
             $this->userModel = $this->model('User');
         }
-
+        // Save Image 
+        public function storeimg()
+        {
+            if(isset($_SESSION['id']))
+            { 
+                 if(isset($_POST['image64']) && isset($_POST['imagesticker']))
+                 {
+                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                        $upload_dir = "../public/imgs/";
+                        $img = $_POST['image64'];
+                        $img = str_replace('data:image/png;base64,', '', $img);
+                        $img = str_replace(' ', '+', $img);
+                        $data = base64_decode($img);
+                        $file = $upload_dir . mktime().'.png';
+                        file_put_contents($file, $data);
+                        chmod($file, 0777);
+                        //str_replace(URLROOT, '..',
+                        $sourceImage =  $_POST['imagesticker']);
+                        list($srcWidth, $srcHeight) = getimagesize($sourceImage);
+                        $src = imagecreatefrompng($sourceImage);
+                        $dest = imagecreatefrompng($file);
+                        imagecopyresized($dest, $src, 0, 0, 0, 0, 200, 200, $srcWidth, $srcHeight);
+                        imagepng($dest, $file, 9);
+                        move_uploaded_file($dest, $file);
+                    
+                        $data = ['userid' => $_SESSION['id'],
+                                 'imgurl' => $file          
+                            ];
+                            if($this->postModel->save($data)){
+                            }else
+                              return false;
+                    }
+            }else{
+                redirect('pages/index');
+            }
+        }
         public function index(){
             if (!isset($_GET['page']))
             {
@@ -28,7 +61,6 @@
             $this->view('posts/index', $data);
             
         }
-        
         public function pagination()
         {
             if(!is_numeric($_GET['page']))
@@ -54,8 +86,6 @@
                 return $pics;
            
         }
-       
-        
         public function image(){
            if(isset($_SESSION['id']))
            {
@@ -67,41 +97,6 @@
                 $this->view('pages/index');
            }
             
-        }
-        
-        public function takeImage()
-        {
-                if(isset($_POST['image64']) && isset($_POST['imagesticker']))
-                {
-                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                        $upload_dir = "../public/imgs/";
-                        $img = $_POST['image64'];
-                        $img = str_replace('data:image/png;base64,', '', $img);
-                        $img = str_replace(' ', '+', $img);
-                        $data = base64_decode($img);
-                        $file = $upload_dir . time().'.png';
-                        file_put_contents($file, $data);
-                        chmod($file, 0777);
-                        $sourceImage = str_replace(URLROOT, '..',  $_POST['imagesticker']);
-                        list($srcWidth, $srcHeight) = getimagesize($sourceImage);
-                        $src = imagecreatefrompng($sourceImage);
-                        $dest = imagecreatefrompng($file);
-                        imagecopyresized($dest, $src, 0, 0, 0, 0, 200, 200, $srcWidth, $srcHeight);
-                        imagepng($dest, $file, 9);
-                        move_uploaded_file($dest, $file);
-                    
-                        $dt = ['userid' => $_SESSION['id'],
-                        'imgurl' => $file          
-                            ];
-                        if (!empty($data)) {
-                                if ($this->postModel->addImage($dt) == true) {
-                                    $this->postModel->getImage();
-                            }
-                    
-                 }
-               
-               
-            }
         }
         public function addlikes()
         {
@@ -120,7 +115,6 @@
             }
                   
         }
-        
         public function dellikes()
         {
             if(isset($_POST['imgid']) && isset($_POST['userid']))
@@ -134,7 +128,6 @@
                    echo "unliked";
             }
         }
-        
         public function addComments()
         {
             if(isset($_POST['imgid']) && isset($_POST['userid']) && isset($_POST['comment']) && !empty($_POST['comment']))
@@ -169,7 +162,6 @@
                
             }
         }
-        
         public function delComments()
         {
             if(isset($_POST['imgid']))
@@ -184,7 +176,6 @@
                 }
             }
         }
-        
         public function delImage()
         {
              if(isset($_POST['imgid']))
@@ -198,5 +189,4 @@
                 
             } 
         }
-        
 }

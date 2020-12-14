@@ -1,7 +1,7 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 
 <div class="jumbotron">
-       <img src="../public/imgs/token.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+       <img src="../public/imgs/viewsvg/token.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
        <p class="lead">Wrong token please try again.</p>
        <hr class="my-4">
 </div>
