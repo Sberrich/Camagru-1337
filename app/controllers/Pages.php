@@ -8,11 +8,10 @@
     //Index Method
     public function index()
     {
-            $data = [
-                'title'=>'Welcome to Camagru ',
-                'description' => 'this small web application allowing you to make basic photo editing using your webcam and some predefined images.'
-            ];
-     
+      $data = [
+        'title' => 'Welcome to Camagru',
+        'description' => 'This is a small web application allowing you to make basic photo editing using your webcam and some predefined images.',
+      ];
       $this->view('pages/index', $data);
     }
     //About Method

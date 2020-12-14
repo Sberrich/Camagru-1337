@@ -5,7 +5,7 @@
             <div class="card card-body mt-5 register">
                 <div class="forgot">
 	                <h2 class="text-center">Forgot your password?</h2>
-                    <img src="../public/imgs/viewsvg/fgp.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+                    <img src="../public/imgs/svg/fgp.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
 	                <p>Change your password in three easy steps. This will help you to secure your password!</p>
 	                <ol class="list-unstyled">
 	                    <li><span class="text-primary text-medium">1. </span>Enter your email address below.</li>

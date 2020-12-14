@@ -1,4 +1,5 @@
 <?php require APPROOT .'/views/inc/header.php'; ?>
+<div class="container">
     <div class="container take-pic">
         <h2 class="text-center text-muted">Welcome To Camagru Studio</h2>
         <a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-outline-info"><i class="fa fa-backward"></i> Back</a><br>
@@ -71,5 +72,6 @@
 
         
     </div>
+</div>
 
 <?php require APPROOT .'/views/inc/footer.php'; ?>

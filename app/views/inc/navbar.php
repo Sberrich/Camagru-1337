@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active pr-3">
-          <a class="nav-link" href="<?php echo URLROOT;?>/Posts/index"><i class="fas fa-home mr-1" aria-hidden="true"></i> Home</a>
+          <a class="nav-link" href="<?php echo URLROOT;?>/Posts/index"><i class="fas fa-index mr-1" aria-hidden="true"></i> index</a>
         </li>
         <li class="nav-item active pr-3">
           <a class="nav-link" href="<?php echo URLROOT;?>/pages/about"><i class="fa fa-info-circle mr-2" aria-hidden="true"></i>About </a>
@@ -24,11 +24,14 @@
       </ul>
       <ul class="navbar-nav ml-auto">
       <?php if(isset($_SESSION['id'])): ?>
-          <li class="nav-item active pr-3">
-          <a class="nav-link" href="<?php echo URLROOT;?>/users/profile"><i class="fas fa-user" aria-hidden="true"></i> Profile </a>
-        </li>
+           <li class="nav-item active pr-3">
+              <a class="nav-link" href="<?php echo URLROOT;?>/Posts/camera"><i class="fas fa-camera" aria-hidden="true"></i> Camera </a>
+           </li>
+           <li class="nav-item active pr-3">
+              <a class="nav-link" href="<?php echo URLROOT;?>/users/modify"><i class="fas fa-edit" aria-hidden="true"></i> EditProfile </a>
+           </li>
         <li class="nav-item active pr-3">
-          <a class="nav-link" href="<?php echo URLROOT;?>/users/logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout </a>
+          <a class="nav-link" href="<?php echo URLROOT;?>/users/logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i>Logout</a>
         </li>
         
       <?php else: ?>

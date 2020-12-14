@@ -10,6 +10,11 @@ li {
     width: 200px;
     height: 200px;
 }
+.badge
+{
+    width: 500px;
+    height: 500px;
+}
 
 .camera {
     width: 100%;

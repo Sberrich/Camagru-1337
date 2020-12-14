@@ -1,10 +1,9 @@
 <?php require APPROOT.'/views/inc/header.php'; ?>
 <div class="container">
-<a href="<?php echo URLROOT; ?>/users/profile" class="btn btn-light"><i class="fa fa-backward"></i> Back</a><br>
   <div class="row">
     <div class="col-md-8 mx-auto">
       <div class="card card-body mt-5 register">
-          <img src="../public/imgs/viewsvg/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+          <img src="../public/imgs/svg/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
           <h2 class="text-center display-5">Modify An Account</h2>
           <p>Please fill out this form to modify your compte</p>
         <form action="<?php echo URLROOT; ?>/users/modify" method="post">

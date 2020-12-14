@@ -1,43 +1,44 @@
 <?php
     class User{
         private $db;
-        private $token;
-
-        public function __construct(){
+        
+        public function __construct()
+        {
             $this->db = new Database;
         }
-        public function register($data){
-        
-        $this->db->query('INSERT INTO user (username, email, password, token) VALUES(:username, :email, :password, :token)');
-        $this->db->bind(':username', $data['username']);
-        $this->db->bind(':email', $data['email']);
-        $this->db->bind(':password', $data['password']);
-        $this->db->bind(':token', $data['token']);
-        if($this->db->execute()){
-          return true;
-        } else {
-          return false;
+        //register Model
+        public function register($data)
+        {
+          $this->db->query('INSERT INTO user (username, email, password, token) VALUES(:username, :email, :password, :token)');
+          $this->db->bind(':username', $data['username']);
+          $this->db->bind(':email', $data['email']);
+          $this->db->bind(':password', $data['password']);
+          $this->db->bind(':token', $data['token']);
+          if($this->db->execute()){
+            return true;
+           } else {
+            return false;
+           }
         }
-       }
-
-      public function login($username, $password)
-      {
-        $this->db->query('SELECT * FROM user WHERE username = :username');
-        $this->db->bind(':username', $username);
-        
-        $row = $this->db->single();
-        
-        $hashed_password = $row->password;
-        $hash = hash('whirlpool', $password);
-        if($hash == $hashed_password){
-          return $row;
-        } else {
-          return false;
+        // Login Model
+        public function login($username, $password)
+        {
+            $this->db->query('SELECT * FROM user WHERE username = :username');
+            $this->db->bind(':username', $username);
+            
+            $row = $this->db->single();
+            
+            $hashed_password = $row->password;
+            $hash = hash('whirlpool', $password);
+            if($hash == $hashed_password){
+              return $row;
+            } else {
+              return false;
+            }
         }
-        
-      }
-      public function findUserByUsername($username)
-      {
+        //Find User By username
+        public function findUserByUsername($username)
+        {
           $this->db->query('SELECT * FROM user WHERE username = :username');
           $this->db->bind(':username', $username);
           $row = $this->db->single();
@@ -46,26 +47,29 @@
           }else{
             return false;
           }
-      }
-      
-      public function getUserByToken($token)
-      {
-          $this->db->query('SELECT * FROM user WHERE token = :token');
-          $this->db->bind(':token', $token);
-          $row = $this->db->single();
-          return $row;
-      }
-      public function updateTokenbyemail($data){
-        $this->db->query('UPDATE user SET token = :token WHERE email = :email');
-        $this->db->bind(':token', $data['token']);
-        $this->db->bind(':email', $data['email']);
-        if($this->db->execute())
-             return true;
-        else
-             return false;
-     }
-      public function findUserByEmail($email)
-      {
+        }
+        //Get User by Tocker
+        public function getUserByToken($token)
+        {
+            $this->db->query('SELECT * FROM user WHERE token = :token');
+            $this->db->bind(':token', $token);
+            $row = $this->db->single();
+            return $row;
+        }
+        //Update And Expire Token
+        public function updateTokenbyemail($data)
+        {
+            $this->db->query('UPDATE user SET token = :token WHERE email = :email');
+            $this->db->bind(':token', $data['token']);
+            $this->db->bind(':email', $data['email']);
+            if($this->db->execute())
+                return true;
+            else
+                return false;
+        }
+        //FindUserByEmail
+        public function findUserByEmail($email)
+        {
             $this->db->query('SELECT * FROM user WHERE email = :email');
             $this->db->bind(':email', $email);
             $row = $this->db->single();
@@ -75,14 +79,15 @@
               return false;
             }
         }
-         public function getUserByEmail($email)
+        //Get User By Email
+        public function getUserByEmail($email)
         {
             $this->db->query('SELECT * FROM user WHERE email = :email');
             $this->db->bind(':email', $email);
             $row = $this->db->single();
             return $row;
         }
-
+        //Change PassWord
         public function changepass($data)
         {
             
@@ -101,7 +106,7 @@
             else
                 return false;
         }
-        
+        //Check The User Confimation
         public function checkuserconfirmed($username)
         {
             $this->db->query('SELECT * FROM user WHERE username = :username');
@@ -114,8 +119,9 @@
               return false;
             }
         }
-
-         public function forgottenpass($data){
+        //Forgot PassWord
+        public function forgottenpass($data)
+        {
                 $this->db->query('UPDATE user SET username = :username WHERE token = :token');
                 $this->db->bind(':username', $data['username']);
                 $this->db->bind(':token', $data['token']);
@@ -125,8 +131,8 @@
                   } else {
                     return false;
                   }
-             }
-        
+        }
+        //Confirm
         public function confirm($data)
         {
             $token = $data['token'];
@@ -143,9 +149,9 @@
                 return false;
             }
         }
-        
+        //Update Profile 
         public function modify($data)
-       {
+        {
            $this->db->query('SELECT * FROM user WHERE id = :id1');
            $this->db->bind(':id1', $data['id']);
            $row = $this->db->single();
@@ -165,16 +171,35 @@
            } else {
                return false;
            }
-       }
-
-       public function flash($key,$value)
-       {
-        if (isset($_SESSION['flash'])) {
-            echo $_SESSION['flash'];
-          unset($_SESSION['flash']);
-       }
-      }
-     
-      
-        
+        }
+        //Flash Method
+        public function flash($key,$value)
+        {
+          if (isset($_SESSION['flash']))
+               echo $_SESSION['flash'];
+           unset($_SESSION['flash']);
+        }
+        //Get Comment
+        public function get_commenter($userid)
+        {
+          $this->db->query('SELECT * FROM user WHERE userid = :userid');
+          $this->db->bind(':userid',$userid);
+          $result = $this->db->single();
+          if($result)
+            return ($result);
+              else
+          return false;
+        } 
+         //get Dest
+         public function get_dest($userid)
+        { 
+            $this->db->query('SELECT * FROM users WHERE id = :id');
+            $this->db->bind(':id',$userid);
+              $result = $this->db->single();
+            if($result)
+              return ($result);
+              else
+              return false;
+        }    
 }
+?>

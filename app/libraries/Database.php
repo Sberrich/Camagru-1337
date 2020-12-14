@@ -56,9 +56,10 @@
             $this->req->bindvalue($param, $value, $type);
         }
 
-        public function execute(){
+        public function execute()
+        {
             return $this->req->execute();
-          }
+        }
 
         public function resultSet()
         {
@@ -75,5 +76,10 @@
         public function rowCount()
         {
             return $this->req->rowCount();
+        }
+        public function fetchColumn()
+        {
+            $this->execute();
+            return $this->req->fetchColumn();
         }
     }

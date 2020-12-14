@@ -1,8 +1,8 @@
 <?php require APPROOT .'/views/inc/header.php';?>
 <div class="container">
 <main role="main" class="inner cover" class="text-center">
-        <h1 class="cover-heading">CAMAGRU - ECOLE 1337 - 42 Network</h1>
-        <img src="../public/imgs/viewsvg/tele.gif" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+  <img src="../public/imgs/svg/badge.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block badge">
+  <h1 class="cover-heading">CAMAGRU - ECOLE 1337 - 42 Network</h1>
         <p class="lead" class="text-center display-2">
           Projet réalisé dans le cadre de notre formation à l'école 42 - premier projet de la branche Web
           Objectifs: Gestion utilisateurs - Gestion permissions - Mailing - Sécurité / Validation de données

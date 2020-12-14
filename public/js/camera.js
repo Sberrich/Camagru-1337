@@ -104,7 +104,7 @@ save.addEventListener("click", function()
         var val = "image64="+datacanva+"&imagesticker="+emoji;
         var ajax = new XMLHttpRequest();
 
-        ajax.open("POST","http://192.168.99.101:8088/Camagru/Posts/takeImage");
+        ajax.open("POST","http://localhost/Camagru/Posts/takeImage");
         ajax.withCredentials = true;
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.onreadystatechange = function()
@@ -122,6 +122,29 @@ save.addEventListener("click", function()
 
 
 /////////////////////////upload///////////////////////////
+
+function el(file){return document.getElementById(file);}
+
+var canvas  = el("canvas");
+var context = canvas.getContext("2d");
+
+function readImage() {
+    if ( this.files && this.files[0] ) {
+        var FR= new FileReader();
+        FR.onload = function(e) {
+           var img = new Image();
+           img.addEventListener("load", function() {
+             context.clearRect(0, 0, canvas.width, canvas.height);
+             context.drawImage(img, 0, 0, canvas.width, canvas.height);
+           });
+           img.src = e.target.result;
+        };       
+        FR.readAsDataURL( this.files[0] );
+        document.getElementById('clear').disabled = false;
+    }
+}
+
+el("file").addEventListener("change", readImage, false);
 
 
 
