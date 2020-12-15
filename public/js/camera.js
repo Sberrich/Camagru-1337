@@ -73,7 +73,7 @@ capture.addEventListener("click",function(event)
 });
 
 /////////////////////Take A stickers//////////////////
-var emoji;
+var emoji = "none";
 var filters = document.getElementById('img_filter');
 var stickers = document.getElementsByName('stickers');
 for(var i = 0; i < stickers.length; i++)
@@ -89,8 +89,8 @@ for(var i = 0; i < stickers.length; i++)
         {
 
             filters.style.display = 'block';
-            emoji = this.value;
-            filters.src = emoji;
+            filters.src = this.value;
+            emoji= filters.src;
         }
     }
 }
@@ -103,14 +103,14 @@ save.addEventListener("click", function()
         var val = "image="+datacanva+"&sticker="+emoji;
         var ajax = new XMLHttpRequest();
 
-        ajax.open("POST","http://192.168.99.101:8088/Camagru/Posts/Saveimage");
+        ajax.open("POST","http://localhost/Camagru/Posts/SaveImage");
         ajax.withCredentials = true;
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.onreadystatechange = function()
         {
           if (this.readyState == 4 && this.status == 200)
           {
-              location.reload();
+              
           }
         }
         ajax.send(val);

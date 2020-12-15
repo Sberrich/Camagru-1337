@@ -14,11 +14,11 @@
               {
                       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                       $upload_dir = "../public/imgs/";
-                      $img = $_POST['image64'];
+                      $img = $_POST['image'];
                       $img = str_replace('data:image/png;base64,', '', $img);
                       $img = str_replace(' ', '+', $img);
                       $data = base64_decode($img);
-                      $file = $upload_dir . time().'.png';
+                      $file = $upload_dir . mktime().'.png';
                       file_put_contents($file, $data);
                       chmod($file, 0777);
                       $sourceImage = str_replace(URLROOT, '..',  $_POST['sticker']);
@@ -33,12 +33,13 @@
                       'imgurl' => $file          
                           ];
                       if (!empty($data)) {
-                              if ($this->postModel->save($dt) == true) {
-                                  $this->postModel->getImage();
-                          }
+                        if($this->postModel->save($data)){
+                        }else
+                          return false;
+                          
                }
              
-            }
+              }
             }else
             {
               redirect('pages/index');
@@ -205,7 +206,7 @@
         //Profile Pic 
         public function profilePic()
         {
-          if(isset($_SESSION['userid']))
+          if(isset($_SESSION['id']))
           {
             //On vérifie que tous les jetons sont là
             if (isset($_SESSION['token']) AND isset($_POST['token']) AND !empty($_SESSION['token']) AND !empty($_POST['token'])){
@@ -213,7 +214,7 @@
                 if(isset($_POST['submit2']))
                 {
                     $path = $_POST['submit2'];
-                    if($this->userModel->profilePic($path, $_SESSION['userid']))
+                    if($this->userModel->profilePic($path, $_SESSION['id']))
                     {
                         redirect('posts/index');
                     }

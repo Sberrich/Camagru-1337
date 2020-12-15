@@ -18,7 +18,7 @@
             <!-- Navbar Group one -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active pr-3">
-              <a class="nav-link" href="<?php echo URLROOT;?>/Posts/index"><i class="fas fa-index mr-1" aria-hidden="true"></i> index</a>
+              <a class="nav-link" href="<?php echo URLROOT;?>/posts/index"><i class="fas fa-index mr-1" aria-hidden="true"></i>Home</a>
             </li>
             <li class="nav-item active pr-3">
               <a class="nav-link" href="<?php echo URLROOT;?>/pages/about"><i class="fa fa-info-circle mr-2" aria-hidden="true"></i>About </a>

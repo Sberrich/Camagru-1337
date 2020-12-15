@@ -6,7 +6,7 @@
                     <p class="lead"><?php echo $data['description']; ?></p>
                     <img src="../public/imgs/svg/index.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
               </div>
-              <a href="<?php echo URLROOT; ?>/users/profile" class="btn btn-light"><i class="fa fa-heart"></i> ENJOY IT</a><br>
+              <a href="<?php echo URLROOT; ?>/posts/index" class="btn btn-light"><i class="fa fa-heart"></i> ENJOY IT</a><br>
         </div>
 </div>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

@@ -9,8 +9,8 @@ class Post{
     //Save Image in Folder with Stickers
     public function save($data)
     {    
-        $this->db->query('INSERT INTO `Img` (`imgid`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
-        $this->db->bind(':imgid', $data['imgid']);
+        $this->db->query('INSERT INTO `Img` (`userid`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
+        $this->db->bind(':userid', $data['userid']);
         $this->db->bind(':imgurl', $data['imgurl']);
         if($this->db->execute()){
                  return true;
@@ -24,6 +24,7 @@ class Post{
         $this->db->query('SELECT * FROM Img JOIN `user` ON `Img`.`userid` = `user`.`id`  WHERE user.id=:userid order by imgedate desc');
         $this->db->bind(':userid', $userid);
         $row = $this->db->resultSet();
+       
             if($row)
                 return ($row);
             else
@@ -32,7 +33,7 @@ class Post{
     //Get Images for index Page
     public function getImage()
     {
-         $this->db->query('SELECT * FROM Img JOIN `user` ON `Img`.`userid` = `user`.`id` order by imgedate desc ');
+         $this->db->query('SELECT * FROM Img JOIN `user` ON `Img`.`imgid` = `user`.`id` order by imgedate desc ');
         $row = $this->db->resultSet();
             if($row)
             {
@@ -46,13 +47,22 @@ class Post{
     //Remove Posts
     public function deletePost($imgid, $userid)
     {
-        $this->db->query('DELETE FROM Img WHERE imgid = :imgid AND userid = :userid');
-		$this->db->bind(':imgid', $imgid);
-		$this->db->bind(':userid', $userid);
-		if($this->db->execute())
-			return true;
-		else
-			return false;
+        $this->db->query('SELECT * FROM Img WHERE imgid = :imgid AND userid = :userid');
+        $this->db->query('DELETE FROM `Img` WHERE imgid= :imgid AND userid = :userid');
+        $this->db->bind(':imgid', $imgid);
+        $this->db->bind(':userid', $userid);
+        $row = $this->db->single();
+        unlink($row->imgurl);
+        $this->db->bind(':imgid', $imgid);
+        $this->db->bind(':userid', $userid);
+        if($this->db->execute())
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
     //Get Comments
     public function getComments()

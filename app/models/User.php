@@ -200,6 +200,16 @@
               return ($result);
               else
               return false;
-        }    
+        }
+         //profilePicture
+         public function profilePic($path, $user_id){
+          $this->db->query('UPDATE user SET profile_photo = :p WHERE userid = :userid');
+          $this->db->bind(':userid', $user_id);
+          $this->db->bind(':p', $path);
+          if($this->db->execute())
+               return true;
+          else
+               return false;
+       } 
 }
 ?>

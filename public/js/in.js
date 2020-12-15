@@ -7,13 +7,13 @@ for(var i=0; i < comment.length; i++){
     var imgid = (event.target && event.target.getAttribute('data-c-post_id'));
     var userid = (event.target && event.target.getAttribute('data-c-user_id'));
       if(userid == "")
-      { window.location.replace("http://192.168.99.101:8088/Camagru/users/login");
+      { window.location.replace("http://localhost/Camagru/users/login");
       }
     var test = (event.target && event.target.parentElement);
     var val = test.firstElementChild;
     var ajax = new XMLHttpRequest();
     var params = "c_post_id="+imgid+"&c_user_id="+userid+"&comment="+val.value;  
-    ajax.open('POST', 'http://192.168.99.101:8088/Camagru/Posts/comment');
+    ajax.open('POST', 'http://localhost/Camagru/Posts/comment');
     ajax.withCredentials = true;
     ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     ajax.onreadystatechange = function(){
@@ -39,11 +39,11 @@ function like(event)
   var li_nb = document.getElementById('li_nb_'+postid);
   // var sym = 0;
   if (userid == "") {
-    window.location.replace("http://192.168.99.101:8088/Camagru/users/login");
+    window.location.replace("http://localhost/Camagru/users/login");
     return ;
   }
   var ajax = new XMLHttpRequest();
-  ajax.open('POST', 'http://192.168.99.101:8088/Camagru/Posts/Like');
+  ajax.open('POST', 'http://localhost/Camagru/Posts/Like');
   ajax.withCredentials = true;
   if (event.target.className == "fa fa-heart-o")
   {
