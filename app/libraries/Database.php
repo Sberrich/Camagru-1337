@@ -6,7 +6,9 @@
   * Bind values
   * Return rows and results
   */
-    class Database{
+    class Database
+    {
+        //Variabls  DB
         private $host = DB_HOST;
         private $usr = DB_USER;
         private $pass = DB_PASS;
@@ -27,12 +29,12 @@
                 echo $this->error;
             }
         }
-
+        // Query Method
         public function query($sql)
         {
             $this->req = $this->cn->prepare($sql);
         }
-
+        // Bind Method
         public function bind($param, $value, $type = null)
         {
             if(is_null($type)){
@@ -55,31 +57,33 @@
             }
             $this->req->bindvalue($param, $value, $type);
         }
-
+        //Execute Method
         public function execute()
         {
             return $this->req->execute();
         }
-
+        //Set Result Method
         public function resultSet()
         {
             $this->execute();
             return $this->req->fetchAll(PDO::FETCH_OBJ);
         }
-
+        //Single Method
         public function single()
         {
             $this->execute();
             return $this->req->fetch(PDO::FETCH_OBJ);
         }
-
+        //Count Rowes
         public function rowCount()
         {
             return $this->req->rowCount();
         }
+        //Fetch Columns
         public function fetchColumn()
         {
             $this->execute();
             return $this->req->fetchColumn();
         }
     }
+?>

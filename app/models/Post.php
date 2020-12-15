@@ -1,7 +1,7 @@
 <?php
 class Post{
     private $db;
-  
+
     public function __construct()
     {
         $this->db = new Database;
@@ -9,8 +9,8 @@ class Post{
     //Save Image in Folder with Stickers
     public function save($data)
     {    
-        $this->db->query('INSERT INTO `Img` (`id`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
-        $this->db->bind(':id', $data['id']);
+        $this->db->query('INSERT INTO `Img` (`imgid`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
+        $this->db->bind(':imgid', $data['imgid']);
         $this->db->bind(':imgurl', $data['imgurl']);
         if($this->db->execute()){
                  return true;
@@ -71,7 +71,8 @@ class Post{
     // Add Comments
     public function addComment($data)
     {
-        $this->db->query("INSERT INTO `comment`(`userid`, `imgid`, `comment`, `cmntdate`) VALUES(:userid, :imgid, :comment, NOW())");          $this->db->bind(':user_id',$data['user_id']);
+        $this->db->query("INSERT INTO `comment`(`userid`, `imgid`, `comment`, `cmntdate`) VALUES(:userid, :imgid, :comment, NOW())");
+        $this->db->bind(':user_id',$data['user_id']);
         $this->db->bind(':userid', $userid);
         $this->db->bind(':imgid', $imgid);
         $this->db->bind(':comment', $comment);
@@ -94,6 +95,7 @@ class Post{
         }else
             return false;   
     }
+    //Delete Likes
     public function dellikes($data)
     {
         $this->db->query("DELETE FROM `like` WHERE userid=:userid AND imgid=:imgid");

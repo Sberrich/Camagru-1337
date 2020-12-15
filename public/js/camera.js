@@ -66,7 +66,6 @@ capture.addEventListener("click",function(event)
         }
         context.drawImage(video, 0, 0, canvas.width,canvas.height);
         trash.disabled = false;
-
     }else
     {
         alert("You Should Take A sticker");
@@ -81,7 +80,7 @@ for(var i = 0; i < stickers.length; i++)
 {
     stickers[i].onclick = function(event)
     {
-        if(canvas.toDataURL() !== document.getElementById('canvas').toDataURL())
+        if(canvas.toDataURL() !== document.getElementById('canvas2').toDataURL())
         {
             emoji = this.value;
             filters.src = emoji;
@@ -98,20 +97,20 @@ for(var i = 0; i < stickers.length; i++)
 ///////////////////////Save Images ////////////////////////
 save.addEventListener("click", function()
 {
-    if(canvas.toDataURL() !== document.getElementById('canvas').toDataURL())
+    if(canvas.toDataURL() !== document.getElementById('canvas2').toDataURL())
     {
         var datacanva = canvas.toDataURL("image/png");
-        var val = "image64="+datacanva+"&imagesticker="+emoji;
+        var val = "image="+datacanva+"&sticker="+emoji;
         var ajax = new XMLHttpRequest();
 
-        ajax.open("POST","http://localhost/Camagru/Posts/takeImage");
+        ajax.open("POST","http://192.168.99.101:8088/Camagru/Posts/Saveimage");
         ajax.withCredentials = true;
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.onreadystatechange = function()
         {
           if (this.readyState == 4 && this.status == 200)
-          { 
-            
+          {
+              location.reload();
           }
         }
         ajax.send(val);

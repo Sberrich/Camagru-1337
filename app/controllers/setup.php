@@ -28,3 +28,4 @@ class Setup extends Controller
 		}
 	}
 }
+?>

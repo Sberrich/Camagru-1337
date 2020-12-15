@@ -35,7 +35,8 @@
           <input id="file" type="file"  name="file" class="btn btn-info" accept="image/jpg, image/jpeg, image/png"></input><br>
         </div>
       </div>
-    </div>          <canvas  id="canvas2" width="400" height="300"></canvas>
+    </div>          
+    <canvas  id="canvas2" width="400" height="300"></canvas>
 
    
       <div class="col">

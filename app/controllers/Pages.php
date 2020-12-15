@@ -26,3 +26,4 @@
       $this->view('pages/notfound');
     }
   }
+?>

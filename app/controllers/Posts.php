@@ -10,31 +10,34 @@
         {
           if(isset($_SESSION['id']))
             {
-            if(isset($_POST['image']) && isset($_POST['sticker'])){
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $upload_dir = "../public/imgs/";
-                $img = $_POST['image'];
-                $img = str_replace('data:image/png;base64,', '', $img);
-                $img = str_replace(' ', '+', $img);
-                $data = base64_decode($img);
-                $file = $upload_dir . mktime().'.png';
-                file_put_contents($file, $data);
-                $sourceImage = $_POST['sticker'];
-                $destImage = $file;
-                list($srcWidth, $srcHeight) = getimagesize($sourceImage);
-                $src = imagecreatefrompng($sourceImage);
-                $dest = imagecreatefrompng($destImage);
-                imagecopyresized($dest, $src, 0, 0, 0, 0, 150, 150, $srcWidth, $srcHeight);
-                imagepng($dest, $file, 9);
-                move_uploaded_file($dest, $file);
-                
-                $data = [
-                    'id'  => $_SESSION['id'],
-                    'path' => $file,
-                ];
-                  if($this->postModel->save($data)){
-                  }else
-                    return false;
+              if(isset($_POST['image']) && isset($_POST['sticker']))
+              {
+                      $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                      $upload_dir = "../public/imgs/";
+                      $img = $_POST['image64'];
+                      $img = str_replace('data:image/png;base64,', '', $img);
+                      $img = str_replace(' ', '+', $img);
+                      $data = base64_decode($img);
+                      $file = $upload_dir . time().'.png';
+                      file_put_contents($file, $data);
+                      chmod($file, 0777);
+                      $sourceImage = str_replace(URLROOT, '..',  $_POST['sticker']);
+                      list($srcWidth, $srcHeight) = getimagesize($sourceImage);
+                      $src = imagecreatefrompng($sourceImage);
+                      $dest = imagecreatefrompng($file);
+                      imagecopyresized($dest, $src, 0, 0, 0, 0, 200, 200, $srcWidth, $srcHeight);
+                      imagepng($dest, $file, 9);
+                      move_uploaded_file($dest, $file);
+                  
+                      $dt = ['userid' => $_SESSION['id'],
+                      'imgurl' => $file          
+                          ];
+                      if (!empty($data)) {
+                              if ($this->postModel->save($dt) == true) {
+                                  $this->postModel->getImage();
+                          }
+               }
+             
             }
             }else
             {
@@ -86,7 +89,7 @@
             redirect('pages/index');
           }
         }
-       //index
+        //index
         public function index()
         {
             $postsPerPage = 5;
@@ -199,7 +202,6 @@
             redirect('pages/index');
           }
         }
-        
         //Profile Pic 
         public function profilePic()
         {
