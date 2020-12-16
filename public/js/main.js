@@ -45,7 +45,7 @@ document.getElementById('btn').addEventListener('click', function(){
            radio[i].onclick = function() {
             imgfilter.style.display = 'block';
            imgfilter.src = this.value;
-           stick = imgfilter.src.replace("http://localhost/Camagru", "..");
+           stick = imgfilter.src.replace("http://192.168.99.101:8088/Camagru", "..");
          
          
        }
@@ -131,7 +131,7 @@ document.getElementById('btn').addEventListener('click', function(){
         var canvasData = canvas.toDataURL("image/png");
         var params = "image64="+canvasData+"&imagesticker="+stick;
         var xhttp = new XMLHttpRequest();
-        xhttp.open('POST', 'http://localhost/Camagru/Posts/takeImage');
+        xhttp.open('POST', 'http://192.168.99.101:8088/Camagru/Posts/takeImage');
        
         xhttp.withCredentials = true;
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

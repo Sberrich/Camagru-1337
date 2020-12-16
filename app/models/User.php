@@ -48,7 +48,7 @@
             return false;
           }
         }
-        //Get User by Tocker
+        //Get User by Token
         public function getUserByToken($token)
         {
             $this->db->query('SELECT * FROM user WHERE token = :token');
@@ -136,13 +136,16 @@
         public function confirm($data)
         {
             $token = $data['token'];
+           
             $this->db->query('UPDATE user SET confirmed = 1 WHERE token= :token');
             $this->db->bind(':token', $token);
             if($this->db->execute())
             {
-              $this->db->query('UPDATE user SET token = null WHERE token= :token');
+              
+              $this->db->query('UPDATE user SET token = NULL WHERE token= :token');
               $this->db->bind(':token', $token);
               if($this->db->execute()) return true;
+              
                 return true;
             }
             else{
@@ -152,7 +155,7 @@
         //Update Profile 
         public function modify($data)
         {
-           $this->db->query('SELECT * FROM user WHERE id = :id1');
+           $this->db->query('SELECT * FROM user WHERE id = :id');
            $this->db->bind(':id1', $data['id']);
            $row = $this->db->single();
            $mail = $data['email'] != "" ? $data['email'] : $row->email;

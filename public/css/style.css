@@ -112,7 +112,7 @@ h6
     
 }
 .take-pic .preview {
-    position: relative;
+    position: absolute;
     text-align: center;
 }
 
