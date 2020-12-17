@@ -47,14 +47,14 @@ stopit.addEventListener("click", function(event)
     audio: false
     }, function(stream){
         video.srcObject = stream;
-        video.stop()
+        video.pause()
     }, function(error){
     
     });
 
 });
 //////////////////Capture Canvas///////////////////////
-capture.addEventListener("click",function(event)
+capture.addEventListener("click",function()
 {
     if(document.getElementById('img_filter').src !="")
     {

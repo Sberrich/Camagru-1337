@@ -21,7 +21,7 @@
                       $file = $upload_dir . mktime().'.png';
                       file_put_contents($file, $data);
                       chmod($file, 0777);
-                      $sourceImage = str_replace(URLROOT, '..',  $_POST['sticker']);
+                      $sourceImage = $_POST['sticker'];
                       list($srcWidth, $srcHeight) = getimagesize($sourceImage);
                       $src = imagecreatefrompng($sourceImage);
                       $dest = imagecreatefrompng($file);
@@ -29,7 +29,7 @@
                       imagepng($dest, $file, 9);
                       move_uploaded_file($dest, $file);
                   
-                      $dt = ['userid' => $_SESSION['id'],
+                      $dt = ['id' => $_SESSION['id'],
                       'imgurl' => $file          
                           ];
                       if (!empty($data)) {
