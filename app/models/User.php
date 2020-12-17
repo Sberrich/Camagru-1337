@@ -155,7 +155,8 @@
         //Update Profile 
         public function modify($data)
         {
-           $this->db->query('SELECT * FROM user WHERE id = :id');
+          
+           $this->db->query('SELECT * FROM user WHERE id = :id1');
            $this->db->bind(':id1', $data['id']);
            $row = $this->db->single();
            $mail = $data['email'] != "" ? $data['email'] : $row->email;

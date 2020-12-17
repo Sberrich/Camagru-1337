@@ -33,8 +33,8 @@
                       'imgurl' => $file          
                           ];
                       if (!empty($data)) {
-                              if ($this->postModel->save($dt) == true) {
-                                  $this->postModel->getImage();
+                              if ($this->postModel->save($data) == true) {
+                                 
                           }
                   
                }

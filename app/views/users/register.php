@@ -14,7 +14,7 @@
                                 <span class="icon input-group-text bg-white px-4 border-md border-right-0">
                                     <i class="fa fa-user text-muted"></i>
                                 </span>
-                                <input type="text"  placeholder="First Name" name="username" class="input form-control bg-white border-md border-left-0 pl-3" value="<?php echo $data['username']; ?>">
+                                <input type="text"  placeholder="Username" name="username" class="input form-control bg-white border-md border-left-0 pl-3" value="<?php echo $data['username']; ?>">
                             </div>
                             <span class="invalid-feedback"><?php echo $data['username_err']; ?></span>
                         </div>
