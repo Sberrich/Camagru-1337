@@ -1,11 +1,9 @@
 <?php require APPROOT.'/views/inc/header.php'; ?>
-<div class="container">
-    <div class="jumbotron">
-    <img src="../public/imgs/svg/confirmed.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block svg">
-            <div>
-                <h4 class="lead">Your account has been created.</h4>
-            </div> 
-            <a href="<?php echo URLROOT;?>/users/login"><button type="button" class="btn btn-primary btn-block py-2">Login</button></a>
-    </div>
-</div>
+<div class="container text-center">
+<hr class="my-4">
+            <h4>Your account has been Verified.</h4>
+            <img src="../public/imgs/svg/verif.svg" alt="" class="img-fluid" id="badge"/>
+            <a href="<?php echo URLROOT;?>/users/login"><button type="button" class="btn btn-outline-info"><i class="fa fa-sign-in">Login</i></button></a>
+            <hr class="my-4">
+        </div>
 <?php require APPROOT.'/views/inc/footer.php'; ?>

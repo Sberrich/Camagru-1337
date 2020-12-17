@@ -14,11 +14,11 @@
               {
                       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                       $upload_dir = "../public/imgs/";
-                      $img = $_POST['image'];
+                      $img = $_POST['image64'];
                       $img = str_replace('data:image/png;base64,', '', $img);
                       $img = str_replace(' ', '+', $img);
                       $data = base64_decode($img);
-                      $file = $upload_dir . mktime().'.png';
+                      $file = $upload_dir . time().'.png';
                       file_put_contents($file, $data);
                       chmod($file, 0777);
                       $sourceImage = $_POST['sticker'];
@@ -33,12 +33,11 @@
                       'imgurl' => $file          
                           ];
                       if (!empty($data)) {
-                        if($this->postModel->save($data)){
-                        }else
-                          return false;
-                          
+                              if ($this->postModel->save($dt) == true) {
+                                  $this->postModel->getImage();
+                          }
+                  
                }
-             
               }
             }else
             {
