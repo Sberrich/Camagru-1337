@@ -33,16 +33,9 @@ class Post{
     //Get Images for index Page
     public function getImage()
     {
-         $this->db->query('SELECT * FROM Img JOIN `user` ON `Img`.`imgid` = `user`.`id` order by imgedate desc ');
+         $this->db->query('SELECT * FROM Img JOIN `user` ON `Img`.`userid` = `user`.`id` order by imgedate desc ');
         $row = $this->db->resultSet();
-            if($row)
-            {
-                return ($row);
-            }
-            else
-            {
-               false;
-            }
+        return ($row);
     }
     //Remove Posts
     public function deletePost($imgid, $userid)
