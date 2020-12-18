@@ -22,17 +22,10 @@
                 <div id="imagefilter">
                     <img id="img_filter"></img>
                     <video id="video"></video>
-                    <canvas  id="canvas" width="400" height="300"></canvas>
                 </div>
             </div>
          </div>
-         <div class="col">
-        <h3 style="text-align: center;">The Capture</h3>
-        <div  width="400" height="300">
-          <canvas  id="canvas2" width="400" height="300"></canvas>
-        </div>
-      </div>
-        <!-- Filters Block -->
+          <!-- Filters Block -->
         <div class="col-md-3">   
             <div data-spy="scroll"  style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden; border:2px groove black; width: 200px; height: 300px; float: left; display: block;">     
                 <div class="d-flex flex-column" >
@@ -47,6 +40,13 @@
             </div>
         </div>
     </div>
+         <div class="col">
+        <h3 style="text-align: center;">The Capture</h3>
+        <div  width="400" height="300">
+            <canvas  id="canvas" width="400" height="300"></canvas>
+          <canvas  id="canvas2" width="400" height="300"></canvas>
+        </div>
+      </div>
 <!-- take pic div -->
     <div class="row">
         <div class="flex-md-equal w-100 my-md-3 pl-md-3"> 
@@ -61,7 +61,7 @@
                                     foreach($data['posts'] as $posts):
                                 ?>
 			                    <a class="m-3 pr-5 pt-1 pl-5 pb-5">
-                                    <img class="img-fluid img-thumbnail" src="<?php echo $posts->imgurl;?>" height="100%" width="100%">
+                                    <img class="img-fluid img-thumbnail" src="<?php echo $posts->path;?>" height="100%" width="100%">
                                     <form action="<?php echo  URLROOT;?>/posts/deletePost" method="POST">
                                     <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>" />
                                     <button type="submit" name="submit1" class="btn btn-outline-danger w-100 fa fa-trash-o fa-fw"  value="<?php echo $posts->imgid;?>"> Delete</button>

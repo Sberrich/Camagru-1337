@@ -111,7 +111,7 @@ save.addEventListener("click", function()
         var canvadata = canvas.toDataURL("image/png");
         var val = "image="+canvadata+"&sticker="+emoji;
         var ajax = new XMLHttpRequest();
-        ajax.open('POST','http://192.168.99.100:8088/Camagru/Posts/SaveImage');
+        ajax.open('POST','http://localhost/Camagru/Posts/SaveImage');
         ajax.withCredentials = true;
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         
