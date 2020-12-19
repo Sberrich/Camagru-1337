@@ -44,7 +44,7 @@
                     }
                     elseif(strlen($_POST['username']) < 6 || strlen($_POST['username']) > 8 )
                     {
-                                $data['username_err'] = 'The Username Field is required.';
+                                $data['username_err'] = 'To create Username, you have to meet at Mini 6 char and In max 8 char';
                     }
                     elseif(!ctype_alnum($data['username']) && !empty($data['username']))
                     {
@@ -100,7 +100,7 @@
                             <body style= " background-color: lightblue;">
                                 <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                 <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.100:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                             </body>
                          </html>                    
                         ';
@@ -110,8 +110,8 @@
                         //Register User
                              if($this->userModel->register($data))
                              {
-                                 flash('register_success', 'Check Your Email Please To Confirm Your Account!');
                                  redirect('users/login');
+                                 flash('register_success', 'Check Your Email Please To Confirm Your Account!');
                              }
                            
                             else
@@ -266,6 +266,10 @@
                     'email_err' => '' 
                 ];
                 //validate Email
+                if($this->userModel->checkemailconfirmed($data['email']) == false)
+                {
+                    $data['email_err'] = 'Please Confirm your email At first';
+                }
                 if(empty($data['email'])){
                     $data['email_err'] = 'Please enter email';
                 }
@@ -292,7 +296,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://192.168.99.100:8088/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>
@@ -536,6 +540,15 @@
           $_SESSION['notification'] = $user->notification;
           redirect('pages/index');          
         }
+         // Token  
+         public function profile()
+         {
+             
+             $page = ['title' => "Ches"];
+             
+             $this->view("users/profile", $page);
+         
+         }
 
     }
 ?>

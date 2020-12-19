@@ -11,7 +11,7 @@
               if(isset($_POST['image']) && isset($_POST['sticker']))
               {
                     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                    $upload_dir = "imgs/photos/";
+                    $upload_dir = "../public/imgs/photos/";
                     $img = $_POST['image'];
                     $img = str_replace('data:image/png;base64,', '', $img);
                     $img = str_replace(' ', '+', $img);
@@ -31,8 +31,8 @@
                         'userid'  => $_SESSION['id'],
                         'imgurl' => $file,
                     ];
-                      if($this->postModel->save($data)){
-                        $this->postModel->getImage();
+                      if($this->postModel->addImage($data) == true){
+                          $this->postModel->getImage();
                       }else
                         return false;
               }
@@ -41,192 +41,168 @@
               redirect('pages/index');
             }
         }
-        //Webcam
-        public function camera()
-        {
-            if(isset($_SESSION['id']))
+ 
+        public function index(){
+            if (!isset($_GET['page']))
             {
-             $posts = $this->postModel->getImagesbyUsr($_SESSION['id']);
-             $data = ['posts' => $posts];
-                 $this->view('posts/camera', $data);
-            }else
-            {
-              redirect('pages/index');
-            }
-             
-        }
-        //Delete Posts
-        public function deletePost()
-        {
-            if(isset($_SESSION['id']))
-            {
-              //On vérifie que tous les jetons sont là
-              if (isset($_SESSION['token']) AND isset($_POST['token']) AND !empty($_SESSION['token']) AND !empty($_POST['token'])){
-                if ($_SESSION['token'] == $_POST['token']){
+                $_GET['page'] = 0;
 
-                  $data = $this->postModel->getImagesbyUsr($_SESSION['id']);
-                  if(isset($_POST['submit1'])){
-                      $postId = $_POST['submit1'];
-                      if($this->postModel->deletePost($postId, $_SESSION['id']))
-                      {
-                          redirect('posts/camera');
-                      }
-                      else
-                          die('ERROR');
-                  }
-                  $this->view('posts/camera',$data);
-                }else
-                  redirect('pages/notfound');
-              }else{                 
-                  // Les token ne correspondent pas
-                  redirect('pages/notfound');
-              }
-          }else
-          {
-            redirect('pages/index');
-          }
-        }
-        //index
-        public function index()
-        {
-            $postsPerPage = 5;
-            $totalPosts = $this->postModel->count_posts();
-            $totalPages = ceil($totalPosts/$postsPerPage);
-        
-            if(isset($_GET['page']) AND !empty($_GET['page']) AND $_GET['page'] > 0 AND $_GET['page'] <= $totalPages)
-            {
-              $_GET['page'] = intval($_GET['page']);
-              $currentPage = $_GET['page'];    
-            }else
-              $currentPage = 1;
-        
-              $depart = ($currentPage - 1) * $postsPerPage;
-            
-              $posts = $this->postModel->getImage($depart, $postsPerPage);
-              $likes = $this->postModel->getlikes();
-              $comments = $this->postModel->getcomments();
-              $data =[
-                'comments'=> $comments,
+            }
+            $posts = $this->pagination();
+            $likes = $this->postModel->getlikes();
+            $comments = $this->postModel->getComments();
+            $data = [
+                'title'=>'Camagru ',
+                'posts' => $posts['post'],
+                'nbrPages' => $posts['nbrPages'],
                 'likes' => $likes,
-                'posts' => $posts,
-                'totalPages' => $totalPages,
-                'currentPage' => $currentPage,
-                'depart' => $depart,
-              ];
-              $this->view('posts/index',$data);
-        }
-        //comment
-        public function comment()
-        {
-            if(isset($_SESSION['id']))
-            {
-              if(isset($_POST['imgid']) && isset($_POST['userid']) && isset($_POST['comment']) && !empty($_POST['comment']))
-              {
-                  $data = [
-                      'imgid'=> $_POST['imgid'],
-                      'userid' => $_POST['userid'],
-                      'comment' => $_POST['comment'],
-                  ];
-                  $com = $this->userModel->get_commenter($data['userid']);
-                  $uid = $this->postModel->getUserByPostId($data['imgid']);
-                  $d = $this->userModel->get_dest($uid->id);
-                  if($this->postModel->addComment($data) && $d->notif == 1)
-                  {
-                    $destinataire = $d->email;
-                    $sujet = "Your post has been commented" ;
-                    $message = '
-                    <p>Hi,
-                        <br /><br />
-                        @'.$com->username.', commented your post .
-                    </p>
-                    <p>
-                        <br />--------------------------------------------------------
-                        <br />This is an automatic mail , please do not reply.
-                    </p> ';
-              
-                    $headers = "Content-type:text/html;charset=UTF-8" . "\r\n";
+                'comments' => $comments
+            ];
             
-                    mail($destinataire, $sujet, $message, $headers); 
-                      
-                  }
-              }
-            }else
-            {
-              redirect('pages/index');
-            }
+            $this->view('posts/index', $data);
+            
         }
-        //Likes
-        public function Like()
+        
+        public function pagination()
         {
-          if(isset($_SESSION['id']))
-          {
-            if(isset($_POST['imgid']) && isset($_POST['userid']) && isset($_POST['comment']) && isset($_POST['likes']))
+            if(!is_numeric($_GET['page']))
+                $_GET['page'] = 1;
+            if($_GET['page'] == 0)
+                $nbStart = 0;
+            else
             {
-                $data = [
-                    'imgid'=> $_POST['imgid'],
-                    'userid' => $_POST['userid'],
-                    'comment' => $_POST['comment'],
-                    'likes' => $_POST['likes']
-                ];
-                 $this->postModel->like_count($data);
-                if($data['c'] == 'fa fa-heart')
-                {
-                  
-                  if($this->postModel->delelikes($data))
-                  {
+                if($_GET['page'])
+                    $nmbr = $_GET['page'];
+               
+                $nbStart = ($nmbr * 5) - 5;
+            }
+           
+            $allposts = $this->postModel->getImage();
+            $nbrposts = count($allposts);
+            $nbrpages =  ceil($nbrposts / 5);
+             $pics = ['post' =>  $this->postModel->imgpaginat($nbStart, 5),
+                        'nbrPages' => $nbrpages
+                        ];
+                    
     
-                  }
-                  else
-                  {
-                    die('something went wrong');
-                  }
-                }
-                else if($data['c'] == 'fa fa-heart-o')
-                {
-                  
-                  if($this->postModel->addLikes($data))
-                  {
-                  }
-                  else
-                  {
-                    die('something went wrong');
-                  }
-                }
-                   
-            }
-          }else
-          {
-            redirect('pages/index');
-          }
+                return $pics;
+           
         }
-        //Profile Pic 
-        public function profilePic()
+       
+        
+        public function camera(){
+           if(isset($_SESSION['id']))
+           {
+            $posts = $this->postModel->getImagesbyUsr($_SESSION['id']);
+            $data = ['posts' => $posts];
+                $this->view('posts/camera', $data);
+           }else
+           {
+                $this->view('pages/index');
+           }
+            
+        }
+        
+        
+        
+        public function addlikes()
         {
-          if(isset($_SESSION['id']))
-          {
-            //On vérifie que tous les jetons sont là
-            if (isset($_SESSION['token']) AND isset($_POST['token']) AND !empty($_SESSION['token']) AND !empty($_POST['token'])){
-              if ($_SESSION['token'] == $_POST['token']){
-                if(isset($_POST['submit2']))
-                {
-                    $path = $_POST['submit2'];
-                    if($this->userModel->profilePic($path, $_SESSION['id']))
-                    {
-                        redirect('posts/index');
-                    }
-                    else
-                      die('ERROR');
-                }
-              }else
-              redirect('pages/notfound');
-            }else{ 
-              // Les token ne correspondent pas
-              redirect('pages/notfound');
-            }
-            }else
+            if(isset($_POST['imgid']) && isset($_POST['userid']))
             {
-              redirect('pages/index');
+                
+                $userid = $_POST['userid'];
+                $imgid = $_POST['imgid'];
+                $data = ['imgid' => $imgid,
+                        'userid' => $userid
+                        ];
+              
+               if($this->postModel->addLikes($data) == true)
+                   echo "liked";
+               
+            }
+                  
+        }
+        
+        public function dellikes()
+        {
+            if(isset($_POST['imgid']) && isset($_POST['userid']))
+            {
+                $userid = $_POST['userid'];
+                $imgid = $_POST['imgid'];
+                 $data = ['imgid' => $imgid,
+                        'userid' => $userid
+                        ];
+                if($this->postModel->dellikes($data) == true)
+                   echo "unliked";
             }
         }
-    }
+        
+        public function addComments()
+        {
+            if(isset($_POST['imgid']) && isset($_POST['userid']) && isset($_POST['comment']) && !empty($_POST['comment']))
+                {   
+                    $usr = $this->postModel->user_by_email($_POST['imgid']);
+                    $to  = $usr->email;
+                    $notif = $usr->notification ;
+                    $subject = "Notification A New Comment On Your Photo";
+                    $message='Hello ,your friend '.$_SESSION['username'].' add a new comment on your photo';
+                    $headers = 'From: no-reply@camagru.com' . "\r\n" .
+                                'Reply-To: no-reply@camagru.com' . "\r\n" .
+                                'X-Mailer: PHP/' . phpversion();
+                    if(!isset($_SESSION['id'])){
+                        redirect("users/login");
+                    }
+                    $data = ['imgid' => $_POST['imgid'],
+                        'userid' => $_POST['userid'],
+                         'comment' => $_POST['comment']
+                        ];
+
+                    if($usr->notification == 1){
+                        mail($to, $subject, $message , $headers); 
+                    }
+                   if($this->postModel->addComments($data))
+                   {
+                        return true;
+                       
+                   }
+                
+                 
+                
+               
+            }
+        }
+        
+        public function delComments()
+        {
+            if(isset($_POST['imgid']))
+            {
+                $imgid = $_POST['imgid'];
+                if($this->postModel->delComment($imgid))
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        
+        public function delImage()
+        {
+             if(isset($_POST['imgid']))
+                  
+            {  
+                 $imgid = $_POST['imgid'];
+              if($this->postModel->delImage($imgid, $_SESSION['id']))
+                {   
+                    $this->postModel->getImagesbyUsr($_SESSION['id']);
+                }
+                
+            } 
+        }
+        
+}
+
+        
+    
 ?>

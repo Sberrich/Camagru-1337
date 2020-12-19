@@ -1,21 +1,16 @@
+#capture{
+    text-align: center;
+}
+
+li {
+    display: block;
+  }
+ 
 img{
-      width: 200px;
-      height: 200px;
-  }
-#badge
-  {
-      width: 500px;
-      height: 400px;
-  }
-#video
-  {
-   border: 10px goldenrod groove;
-   padding: 10px;
-   width: 500px;
-   height: 500px;
-   border-radius: 8px;
-  }
-  
+     width: 200px;
+     height: 200px;
+ }
+
 .camera {
     width: 100%;
 }
@@ -40,34 +35,83 @@ img{
     width: 250px;
 }
 
-#img_filter{
-     position: relative;
-     top: 400px;
-     left: 0px;
-  
+#imagefilter{
+    position: relative;
+    width: 400px;
+    height: 300px;
+    margin: auto;
+}
+
+ #img_filter{
+     position: absolute;
+     top: 50px;
+     left: 10px;
+     display: flex;
      width: 150px;
      height: 150px;
 }
 
 .take-pic .sticker {
     padding: 5px;
-    
+    border-bottom: 1px solid #44444478;
     text-align: center;
 }
-#scroll
-{
-    width: 400px;
-    overflow-x: scroll;
-    overflow-y: hidden;
+
+
+.detailBox {
+    width:320px;
+    border:1px solid #bbb;
+    margin:50px;
+}
+.titleBox {
+    background-color:#fdfdfd;
+    padding:10px;
+}
+.titleBox label{
+  color:#444;
+  margin:0;
+  display:inline-block;
 }
 
-
-#imagefilter
-{
-    position:relative;
+.commentBox {
+    padding:10px;
+    border-top:1px dotted #bbb;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width:18%;
+}
+.actionBox .form-group * {
+    width:100%;
+}
+.taskDescription {
+    margin-top:10px 0;
+}
+.commentList {
+    padding:0;
+    list-style:none;
+    max-height:100px;
+    max-width: 100px;
+    overflow:auto;
+}
+.commentList li {
+    margin:0;
+    margin-top:10px;
+}
+.commentList li > div {
+    display:table-cell;
 }
 
-
+.commentText p {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
 .actionBox {
     border-top:1px dotted rgb(184, 164, 164);
     padding:10px;
@@ -77,7 +121,11 @@ h6
     font-family: monospace;
 
 }
-
+nav
+{
+    height: auto;
+    width: auto;
+}
 
 .register .input {
     border-radius: 0 .25rem .25rem 0;
@@ -111,15 +159,8 @@ h6
     flex-direction: row;
     
 }
+
 .take-pic .preview {
-    position: absolute;
+    position: relative;
     text-align: center;
 }
-
-
-
-
-
-
-
-

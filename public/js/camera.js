@@ -6,13 +6,13 @@ var stopit = document.getElementById("btn-stop");
 var save = document.getElementById("save");
 var trash = document.getElementById("clear");
 var checker = false;
-var video = document.getElementById("video");
 
 //////////////////Start The Studio Stream////////////////////
 start.addEventListener("click", function(event)
 {
     checker = true;
-    
+    var video = document.getElementById("video");
+
     navigator.getMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
@@ -36,6 +36,8 @@ start.addEventListener("click", function(event)
 stopit.addEventListener("click", function(event)
 {
     checker = false;
+    var video = document.getElementById("video");
+
     vendorUrl = window.URL || window.webkitURL;
     context.strokeRect(0, 0, w, h);
     navigator.getMedia = navigator.getUserMedia ||
@@ -99,7 +101,7 @@ for(var i = 0; i < stickers.length; i++)
 
             filters.style.display = 'block';
             filters.src = this.value;
-            emoji= filters.src;
+            emoji = filters.src.replace("http://192.168.99.100:8088/Camagru", "..");
         }
     }
 }
@@ -111,19 +113,16 @@ save.addEventListener("click", function()
         var canvadata = canvas.toDataURL("image/png");
         var val = "image="+canvadata+"&sticker="+emoji;
         var ajax = new XMLHttpRequest();
-        ajax.open('POST','http://localhost/Camagru/Posts/SaveImage');
-        ajax.withCredentials = true;
+        ajax.open('POST','http://192.168.99.100:8088/camagru/posts/SaveImage');
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        
         ajax.onreadystatechange = function()
         {
           if (this.readyState == 4 && this.status == 200)
           {
-            console.log;
-            //   location.reload();
           }
         }
         ajax.send(val);
+        window.location.reload(true);
  }
     
 });

@@ -119,6 +119,19 @@
               return false;
             }
         }
+        //Check The User Confimation
+        public function checkemailconfirmed($email)
+        {
+            $this->db->query('SELECT * FROM user WHERE email = :email');
+            $this->db->bind(':email', $email);
+            $row = $this->db->single();
+            $chek = $row->confirmed;
+            if($chek == 1){
+                return true;
+            }else{
+              return false;
+            }
+        }
         //Forgot PassWord
         public function forgottenpass($data)
         {
