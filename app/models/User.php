@@ -68,7 +68,7 @@
                 return false;
         }
         //FindUserByEmail
-        public function findUserByEmail($email)
+        public function getemailbyuser($email)
         {
             $this->db->query('SELECT * FROM user WHERE email = :email');
             $this->db->bind(':email', $email);

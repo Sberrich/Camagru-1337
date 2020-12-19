@@ -1,6 +1,4 @@
-#capture{
-    text-align: center;
-}
+
 
 li {
     display: block;
@@ -42,14 +40,7 @@ img{
     margin: auto;
 }
 
- #img_filter{
-     position: absolute;
-     top: 50px;
-     left: 10px;
-     display: flex;
-     width: 150px;
-     height: 150px;
-}
+
 
 .take-pic .sticker {
     padding: 5px;
@@ -80,33 +71,7 @@ img{
 .commentBox .form-group:first-child, .actionBox .form-group:first-child {
     width:80%;
 }
-.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
-    width:18%;
-}
-.actionBox .form-group * {
-    width:100%;
-}
-.taskDescription {
-    margin-top:10px 0;
-}
-.commentList {
-    padding:0;
-    list-style:none;
-    max-height:100px;
-    max-width: 100px;
-    overflow:auto;
-}
-.commentList li {
-    margin:0;
-    margin-top:10px;
-}
-.commentList li > div {
-    display:table-cell;
-}
 
-.commentText p {
-    margin:0;
-}
 .sub-text {
     color:#aaa;
     font-family:verdana;
@@ -160,7 +125,3 @@ nav
     
 }
 
-.take-pic .preview {
-    position: relative;
-    text-align: center;
-}

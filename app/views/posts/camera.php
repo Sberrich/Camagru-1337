@@ -1,90 +1,120 @@
-<?php require APPROOT .'/views/inc/header.php'; ?>
+<?php require APPROOT . '/views/inc/header.php'; ?>
+
 <div class="container">
-        <div class="jumbotron">
-            <h2 class="text-center text-dark">Welcome To Camagru Studio</h2>
-            <img src="../public/imgs/svg/studio.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
-        </div>
-        <div class="container take-pic">
-            <!-- The Stream -->
-            <div class="d-flex flex-column">
-                <h3 style="text-align: center;">The Stream</h3>
-                <div class="row" id="imageHolder">
-                            <div class="col-md-9 camera">
-                                <!-- Buttons Group Start -->
-                <div class="actions">
-                    <a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-light"><i class="fa fa-backward"></i> Back</a>
-                    <button id="btn-start" type="button" class="btn btn-outline-success">Start Streaming</button>
-                    <button id="btn-stop" type="button" class="btn btn-outline-danger">Stop Streaming</button>
-                    <button class="btn btn-outline-info" id="capture" role="button">Take A Picture</button>
-                    <input type="file" name="upFile" id="upFile"  class="btn btn-outline-success" accept=".png,.gif,.jpg,.jpeg">
-                </div>
-                                <div class="d-flex flex-column">
-                                    <div id="imagefilter">
-                                    <h3 style="text-align: center;">The Video</h3>
-                                        <img id="img_filter"></img>
-                                        <video id="video"></video>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-9 preview">  
-                            <h3 style="text-align: center;">The Capture</h3>
-                            
-                                <canvas class="" id="canvas" width="400" height="300"></canvas>
-                                <canvas  id="canvas2" width="400" height="300"></canvas>
-                        
-                            </div>
-                            <!-- Filters Block -->
-                            <div class="col-md-3">  
-                            <h3 style="text-align: center;">Filters</h3>
+	<div class="row " >
+		
+			
+		<div class="col-8">
+			<div class="card">
+			<?php flash('posts');?>
+					<div class="card-header">
+						<h2 style="text-align: center;">Camera</h2>
+					</div>
+					
+				
+					<div class="card-body">
+						
+					<div  style='position: relative;'>
+						<img  src ='' id = 'imgf' style='position: absolute;top: 10px;left: 10px;display: none; width: 30%; height: 30%;'>
+						<video class="img-fluid border border-dark" id="video" height="480" width="640"></video>
+					</div>
+					<br>
+						<button class="btn btn-dark btn-block " id="snap" disabled>
+							Take Picture</button>
+							<br>
+						<div style='position: relative;'>
+							<img src ='' id = 'canvasf' style='position: absolute;top: 10px;left: 10px;display: none; width: 30%; height: 30%;'>
+						<canvas class="img-fluid border border-dark" id="canvas" height="480" width="640"></canvas>
+						</div>	
+						
+
+
+
+					<div class="row">
+						<div class="col">
+							<img src="../public/imgs/Emoji/1.png" alt="Emoji" height="40px" width="40px">
+							<input type="radio" id="1" name="filter" value = '../public/imgs/Emoji/1.png'>
+						</div>
+						<div class="col">
+							<img src="../public/imgs/Emoji/2.png" alt="Emoji" height="40px" width="40px">
+							<input type="radio" id="2" name="filter" value = '../public/imgs/Emoji/2.png'>
+						</div>
+						<div class="col">
+							<img src="../public/imgs/Emoji/3.png" alt="Emoji" height="40px" width="40px">
+							<input type="radio" id="3" name="filter" value = '../public/imgs/Emoji/3.png'>
+						</div>
+						<div class="col">
+							<img src="../public/imgs/Emoji/4.png" alt="Emoji" height="40px" width="40px">
+							<input type="radio" id="4" name="filter" value = '../public/imgs/Emoji/4.png'>
+						</div>
+						
+						
+						
+					</div>	
+					
+					</div>
+
+					<div class="card-footer">
+
+						
+							
+						
+							<div class="input-group">
+
+  								
+  								<div class="custom-file">
+   									<input type="file"  id="file" class="custom-file-input" accept=".png, .gif, .jpg, .jpeg">
+    								<label class="custom-file-label">Choise image</label>
+  								</div>
+  								
+							</div>
+							<br>
+  							<button class="btn btn-dark btn-block" id="save" >Save</button>
+							<button class="btn btn-dark btn-block" id="clear" >Clear Canvas</button>
+						
+
+
+					</div>
+				</div>
+				</div>
+				
+				<br>
+				
+					<div class="card col-4">
+						<div style="width:100%;height: 1250px; overflow-y:auto; overflow-x:hidden;">
+					<div class="card-header">
+						<h2 style="text-align: center;">Photos</h2>
+					</div>
+					<div class="card-body auto">
+
+						<?php foreach($data['posts'] as $post):?>
+
+							<div class="container">
+
  
-                                <div data-spy="scroll"  style="overflow-x: auto; border:2px groove black; width: 200px; height: 300px; float: left; display: block;">     
-                                    <div class="d-flex flex-column" >
-                                        <?php 
-                                            foreach(glob('../public/imgs/filter/'."*") as $file) : ?>    
-                                            <div class="sticker">
-                                                <?php echo '<img class="card-img-top" src="'.$file.'" id="'.$file.'" style="width: 100px; height: 100px;" >'; ?>
-                                                <input type="radio" value="<?php echo $file; ?>" name="stickers">
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-                <!-- take pic div -->
-                <div class="row">
-                <div class="flex-md-equal w-100 my-md-3 pl-md-3"> 
-                    <div class="flex-md-equal w-100 m-3 py-md-3">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6"> 
-                                    <div class="container">
-                                    <h3 style="text-align: center;">The Scroll</h3>
 
-                                        <div data-spy="scroll"  style="overflow-x: auto; border:1px groove black; width: 500px; height: 400px;" id="scrol" class="img-fluid">
-                                            <div class="col" >
-                                                <?php foreach($data['posts'] as $post): ?>    
-                                                    <div><?php echo '<img class="card-img-top img-fluid" src="'.$post->imgurl.'" style="width: 400px; height: 300px;" >'; ?></div><br>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br> 
-                            <div class="row" id="finishActions">
-                                <form action="<?php echo URLROOT;?>/posts/camera" method="POST">
-                                    <button class="btn btn-outline-primary btn-lg" id="save" role="button" ><i class="fa fa-picture-o" aria-hidden="true"></i></button>
-                                    <button class="btn btn-outline-danger btn-lg" id="clear" role="button" ><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+  
+
+    
+      <a  class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="<?php echo $post->imgurl;?>" >
+          </a>
+   
+    		
+    		</div>		
+    					<?php endforeach;?>
+					</div>
+				</div>
+			</div>
+				</div>
+				
+				
+	
+
 </div>
-<?php require APPROOT .'/views/inc/footer.php'; ?>
+<script src="<?php echo URLROOT;?>/js/snap.js"></script>
+<?php require APPROOT . '/views/inc/footer.php'; ?>	
 
-
-
+				

@@ -80,7 +80,7 @@
                     {
                         $data['email_err'] = 'The Email Field is required.';
                     }
-                    elseif($this->userModel->findUserByEmail($data['email']))
+                    elseif($this->userModel->getemailbyuser($data['email']))
                     {
                         $data['email_err'] = 'Email Already Exist';
                     }
@@ -100,7 +100,7 @@
                             <body style= " background-color: lightblue;">
                                 <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                 <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.100:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                             </body>
                          </html>                    
                         ';
@@ -273,19 +273,19 @@
                 if(empty($data['email'])){
                     $data['email_err'] = 'Please enter email';
                 }
-                elseif($this->userModel->findUserByEmail($data['email']) == false){
+                elseif($this->userModel->getemailbyuser($data['email']) == false){
                     $data['email_err'] = 'Email Not Found';
                 }
                 if(empty($data['email_err']))
                 {
-                    $row = $this->userModel->getUserByEmail($data['email']);
+                    $row = $this->userModel->getemailbyuser($data['email']);
                     if($row->token == "")
                     {
                             //Generate A new Token
                             $token1 = substr(md5(openssl_random_pseudo_bytes(20)), 10);
                             $data['token'] = $token1;
                             $this->userModel->updateTokenbyemail($data);
-                            $row = $this->userModel->getUserByEmail($data['email']);                           
+                            $row = $this->userModel->getemailbyuser($data['email']);                           
                         }
 
                         $token = $row->token;
@@ -296,7 +296,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://192.168.99.100:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>
@@ -421,18 +421,32 @@
                             'confirm_password_err' => '',
                             'notif' =>  $_POST['notif']
                         ]; 
-
-                        //Validate Username
-                            if($this->userModel->findUserByUsername($data['username']))
-                            {
-                                $data['username_err'] = 'Name  is already taken';
-                            }elseif(!ctype_alnum($data['username']) && !empty($data['username']))
-                            {
-                                    $data['username_err'] = 'The Username Field is required.';
-                            }elseif(strlen($_POST['username']) < 6)
-                            {
-                                $data['username_err'] = 'The Username Field is required.';
-                            }
+                        //validate username
+                        if(empty($data['username']))
+                        {
+                            $data['username_err'] = 'The Username Field is required.';
+                        }
+                        elseif(strlen($_POST['username']) < 6 || strlen($_POST['username']) > 8 )
+                        {
+                                    $data['username_err'] = 'To create Username, you have to meet at Mini 6 char and In max 8 char';
+                        }
+                        elseif(!ctype_alnum($data['username']) && !empty($data['username']))
+                        {
+                            $data['username_err'] = 'Please Enter Alphanumeric Username';
+                        }
+                        elseif($this->userModel->findUserByUsername($data['username']))
+                        {
+                            $data['username_err'] = 'Username Already Exist';
+                        }
+                        //validate Email
+                        if(empty($data['email']))
+                        {
+                            $data['email_err'] = 'The Email Field is required.';
+                        }
+                        elseif($this->userModel->getemailbyuser($data['email']))
+                        {
+                            $data['email_err'] = 'Email Already Exist';
+                        }
                         //validate Password
                         if(empty($data['password']))
                         {
@@ -473,7 +487,7 @@
                                 {
                                     $to = $data['email'];
                                     print_r($data['email']);
-                                    $row = $this->userModel->getUserByEmail($data['email']);
+                                    $row = $this->userModel->getemailbyuser($data['email']);
                                     $subject = 'Modify account';
                                     $message = '
                                     <html>

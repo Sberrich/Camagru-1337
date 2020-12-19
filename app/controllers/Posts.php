@@ -5,6 +5,26 @@
              $this->postModel = $this->model('Post');
              $this->userModel = $this->model('User');
         }
+        public function index(){
+            if (!isset($_GET['page']))
+            {
+                $_GET['page'] = 0;
+
+            }
+            $posts = $this->pagination();
+            $likes = $this->postModel->getlikes();
+            $comments = $this->postModel->getComments();
+            $data = [
+                'title'=>'Camagru ',
+                'posts' => $posts['post'],
+                'nbrPages' => $posts['nbrPages'],
+                'likes' => $likes,
+                'comments' => $comments
+            ];
+            
+            $this->view('posts/index', $data);
+            
+        }
         //Save Images
         public function SaveImage()
         {
@@ -42,26 +62,7 @@
             }
         }
  
-        public function index(){
-            if (!isset($_GET['page']))
-            {
-                $_GET['page'] = 0;
-
-            }
-            $posts = $this->pagination();
-            $likes = $this->postModel->getlikes();
-            $comments = $this->postModel->getComments();
-            $data = [
-                'title'=>'Camagru ',
-                'posts' => $posts['post'],
-                'nbrPages' => $posts['nbrPages'],
-                'likes' => $likes,
-                'comments' => $comments
-            ];
-            
-            $this->view('posts/index', $data);
-            
-        }
+        
         
         public function pagination()
         {
