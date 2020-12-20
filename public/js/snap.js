@@ -14,38 +14,48 @@ var video = document.getElementById('video'),
     filter = document.getElementsByName('filter'),
     upload_img = document.getElementById('file'),
     save = document.getElementById("save");
+    start = document.getElementById("btn-start");
+    pause = document.getElementById("btn-stop");
 
  
+start.addEventListener("click",function(event){
 
-if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
-{
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream)
-    {
-      try {
-            video.src = window.URL.createObjectURL(stream);
-      } catch (error) {
-            video.srcObject = stream;
-          }
-        video.play();
-        camera_allowed = 1;
-    }
-    ).catch(function(error) {
-  
+  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+  {
+      navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream)
+      {
+        try {
+              video.src = window.URL.createObjectURL(stream);
+        } catch (error) {
+              video.srcObject = stream;
+            }
+          video.play();
+          camera_allowed = 1;
+      }
+      ).catch(function(error) {
+    
+  });
+  } else if(navigator.webkitGetUserMedia) {
+     
+     navigator.webkitGetUserMedia({ video: true }, function(stream){
+         try {
+                 video.src = window.URL.createObjectURL(stream);
+             } catch (error) {
+                  video.srcObject = stream;
+             }
+         video.play();
+         camera_allowed= 1;
+     }, function(err) {
+          console.log("The following error occurred: " + err.name);
+       });
+  }
 });
-} else if(navigator.webkitGetUserMedia) {
-   
-   navigator.webkitGetUserMedia({ video: true }, function(stream){
-       try {
-               video.src = window.URL.createObjectURL(stream);
-           } catch (error) {
-                video.srcObject = stream;
-           }
-       video.play();
-       camera_allowed= 1;
-   }, function(err) {
-        console.log("The following error occurred: " + err.name);
-     });
-}
+pause.addEventListener("click",function(event)
+{
+  video.srcObject.getTracks().forEach(function(video) {
+    video.stop();
+  });
+  });
 
 
 take_pic.addEventListener("click", function()
@@ -152,7 +162,7 @@ window.addEventListener('DOMContentLoaded', uploadimg);
     var imgData = canvas.toDataURL("image/png");
       var params = "image=" + imgData + "&sticker=" + emoticon;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'http://localhost/camagru/posts/SaveImage');
+   xhr.open('POST', 'http://192.168.99.100:8088/camagru/posts/SaveImage');
 
    xhr.withCredentialfull_canvas = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -161,6 +171,7 @@ window.addEventListener('DOMContentLoaded', uploadimg);
     
     xhr.send(params);
    }
+   location.reload();
       
 });
 
@@ -169,5 +180,35 @@ window.addEventListener('DOMContentLoaded', uploadimg);
 
 
 
+///////////Take Evry
 
- 
+
+function takeSnapshot() {
+  context.drawImage(video, 0, 0, w, h);
+  full_canvas = 1; 
+}
+       
+
+
+function takeAuto() {
+  //takeSnapshot() // get snapshot right away then wait and repeat
+  var counter = parseInt(document.getElementById('myInterval').value)
+  var interval
+  interval = setInterval(function() {
+    
+    if(--counter == 0)
+    {
+      document.getElementById('counter').style.display = 'none'
+      clearInterval(interval);
+    }
+    else{
+      document.getElementById('counter').style.display = 'block'
+      document.getElementById('counter').innerHTML = counter
+    }
+  }, 1000);
+ setTimeout(function(){     
+    console.log('set interval')                                                                                    
+     takeSnapshot()
+ }, document.getElementById('myInterval').value * 1000);
+}
+

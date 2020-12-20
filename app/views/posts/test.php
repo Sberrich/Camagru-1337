@@ -13,13 +13,7 @@
                 <div class="row" id="imageHolder">
                             <div class="col-md-9 camera">
                                 <!-- Buttons Group Start -->
-                <div class="actions">
-                    <a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-light"><i class="fa fa-backward"></i> Back</a>
-                    <button id="btn-start" type="button" class="btn btn-outline-success">Start Streaming</button>
-                    <button id="btn-stop" type="button" class="btn btn-outline-danger">Stop Streaming</button>
-                    <button class="btn btn-outline-info" id="capture" role="button">Take A Picture</button>
-                    <input type="file" name="upFile" id="upFile"  class="btn btn-outline-success" accept=".png,.gif,.jpg,.jpeg">
-                </div>
+                
                                 <div class="d-flex flex-column">
                                     <div id="imagefilter">
                                     <h3 style="text-align: center;">The Video</h3>
