@@ -1,119 +1,168 @@
-<?php require APPROOT .'/views/inc/header.php';?>
+<?php require APPROOT . '/views/inc/header.php'; ?>
 <div class="container">
-<div class="jumbotron text-center">
-<img src="../public/imgs/svg/camagru.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+<div class="pagination justify-content-center">
+  <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <?php
+    if($data['previousPage'] > 0)
+      echo '<li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page">Previous</a></li>';
+    else
+      echo '<li class="page-item"><a class="page-link" >Previous</a></li>';
+        for($i =1; $i <= $data['totalPages']; $i++){
+          if($i == $data['currentPage'])
+          {
+            echo '<li class="page-item"><a class="page-link">'.$i.'</a></li>';
+       
+          } 
+          else
+          {
+            echo '<li class="page-item"><a class="page-link" href="'.URLROOT.'/posts/index?page='.$i.'">'.$i.'</a></li>';
 
-  <p class="lead"></p>
-      <?php if(isset($_SESSION['username'])): ?>
-      <a class="btn btn-outline-success btn-lg" href="<?php echo URLROOT;?>/posts/camera" role="button">Add Photo</a>
-      <?php else : ?>
-      <a class="btn btn-outline-info" href="<?php echo URLROOT;?>/users/register" role="button">Register Now</a>
-      <a class="btn btn-outline-dark" href="<?php echo URLROOT;?>/users/login" role="button">Log in!</a>
-    <?php endif;?>
+          }
+           
+        }
+    if($data['nextPage'] <= $data['totalPages'])
+      echo '<li class="page-item"><a class="page-link" href="'.URLROOT.'/posts/index?page='.$data['nextPage'].'">Next</a></li>';
+    else
+      echo '<li class="page-item"><a class="page-link" >Next</a></li>';
+    ?>
+  </ul>
+</nav>
 </div>
-
-<div class="album py-5 bg-light">
-  <div class="container  pb-cmnt-container">
-      
-    <div class="row justify-content-start">
-     <?php foreach($data['posts'] as $post)   : ?>
-      <div class="col-md-4">    
-        <div class="card mb-4 box-shadow">
-        <?php echo '<img class="card-img-top" src="'.$post->imgurl.'" alt="Card image cap">'; ?>
-          <div class="card-body">
-              <div class="container">
-                <div class="row justify-content-start">
-                    <div class="col-md-4"><p class="card-text"><?php echo $post->username; ?></p></div>
-                    <div class="col-md-4"  ><p class="card-text" style="width: 200px" id="imgedate"><?php echo $post->imgedate; ?></p></div>
-                </div>
-             
-            <div class="d-flex ">
-              <div class="row ">
-                <?php   
-                    $liked = false;
-                  foreach($data['likes'] as $like){
-                        if($like->userid == $_SESSION['id'] && $like->imgid == $post->imgid){
-                            $liked = true;
-                        ?>
-                    <div class="row ">
-                    <div class="col-md-4">
-                        <i class="fa fa-heart"  data-imgid="<?php echo $post->imgid; ?>" data-userid="<?php echo $_SESSION['id'];?>" name="liket"></i>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="card-text" data-imgid="<?php echo $post->imgid; ?>"><?php echo $post->likes; ?></p>
-                    </div>
-                    </div>
-                <?php }
-                  }
-                  if ($liked === false){ ?>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <i class="fa fa-heart-o"  data-imgid="<?php echo $post->imgid; ?>" data-userid="<?php echo $_SESSION['id'];?>" name="liket"></i>
-                        </div>
-                        <div class="col-md-4">
-                            <p class="card-text" data-imgid="<?php echo $post->imgid; ?>"><?php echo $post->likes; ?></p>
-                        </div>
-                    </div>
-               
-                  <?php }
-
-                  ?>
-                   </div>
-                 
-                </div>
-                  
+<div class="row justify-content-center">
+    <div class="col-md-6">
+      <?php if(is_array($data['posts']))
+        {
+       foreach($data['posts'] as $post):?>
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="mr-4">
+                <img class="rounded-circle" src="https://picsum.photos/id/350/50/50">
               </div>
-              <div class="row justify-content-start">
-                     <div class="container pb-cmnt-container">
-                  <div class="actionBox" >
-                       <?php if(isset($_SESSION['id'])) : ?>
-                            <form class="form-inline" role="form">
-                        <?php else : ?>
-                            <form class="form-inline" role="form" hidden>
-                        <?php endif; ?>
-                                <div class="row">
-                                    <input class="form-control" type="text" placeholder="Your comments" data-imgid="<?php echo $post->imgid; ?>" name="cmntvalue"/>
-                                    <button type="button" class="btn btn-outline-primary"  data-imgid="<?php echo $post->imgid; ?>"  data-userid="<?php echo $_SESSION['id'];?>" name="cmntbtn">Add</button>
-                                </div>
-                                </form>
-                                <ul class="commentList" id="commentList">
-                                      <?php foreach($data['comments'] as $comment){
-                                    if($comment->imgid == $post->imgid){ 
-                                        ?>
-                                    <li>
-                                        <div class="commentText">
-                                            <span class="date sub-text"><?php echo $comment->username;?></span><p data-id="<?php echo $post->imgid; ?>"><?php echo htmlspecialchars($comment->comment);?></p><span class="date sub-text">on <?php echo $comment->cmntdate;?></span>
-
-                                        </div>
-                                    </li>
-                                    <?php } } ?>
-                                </ul>
-                            
-                         </div></div>
+              <div class="ml-2">
+                <div class="h5 m-0"><?php echo $post->username;?></div>
               </div>
             </div>
+          </div>
         </div>
+        <div class="card-body">
+          <div class="text-muted h7 mb-2">
+            <i class="fa fa-clock-o"></i><?php echo ' ' . $post->imgedate;?></div>
+            <img src="<?php echo $post->imgurl;?>" class="img img-fluid" width="500" height="500" >
+        </div>
+          <div class="card-footer">
+            <!-- like    -->
+             <?php
+          $liked = false;
+          if(is_array($data['likes']))
+                  {
+          foreach ($data['likes'] as $like) {
+            if ($like->userid == $_SESSION['id'] && $like->imgid == $post->imgid) {
+              $liked = true; ?>
+              <i  onclick="like(event)"
+                  class = "fas fa-heart"
+                  data-post_id="<?php echo $post->imgid; ?>"
+                  data-user_id="<?php echo $_SESSION['id']; ?>"
+                  data-like_nbr="<?php echo $post->likes;?>"
+                  id="li_<?php echo $post->imgid; ?>">  
+              </i>
+              <?php
+                 }
+             }
+           }
+             if ($liked === false) {?>
+                 <i onclick="like(event)"
+                 class = "far fa-heart"
+                 data-post_id="<?php echo $posts->posts_id;  ?>"
+                 data-like_nbr="<?php echo $posts->like_nbr;?>"
+                 data-user_id="<?php echo $_SESSION['user_id']; ?>"
+                 id="li_<?php echo $posts->posts_id ;?>"></i>
+             <?php }
+             ?>
+             <a id="li_nb_<?php echo $posts->posts_id; ?>" class="h7 text-muted"><?php echo $posts->like_nbr ;?></a>
+       
+              <!-- comment    -->
+          <a class="card-link"><i class="fa fa-comment"></i> Comments</a>
+              <div class="cardbox-comments mt-2">            
+              <textarea name="comment_<?php echo $posts->posts_id ;?>"
+                        class="form-control w-100 mb-2" placeholder="Describe Post here..."
+                        rows="1" >
+                        </textarea>
+              <button onclick="comment(event)"
+                       data-c-user_id="<?php echo $_SESSION['user_id']; ?>"
+                       data-c-post_id="<?php echo $posts->posts_id ;?>"
+                       class="btn btn-secondary pull-right">Add
+              </button>
+                          <br>
+                        </div>
+                      
+              <?php
+                if(is_array($data['comments']))
+                  {
+                    foreach($data['comments'] as $comment)
+                      {
+                        if($comment->post_id == $posts->posts_id)
+                        {
+                          ?>
+                            <hr class="mb-1 mt-4">
+                          <ul class="media-list">
+                            <li class="media">                    
+                              <div class="media-body">
+                                    <strong class="text-dark"><?php echo $comment->username;?></strong>
+                                  <p><?php echo htmlspecialchars($comment->content);?></p> 
+                              </div>
+                            </li>
+                          </ul>
+                              <?php
+                            }
+                          }
+                        }?>                    
+        </div>
+      </div>
+      <br>
+    <?php endforeach ;}?>
     </div>
-    <?php endforeach; ?>
-    </div>
-    </div>
-    <div >
-        <nav aria-label="Page navigation example">
-          <ul class="pagination flex-wrap justify-content-center">
-            <li class="page-item"><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
-            echo $_GET['page'] - 1;
-            else{
-                echo $_GET['page'];}?>">Previous</a></li>
-            <?php for($i = 1; $i <= $data['nbrPages']; $i++) { ?>
-            <li class="page-item "><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
-            <?php }?>
-            <li class="page-item"><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
-            else{
-                echo $_GET['page'];}?>">Next</a></li>
-          </ul>
-    </nav>
-    </div>
+  </div>
 </div>
-</main>
-</div>
-<?php require APPROOT . '/views/inc/footer.php';?>
+<br>
+<br><br>
+<?php require APPROOT . '/views/inc/footer.php'; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

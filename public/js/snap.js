@@ -162,7 +162,7 @@ window.addEventListener('DOMContentLoaded', uploadimg);
     var imgData = canvas.toDataURL("image/png");
       var params = "image=" + imgData + "&sticker=" + emoticon;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'http://192.168.99.100:8088/camagru/posts/SaveImage');
+   xhr.open('POST', 'http://localhost/camagru/posts/SaveImage');
 
    xhr.withCredentialfull_canvas = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
