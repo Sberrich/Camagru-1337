@@ -157,5 +157,12 @@ class Post{
             $row = $this->db->resultSet();
             return ($row);
         }
-       
+        
+    public function getPost($id){
+        $this->db->query('SELECT * FROM img WHERE userid = :user_id ORDER BY imgedate DESC');
+        $this->db->bind(':userid', $id);
+        $result = $this->db->resultSet();
+        return ($result);
+    }
+
 }

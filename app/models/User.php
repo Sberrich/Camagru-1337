@@ -207,26 +207,6 @@
               else
           return false;
         } 
-         //get Dest
-         public function get_dest($userid)
-        { 
-            $this->db->query('SELECT * FROM users WHERE id = :id');
-            $this->db->bind(':id',$userid);
-              $result = $this->db->single();
-            if($result)
-              return ($result);
-              else
-              return false;
-        }
-         //profilePicture
-         public function profilePic($path, $user_id){
-          $this->db->query('UPDATE user SET profile_photo = :p WHERE userid = :userid');
-          $this->db->bind(':userid', $user_id);
-          $this->db->bind(':p', $path);
-          if($this->db->execute())
-               return true;
-          else
-               return false;
-       } 
+       
 }
 ?>

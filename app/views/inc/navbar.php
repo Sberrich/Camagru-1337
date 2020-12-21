@@ -30,7 +30,7 @@
               <?php if(isset($_SESSION['id'])): ?>
                 <!-- User have an id -->
                 <li class="nav-item active pr-3">
-                    <a class="nav-link" href="<?php echo URLROOT;?>/users/profile"><i class="fas fa-user" aria-hidden="true"></i>Profile </a>
+                    <a class="nav-link" href="<?php echo URLROOT;?>/users/profile"><i class="fas fa-user" aria-hidden="true"></i> Profile </a>
                 </li>
                 <!-- User have an id -->
                 <li class="nav-item active pr-3">

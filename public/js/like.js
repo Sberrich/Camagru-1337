@@ -11,13 +11,13 @@ function like(event) {
     var sym = 0;
 
      if (userid == "") {
-       window.location.replace("http://192.168.99.100:8088/Camagru/users/login");
+       window.location.replace("http://localhost/Camagru/users/login");
        return ;
      }
      var xhttp = new XMLHttpRequest();
      
      xhttp.withCredentials = true;
-     xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/Like');
+     xhttp.open('POST', 'http://localhost/Camagru/Posts/dellikes');
      if (event.target.className == "far fa-heart") {
        event.target.className = "fas fa-heart";
        like_nbr++;

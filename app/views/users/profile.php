@@ -26,17 +26,13 @@
 	<hr class="mt-2 mb-5">
 
 <div class="row text-center text-lg-left">
-<?php foreach($data as $post):?>
+<?php
+          foreach($data['posts'] as $post):?>
     <div class="col-lg-3 col-md-4 col-6">
       <a class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="<?php echo $post->imgurl;?>">
-            <form action="<?php echo  URLROOT;?>/posts/delImage" method="POST">
-				
-				<button type="submit" name="submit" class="btn btn-outline-danger" id="clear" role="button" ><i class="fas fa-trash" aria-hidden="true"></i>  Delete</button>
-            	
-            	<input  name="postId" type="hidden" value="<?php echo $post->imgid;?>">
-            </form>
-            
+	  <i class="btn btn-outline-danger" class="fa fa-trash-o" data-imgid="<?php echo $post->imgid; ?>" name="delimg"></i>
+
+            <img class="img-fluid img-thumbnail" src="<?php echo $post->imgurl;?>"/>
           </a>
 
     </div>
@@ -44,6 +40,30 @@
   </div>
 
 
+  
+<script>
+   var delimg = document.getElementsByName("delimg");
 
+for(var i=0; i < delimg.length; i++){ 
+            delimg[i].onclick = function(event){
+            var imgid = (event.target && event.target.getAttribute('data-imgid'));
+            var params = "imgid="+imgid;
+            if(confirm("Are you sure you want to delete this Photo??"))
+            {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('POST', 'http://localhost/Camagru/Posts/delImage');
+                xhttp.withCredentials = true;
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200){
+                        location.reload();
+                    }
+                }
+                xhttp.send(params);
+            }
+           
+        }
+}
+</script>
 </div>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

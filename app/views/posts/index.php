@@ -1,34 +1,5 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 <div class="container">
-    <div class="pagination justify-content-center">
-      <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <?php
-            if($data['previousPage'] > 0)
-              echo '<li class="page-item"><a class="page-link" href="http://http://192.168.99.100:8088/Camagru/Posts/index?page">Previous</a></li>';
-            else
-              echo '<li class="page-item"><a class="page-link" >Previous</a></li>';
-                for($i =1; $i <= $data['totalPages']; $i++){
-                  if($i == $data['currentPage'])
-                  {
-                    echo '<li class="page-item"><a class="page-link">'.$i.'</a></li>';
-              
-                  } 
-                  else
-                  {
-                    echo '<li class="page-item"><a class="page-link" href="'.URLROOT.'/posts/index?page='.$i.'">'.$i.'</a></li>';
-
-                  }
-                  
-                }
-            if($data['nextPage'] <= $data['totalPages'])
-              echo '<li class="page-item"><a class="page-link" href="'.URLROOT.'/posts/index?page='.$data['nextPage'].'">Next</a></li>';
-            else
-              echo '<li class="page-item"><a class="page-link" >Next</a></li>';
-            ?>
-          </ul>
-    </nav>
-    </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
           <?php if(is_array($data['posts']))
@@ -124,9 +95,25 @@
         <?php endforeach ;}?>
         </div>
       </div>
+      <div class="pagination justify-content-center">
+
+          <nav aria-label="Page navigation example">
+          <ul class="pagination flex-wrap justify-content-center">
+            <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
+            echo $_GET['page'] - 1;
+            else{
+                echo $_GET['page'];}?>">Previous</a></li>
+            <?php for($i = 1; $i <= $data['nbrPages']; $i++) { ?>
+            <li class="page-item "><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
+            <?php }?>
+            <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
+            else{
+                echo $_GET['page'];}?>">Next</a></li>
+          </ul>
+    </nav>
+    </div>
+  
 </div>
-<script type="text/javascript" src="<?php echo URLROOT;?>/js/like.js"></script>
-<script type="text/javascript" src="<?php echo URLROOT;?>/js/comment.js"></script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 
 
