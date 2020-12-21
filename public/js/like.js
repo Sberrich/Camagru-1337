@@ -5,19 +5,19 @@ function like(event) {
     var userid = (event.target && event.target.getAttribute('data-user_id'));
     var like_nbr = (event.target && event.target.getAttribute('data-like_nbr'));
     
-    var li = document.getElementById('li_'+ postid);
+    var li = document.getElementById('li_'+ imgid);
     var c = li.getAttribute('class');
     var li_nb = document.getElementById('li_nb_'+postid);
     var sym = 0;
 
      if (userid == "") {
-       window.location.replace("http://localhost/Camagru/users/login");
+       window.location.replace("http://192.168.99.100:8088/Camagru/users/login");
        return ;
      }
      var xhttp = new XMLHttpRequest();
      
      xhttp.withCredentials = true;
-     xhttp.open('POST', 'http://localhost/Camagru/Posts/Like');
+     xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/Like');
      if (event.target.className == "far fa-heart") {
        event.target.className = "fas fa-heart";
        like_nbr++;

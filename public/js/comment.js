@@ -12,12 +12,12 @@
          return ;
        }
        if (userid == "") {
-         window.location.replace("http://localhost/Camagru/users/login");
+         window.location.replace("http://192.168.99.100:8088/Camagru/users/login");
          return;
        }
         var xhttp = new XMLHttpRequest();
        var params = "post_id=" + postid + "&user_id=" + userid + "&content=" + com;
-       xhttp.open('POST', 'http://localhost/Camagru/Posts/comment');
+       xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/comment');
        xhttp.withCredentials = true;
        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
        xhttp.send(params);

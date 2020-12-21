@@ -1,13 +1,13 @@
 <?php
   // DB Params
-  define('DB_HOST', 'localhost');
+  define('DB_HOST', 'mysql');
   define('DB_USER', 'root');
-  define('DB_PASS', '');
+  define('DB_PASS', 'tiger');
   define('DB_NAME', 'camagru');
   // App Root
   define('APPROOT', dirname(dirname(__FILE__)));
   // URL Root
-  define('URLROOT','http://localhost/Camagru');
+  define('URLROOT','http://192.168.99.100:8088/Camagru');
   // Site Name
   define('SITENAME', 'Camagru');
   // App Version
