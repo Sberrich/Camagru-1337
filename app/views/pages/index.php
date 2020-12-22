@@ -4,7 +4,7 @@
               <div class="container">
                     <h1 class="display-2 text-warning" ><?php echo $data['title']; ?></h1>
                     <p class="lead"><?php echo $data['description']; ?></p>
-                    <img src="../public/imgs/svg/index.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
+                    <img src="../public/imgs/svg/index.svg" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg"/>
               </div>
               <a href="<?php echo URLROOT; ?>/posts/index" class="btn btn-light"><i class="fa fa-heart"></i> ENJOY IT</a><br>
         </div>

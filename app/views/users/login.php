@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card card-body mt-5 register">
-                <img src="../public/imgs/svg/login.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+                <img src="../public/imgs/svg/login.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
                 <h2 class="text-center">Login</h2>
                 <p class="font-italic text-center text-muted mb-0">Please fill in your informations to Login!</p>
                 <form action="<?php echo URLROOT;?>/users/login" method="POST">

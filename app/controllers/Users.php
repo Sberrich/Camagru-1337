@@ -110,7 +110,7 @@
                             <body style= " background-color: lightblue;">
                                 <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                 <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://http://192.168.99.100:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                             </body>
                          </html>                    
                         ';
@@ -306,7 +306,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://http://192.168.99.100:8088/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>

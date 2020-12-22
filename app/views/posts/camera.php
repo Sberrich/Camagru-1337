@@ -5,36 +5,36 @@
 			<div class="card">
 					<div class="card-header">
 						<h2 style="text-align: center;">Welcome To Camagru Studio</h2>
-						<img src="../public/imgs/svg/studio.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
+						<img src="../public/imgs/svg/studio.svg" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg"/>
 					</div>
 					<!--scoller-->
 					<div class="container testimonial-group">
 							<div class="row text-center">
 								<div class="col-xs-4">
 									<!-- Filters -->
-									<img src="../public/imgs/Emoji/2.png" alt="Emoji" height="20px" width="20px">
+									<img src="../public/imgs/Emoji/2.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="2" name="filter" value = '../public/imgs/Emoji/2.png'>
-									<img src="../public/imgs/Emoji/3.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/3.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="3" name="filter" value = '../public/imgs/Emoji/3.png'>
-									<img src="../public/imgs/Emoji/4.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/4.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="4" name="filter" value = '../public/imgs/Emoji/4.png'>
-									<img src="../public/imgs/Emoji/5.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/5.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="5" name="filter" value = '../public/imgs/Emoji/5.png'>
-									<img src="../public/imgs/Emoji/6.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/6.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="6" name="filter" value = '../public/imgs/Emoji/6.png'>
-									<img src="../public/imgs/Emoji/7.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/7.png" alt="Emoji" height="40px" width="40px" id="sv"> 
 									<input type="radio" id="7" name="filter" value = '../public/imgs/Emoji/7.png'>
-									<img src="../public/imgs/Emoji/8.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/8.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="8" name="filter" value = '../public/imgs/Emoji/8.png'>
-									<img src="../public/imgs/Emoji/9.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/9.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="9" name="filter" value = '../public/imgs/Emoji/9.png'>
-									<img src="../public/imgs/Emoji/10.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/10.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="4" name="filter" value = '../public/imgs/Emoji/10.png'>
-									<img src="../public/imgs/Emoji/11.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/11.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="11" name="filter" value = '../public/imgs/Emoji/11.png'>
-									<img src="../public/imgs/Emoji/12.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/12.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="4" name="filter" value = '../public/imgs/Emoji/12.png'>
-									<img src="../public/imgs/Emoji/13.png" alt="Emoji" height="40px" width="40px">
+									<img src="../public/imgs/Emoji/13.png" alt="Emoji" height="40px" width="40px" id="sv">
 									<input type="radio" id="13" name="filter" value = '../public/imgs/Emoji/13.png'>			
 								</div>
 							</div>
@@ -69,8 +69,6 @@
 												<label class="custom-file-label">UPFILE</label>
 											</div>
 										</div>
-									
-
 								</div>
 							</div>		
 					</div>

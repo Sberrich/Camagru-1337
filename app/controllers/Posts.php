@@ -190,8 +190,7 @@
         
         public function delImage()
         {
-             if(isset($_POST['imgid']))
-                  
+             if(isset($_POST['imgid']))    
             {  
                  $imgid = $_POST['imgid'];
               if($this->postModel->delImage($imgid, $_SESSION['id']))

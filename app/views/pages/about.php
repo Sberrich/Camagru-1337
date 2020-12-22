@@ -2,7 +2,7 @@
 <div class="container">
     <main role="main" class="inner cover" class="text-center">
       <h1 class="cover-heading text-center display-4">CAMAGRU - ECOLE 1337 - 42 Network</h1>
-            <img src="../public/imgs/svg/badge.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id ="badge">
+            <img src="../public/imgs/svg/badge.svg" style="width: 400px; height: 400px" id="svg">
             <!-- Defintion -->
             <p class="lead">                
                 Project executed out as part of our training at school 1337.
@@ -10,8 +10,8 @@
                 Camagru offers you to create a small web application allowing you to perform basic edits using your webcam and predefined images.
             </b>
             <!-- Objectives -->
+            <h1 class="cover-heading">Objectives:</h1>
             <ul class="list-group">
-                <h1 class="cover-heading">Objectives:</h1>
                 <li class="list-group-item">User management</li>
                 <li class="list-group-item">Permissions management</li>
                 <li class="list-group-item">Mailing</li>
@@ -20,8 +20,8 @@
             </ul>
             <!-- Skills -->
             <p class="lead">
+              <h1 class="cover-heading">Skills:</h1>
               <ul class="list-group">
-                  <h1 class="cover-heading">Skills:</h1>
                   <li class="list-group-item">Security</li>
                   <li class="list-group-item">Web</li>
                   <li class="list-group-item">Database</li>

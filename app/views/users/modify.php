@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-8 mx-auto">
       <div class="card card-body mt-5 register">
-          <img src="../public/imgs/svg/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block">
+          <img src="../public/imgs/svg/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
           <h2 class="text-center display-5">Modify An Account</h2>
           <p>Please fill out this form to modify your compte</p>
           <!-- Form Modify -->
@@ -18,6 +18,17 @@
                                   </div>
                                   <span class="invalid-feedback"><?php echo $data['username_err']; ?></span>
                 </div>
+                <!-- Email Address -->
+                <div class="input-group-prepend d-flex flex-column mb-3  <?php echo (!empty($data['email_err']))? 'is-invalid' : ''; ?>">
+                            <div class="d-flex flex-row input-holder">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-envelope text-muted"></i>
+                                </span>
+                                <input type="email"  placeholder="Email Address" name="email" class="form-control bg-white border-left-0 border-md" 
+                                value="<?php echo $data['email']; ?>">
+                            </div>
+                            <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
+                        </div>
                 <!-- Password -->
                 <div class="input-group-prepend d-flex flex-column mb-3  <?php echo (!empty($data['password_err']))? 'is-invalid' : ''; ?>">
                                   <div class="d-flex flex-row input-holder">
