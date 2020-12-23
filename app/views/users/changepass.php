@@ -21,7 +21,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                             <input type="submit" value="Change Password" class="btn btn-outline-primary btn-block py-2">
+                             <input  type="submit" value="Change Password" class="btn btn-outline-primary btn-block py-2">
                         </div>
                     </div>
                 </form>

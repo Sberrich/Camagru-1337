@@ -18,10 +18,11 @@ class Setup extends Controller
 			echo "Fresh database 'camagru' successfully created\n";
 			$cn->exec('use ' . DB_NAME . ';');
 			echo "Switching to " . DB_NAME . "\n";
-			$sql = file_get_contents(__DIR__.'/../config/Camagru.sql');
+			$sql = file_get_contents(__DIR__.'/../config/camagru.sql');
 			$cn->exec($sql);
 			echo "Database schema imported\n";
 			echo "OK -> Ready to roll !\n";
+			$this->view('pages/setupnotif');
 		} catch (PDOException $e) {
 			echo 'Error: ' . $e->getMessage() . '\n';
 			die();
