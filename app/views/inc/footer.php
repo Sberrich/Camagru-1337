@@ -1,6 +1,8 @@
   </div>
     </body>
     <script type="text/javascript" src="<?php echo URLROOT;?>/js/snap.js"></script>
+    <script type="text/javascript" src="<?php echo URLROOT;?>/js/like.js"></script>
+
 
         <div class="bg-dark" style="position: fixed; bottom: 0; width: 100%;">
           <div class="text-center py-2">

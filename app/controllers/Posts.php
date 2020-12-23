@@ -104,7 +104,47 @@
             
         }
         
-        
+        public function Like(){
+            if($this->userModel->findUserById()){
+      
+              if(isloggedIn() && isset($_POST['post_id']) && isset($_POST['user_id']) && isset($_POST['c']) && isset($_POST['like_nbr']))
+             {
+                 $data = [
+                     'post_id'=> $_POST['post_id'],
+                     'user_id' => $_POST['user_id'],
+                     'c' => $_POST['c'],
+                     'like_nbr' => $_POST['like_nbr']
+                 ];
+                  $this->postModel->like_nbr($data);
+                 if($data['c'] == 'fas fa-heart')
+                 {
+                   if($this->postModel->deleteLike($data))
+                   {
+                      }
+                   else
+                   {
+                     die('wa noud');
+                   }
+                 }
+                 else if($data['c'] == 'far fa-heart')
+                 {
+                   if($this->postModel->dellikes($data))
+                   {
+      
+                   }
+                   else
+                   {
+                     die('wa noud');
+                   }
+                 }
+             }
+             else
+                redirect('posts/home');
+              
+              } else
+                 logout();
+             
+         }
         
         public function addlikes()
         {

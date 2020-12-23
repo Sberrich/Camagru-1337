@@ -44,7 +44,7 @@
 						<div class="btn-group">
 											<a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-outline-dark"><i class="fas fa-backward"  aria-hidden="true"></i> Back</a>
 											<button id="btn-start" type="button" class="btn btn-outline-success"><i class="fas fa-play"  aria-hidden="true"></i></button>
-											<button id="btn-close" type="button" class="btn btn-outline-danger"><i class="fas fa-close"  aria-hidden="true"></i></button>
+
 											<button id="btn-stop" type="button" class="btn btn-outline-danger"><i class="fas fa-pause"  aria-hidden="true"></i></button>
 											<button class="btn btn-outline-danger" id="clear" role="button" ><i class="fas fa-trash" aria-hidden="true"></i></button>
 											<button class="btn btn-outline-dark" id="snap" disabled><i class="fas fa-camera"  aria-hidden="true"></i></button>
@@ -58,18 +58,18 @@
 										<img  src ='' id = 'imgf' style='position: absolute;top: 10px;left: 10px;display: none; width: 30%; height: 30%;'>
 										<video class="img-fluid border border-dark" id="video" height="480" width="640"></video>
 									</div>
+									<div class="input-group" style='position: relative';>
+											<div class="custom-file">
+												<input type="file"  id="file" class="custom-file-input" accept=".png, .gif, .jpg, .jpeg">
+												<label class="custom-file-label">Add Picture</label>
+											</div>
+										</div>
 									<div style='position: relative;'>
 										<img src ='' id = 'canvasf' style='position: absolute;top: 10px;left: 10px;display: none; width: 30%; height: 30%;'>
 										<canvas class="img-fluid border border-dark" id="canvas" height="480" width="640"></canvas>
 									</div>	
-									<div class="finishActions">
-									<div class="input-group">
-											<div class="custom-file">
-												<input type="file"  id="file" class="custom-file-input" accept=".png, .gif, .jpg, .jpeg">
-												<label class="custom-file-label">UPFILE</label>
-											</div>
-										</div>
-								</div>
+									
+									
 							</div>		
 					</div>
 			</div>

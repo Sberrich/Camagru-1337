@@ -1,11 +1,11 @@
 var video = document.getElementById('video'),
-    full_canvas = document.getElementById('canvas'),
-    take_pic = document.getElementById("snap"),
+    canva = document.getElementById('canvas'),
+    snap = document.getElementById("snap"),
     context = canvas.getContext('2d'),
     h = 480,
     w = 640,
-    emoticon,
-    full_canvas = 0,
+    sticker,
+    canva = 0,
     filter_checked = 0,
     camera_allowed = 0,
     canvasfilter = document.getElementById('canvasf'),
@@ -58,10 +58,10 @@ pause.addEventListener("click",function(event)
   });
 
 
-take_pic.addEventListener("click", function()
+snap.addEventListener("click", function()
 {
     context.drawImage(video, 0, 0, w, h);
-    full_canvas = 1;          
+    canva = 1;          
   }
 );
 
@@ -70,10 +70,10 @@ upload_img.addEventListener("click", function()
   if(filter_checked == 1){
     imgfilter.src = "";
   }
-  emoticon = "";
+  sticker = "";
   placefilter = canvasfilter;
   filter_checked = 1;
-  take_pic.disabled = true;
+  snap.disabled = true;
   
      
   }
@@ -87,7 +87,7 @@ function clearcanvas(){
    canvasfilter.src = "";
    imgfilter.style.display = 'none';
    canvasfilter.style.display = 'none';
-   full_canvas = 0;
+   canva = 0;
    placefilter = imgfilter;
 
 
@@ -101,10 +101,10 @@ for (var j= 0; j <= 11; j++)
 {
   filter[j].onclick = function(event) {
   placefilter.style.display = 'block';
-  emoticon = this.value;
+  sticker = this.value;
   filter_checked = 1;
-  placefilter.src = emoticon;
-  take_pic.disabled = false;
+  placefilter.src = sticker;
+  snap.disabled = false;
 }
 }
 
@@ -144,7 +144,7 @@ window.addEventListener('DOMContentLoaded', uploadimg);
 
           img.onload = function () {
                context.drawImage(img, 0, 0, w, h);
-               full_canvas = 1;
+               canva = 1;
                camera_allowed = 1;
                
           }
@@ -165,13 +165,13 @@ window.addEventListener('DOMContentLoaded', uploadimg);
   save.addEventListener("click", function(event) {
     
     var imgData = canvas.toDataURL("image/png");
-      var params = "image=" + imgData + "&sticker=" + emoticon;
+      var params = "image=" + imgData + "&sticker=" + sticker;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'http://192.168.99.100:8088/camagru/posts/SaveImage');
+   xhr.open('POST', 'http://localhost/camagru/posts/SaveImage');
 
-   xhr.withCredentialfull_canvas = true;
+   xhr.withCredentialcanva = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-   if(full_canvas == 1 && filter_checked == 1 && camera_allowed == 1)
+   if(canva == 1 && filter_checked == 1 && camera_allowed == 1)
    {
     
     xhr.send(params);
@@ -190,7 +190,7 @@ window.addEventListener('DOMContentLoaded', uploadimg);
 
 function takeSnapshot() {
   context.drawImage(video, 0, 0, w, h);
-  full_canvas = 1; 
+  canva = 1; 
 }
        
 

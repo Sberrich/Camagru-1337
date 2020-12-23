@@ -1,11 +1,13 @@
+//initialisation de var 
+
 var video = document.getElementById('video'),
-    full_canvas = document.getElementById('canvas'),
-    take_pic = document.getElementById("snap"),
+    canva = document.getElementById('canvas'),
+    snap = document.getElementById("snap"),
     context = canvas.getContext('2d'),
     h = 480,
     w = 640,
-    emoticon,
-    full_canvas = 0,
+    sticker,
+    canva = 0,
     filter_checked = 0,
     camera_allowed = 0,
     canvasfilter = document.getElementById('canvasf'),
@@ -17,7 +19,8 @@ var video = document.getElementById('video'),
     start = document.getElementById("btn-start");
     pause = document.getElementById("btn-stop");
 
- 
+
+  //start de stream
 start.addEventListener("click",function(event){
 
   if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
@@ -50,6 +53,7 @@ start.addEventListener("click",function(event){
        });
   }
 });
+//pause the stream
 pause.addEventListener("click",function(event)
 {
   video.srcObject.getTracks().forEach(function(video) {
@@ -57,29 +61,29 @@ pause.addEventListener("click",function(event)
   });
   });
 
-
-take_pic.addEventListener("click", function()
+//Sanp A pic
+snap.addEventListener("click", function()
 {
     context.drawImage(video, 0, 0, w, h);
-    full_canvas = 1;          
+    canva = 1;          
   }
 );
-
+//Upload img
 upload_img.addEventListener("click", function()
 {
   if(filter_checked == 1){
     imgfilter.src = "";
   }
-  emoticon = "";
+  sticker = "";
   placefilter = canvasfilter;
   filter_checked = 1;
-  take_pic.disabled = true;
+  snap.disabled = true;
   
      
   }
 );
 
-
+// Clear canvas
 document.getElementById('clear').addEventListener("click", clearcanvas);
 function clearcanvas(){
    context.clearRect(0, 0, w, h);
@@ -87,7 +91,7 @@ function clearcanvas(){
    canvasfilter.src = "";
    imgfilter.style.display = 'none';
    canvasfilter.style.display = 'none';
-   full_canvas = 0;
+   canva = 0;
    placefilter = imgfilter;
 
 
@@ -95,23 +99,21 @@ function clearcanvas(){
 
 
 
-
+// Iteration sur stickers
 
 for (var j= 0; j <= 11; j++)
 {
   filter[j].onclick = function(event) {
   placefilter.style.display = 'block';
-  emoticon = this.value;
+  sticker = this.value;
   filter_checked = 1;
-  placefilter.src = emoticon;
-  take_pic.disabled = false;
+  placefilter.src = sticker;
+  snap.disabled = false;
 }
 }
 
 
-
-
-
+// check if image in inputs
 function isImage(file)
 {
    const validImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -121,15 +123,7 @@ function isImage(file)
    else
        return false;
 }
-
-
-
-
- 
-
-
-
-
+// uploading fonction
 
 window.addEventListener('DOMContentLoaded', uploadimg);
   function uploadimg(){
@@ -139,7 +133,7 @@ window.addEventListener('DOMContentLoaded', uploadimg);
 
           img.onload = function () {
                context.drawImage(img, 0, 0, w, h);
-               full_canvas = 1;
+               canva = 1;
                camera_allowed = 1;
                
           }
@@ -156,17 +150,17 @@ window.addEventListener('DOMContentLoaded', uploadimg);
 
 
 
-
+// save a pic
   save.addEventListener("click", function(event) {
     
     var imgData = canvas.toDataURL("image/png");
-      var params = "image=" + imgData + "&sticker=" + emoticon;
+      var params = "image=" + imgData + "&sticker=" + sticker;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'http://192.168.99.100:8088/camagru/posts/SaveImage');
+   xhr.open('POST', 'http://localhost/camagru/posts/SaveImage');
 
-   xhr.withCredentialfull_canvas = true;
+   xhr.withCredentialcanva = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-   if(full_canvas == 1 && filter_checked == 1 && camera_allowed == 1)
+   if(canva == 1 && filter_checked == 1 && camera_allowed == 1)
    {
     
     xhr.send(params);
@@ -181,11 +175,11 @@ window.addEventListener('DOMContentLoaded', uploadimg);
 
 
 ///////////Take Evry
-
+// count down
 
 function takeSnapshot() {
   context.drawImage(video, 0, 0, w, h);
-  full_canvas = 1; 
+  canva = 1; 
 }
        
 
