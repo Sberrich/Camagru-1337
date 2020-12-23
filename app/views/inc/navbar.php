@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+<nav class="navbar navbar-expand-lg navbar-dark  py-2" style="background-color: #000; height: 3em; display: flex; align-items: center;">
   <div class="container">
       <a class="navbar-brand" href="<?php echo URLROOT;?>/Posts/index">
           <svg width="70" height="20" viewBox="0 0 76 20" fill="none">
