@@ -7,145 +7,136 @@
             $this->userModel = $this->model('User');
             $this->postModel = $this->model('Post');
         }
-        public function profile()
-        {
-            $posts = $this->postModel->getImagesbyUsr($_SESSION['id']);
-            $data = ['title' => $_SESSION['username'],
-                     'posts' => $posts
-                
-            ];
-            $this->view("users/profile", $data);
-        }
         //Register Method
         public function register()
         {      
             //Check If the User is login or Not
             if(!$this->isloggedIn())
             {
-                //Check If the User is login or not
-            if($this->isloggedIn())
-            {
-                redirect('pages/index');
-            }
-                //check for post
-            if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
-            {
-                // Proccess Form
-                $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
+                    //Check If the User is login or not
+                if($this->isloggedIn())
+                {
+                    redirect('pages/index');
+                }
+                    //check for post
+                if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
+                {
+                    // Proccess Form
+                    $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
 
-                //Sanitize Post Data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                    //Sanitize Post Data
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                //Init Data
-                $data =['username' => trim($_POST['username']),
-                    'password' => trim($_POST['password']),
-                    'confirm_password' => trim($_POST['confirm_password']),
-                    'email' => trim($_POST['email']),
-                    'token' => $token,
-                    'username_err' => '',
-                    'email_err' => '',
-                    'password_err' => '',
-                    'confirm_password_err' => ''
-                ];
-                //validate username
-                    if(empty($data['username']))
-                    {
-                        $data['username_err'] = 'The Username Field is required.';
-                    }
-                    elseif(strlen($_POST['username']) < 6 || strlen($_POST['username']) > 8 )
-                    {
-                                $data['username_err'] = 'To create Username, you have to meet at Mini 6 char and In max 8 char';
-                    }
-                    elseif(!ctype_alnum($data['username']) && !empty($data['username']))
-                    {
-                        $data['username_err'] = 'Please Enter Alphanumeric Username';
-                    }
-                    elseif($this->userModel->findUserByUsername($data['username']))
-                    {
-                        $data['username_err'] = 'Username Already Exist';
-                    }
+                    //Init Data
+                    $data =['username' => trim($_POST['username']),
+                        'password' => trim($_POST['password']),
+                        'confirm_password' => trim($_POST['confirm_password']),
+                        'email' => trim($_POST['email']),
+                        'token' => $token,
+                        'username_err' => '',
+                        'email_err' => '',
+                        'password_err' => '',
+                        'confirm_password_err' => ''
+                    ];
+                    //validate username
+                        if(empty($data['username']))
+                        {
+                            $data['username_err'] = 'The Username Field is required.';
+                        }
+                        elseif(strlen($_POST['username']) < 6 || strlen($_POST['username']) > 8 )
+                        {
+                                    $data['username_err'] = 'To create Username, you have to meet at Mini 6 char and In max 8 char';
+                        }
+                        elseif(!ctype_alnum($data['username']) && !empty($data['username']))
+                        {
+                            $data['username_err'] = 'Please Enter Alphanumeric Username';
+                        }
+                        elseif($this->userModel->findUserByUsername($data['username']))
+                        {
+                            $data['username_err'] = 'Username Already Exist';
+                        }
 
-                 //validate Password
-                    if(empty($data['password']))
-                    {
-                        $data['password_err'] = 'The Password Field is required.';
-                    }
-                    elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password']))
-                    {
-                        $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
-                    }
+                    //validate Password
+                        if(empty($data['password']))
+                        {
+                            $data['password_err'] = 'The Password Field is required.';
+                        }
+                        elseif(strlen($_POST['password']) < 6 || ctype_lower($_POST['password']))
+                        {
+                            $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
+                        }
 
-                 //Confirm Password
-                    if(empty($data['confirm_password']))
-                    {
-                        $data['confirm_password_err'] = 'Please confirm Password';
-                    }
-                    elseif($_POST['password'] != $_POST['confirm_password'])
-                    {
-                        $data['confirm_password_err'] = 'Passwords not match';
-                    }
+                    //Confirm Password
+                        if(empty($data['confirm_password']))
+                        {
+                            $data['confirm_password_err'] = 'Please confirm Password';
+                        }
+                        elseif($_POST['password'] != $_POST['confirm_password'])
+                        {
+                            $data['confirm_password_err'] = 'Passwords not match';
+                        }
 
-                //validate Email
-                    if(empty($data['email']))
-                    {
-                        $data['email_err'] = 'The Email Field is required.';
-                    }
-                    elseif($this->userModel->getemailbyuser($data['email']))
-                    {
-                        $data['email_err'] = 'Email Already Exist';
-                    }
+                    //validate Email
+                        if(empty($data['email']))
+                        {
+                            $data['email_err'] = 'The Email Field is required.';
+                        }
+                        elseif($this->userModel->getemailbyuser($data['email']))
+                        {
+                            $data['email_err'] = 'Email Already Exist';
+                        }
 
-                // Make sure Errors fileds are empty
-                    if(empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['email_err']))
-                    {
-                        //Hash Password
-                        $data['password'] = hash('whirlpool', $data['password']);
+                    // Make sure Errors fileds are empty
+                        if(empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['email_err']))
+                        {
+                            //Hash Password
+                            $data['password'] = hash('whirlpool', $data['password']);
 
-                        //Send Validation Mail
-                        $to  = $data['email'];
-                        $subject = 'Confirm Account';
-                        $message = '
-                        <html>
-                            <meta charset="UTF-8">
-                            <body style= " background-color: lightblue;">
-                                <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
-                                <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                 <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.100:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
-                            </body>
-                         </html>                    
-                        ';
-                        $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
-                        mail($to, $subject, $message , $headers);
+                            //Send Validation Mail
+                            $to  = $data['email'];
+                            $subject = 'Confirm Account';
+                            $message = '
+                            <html>
+                                <meta charset="UTF-8">
+                                <body style= " background-color: lightblue;">
+                                    <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
+                                    <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.101:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                </body>
+                            </html>                    
+                            ';
+                            $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
+                            mail($to, $subject, $message , $headers);
 
-                        //Register User
-                             if($this->userModel->register($data))
-                             {
-                                 flash('register_success', 'Check Your Email Please To Confirm Your Account!');
-                                 redirect('users/login');
-                             }
-                           
-                            else
-                            {
-                                die('Something went wrong');
-                            }
-                        }else{
-                            // Load view with errors
-                                $this->view('users/register', $data);
-                            }
-                }else{
-                        //Init Data
-                            $data =['username' => '',
-                                'password' => '',
-                                'email' => '',
-                                'confirm_password' => '',
-                                'username_err' => '',
-                                'email_err' => '',
-                                'password_err' => '',
-                                'confirm_password_err' => ''
-                            ];
-                        //Load View
-                        $this->view('users/register', $data);
-                    }
+                            //Register User
+                                if($this->userModel->register($data))
+                                {
+                                    flash('register_success', 'Check Your Email Please To Confirm Your Account!');
+                                    redirect('users/login');
+                                }
+                            
+                                else
+                                {
+                                    die('Something went wrong');
+                                }
+                            }else{
+                                // Load view with errors
+                                    $this->view('users/register', $data);
+                                }
+                    }else{
+                            //Init Data
+                                $data =['username' => '',
+                                    'password' => '',
+                                    'email' => '',
+                                    'confirm_password' => '',
+                                    'username_err' => '',
+                                    'email_err' => '',
+                                    'password_err' => '',
+                                    'confirm_password_err' => ''
+                                ];
+                            //Load View
+                            $this->view('users/register', $data);
+                        }
             }
             else
                 redirect('pages/index');      
@@ -202,7 +193,7 @@
                             {
                                 //create session
                                $this->createUserSession($loggedInUser);
-                               flash('register_success', 'your are logged now');
+                               
                             }else{
                                 $data['password_err'] = "Password incorrect";
                                 $this->view('users/login', $data);
@@ -307,7 +298,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://http://192.168.99.100:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://192.168.99.101:8088/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>
@@ -335,9 +326,7 @@
         public function changepass()
         {
             //check For the token
-            if($_GET['token'] == "") $this->view('users/login');
-            else
-            {
+          
                 $data =['token' => $_GET['token']];
                 $row = $this->userModel->getUserByToken($data['token']);
                     if($_GET['token'] == $row->token)
@@ -402,7 +391,7 @@
                     {
                     redirect('users/token');
                     }
-                }
+                
                         
         }
         //Email Send
@@ -543,6 +532,16 @@
                 else
                     $this->view('pages/index');
             
+        }
+        // Profile of users
+        public function profile()
+        {
+            $posts = $this->postModel->getImagesbyUsr($_SESSION['id']);
+            $data = ['title' => $_SESSION['username'],
+                     'posts' => $posts
+                
+            ];
+            $this->view("users/profile", $data);
         }
         // Token  
         public function token()

@@ -21,11 +21,6 @@ h6
 
 }
 
-nav
-{
-    height: auto;
-    width: auto;
-}
 
 .register .input {
     border-radius: 0 .25rem .25rem 0;
@@ -66,12 +61,8 @@ nav
 }
 /* Decorations */
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 0;
-    margin: 0;
-    background: #C6FFDD;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #f7797d, #FBD786, #C6FFDD);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-image: linear-gradient(to right,#2D728F, #E2C2FF);
   
   }
 

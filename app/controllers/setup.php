@@ -22,7 +22,6 @@ class Setup extends Controller
 			$cn->exec($sql);
 			echo "Database schema imported\n";
 			echo "OK -> Ready to roll !\n";
-			$this->view('pages/setupnotif');
 		} catch (PDOException $e) {
 			echo 'Error: ' . $e->getMessage() . '\n';
 			die();

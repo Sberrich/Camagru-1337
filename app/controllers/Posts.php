@@ -61,9 +61,7 @@
               redirect('pages/index');
             }
         }
- 
-        
-        
+        // pagination
         public function pagination()
         {
             if(!is_numeric($_GET['page']))
@@ -90,7 +88,7 @@
            
         }
        
-        
+        //camera
         public function camera(){
            if(isset($_SESSION['id']))
            {
@@ -105,7 +103,7 @@
         }
         
  
-        
+        // add like
         public function addlikes()
         {
             if(isset($_POST['imgid']) && isset($_POST['userid']))
@@ -167,9 +165,6 @@
                        
                    }
                 
-                 
-                
-               
             }
         }
         

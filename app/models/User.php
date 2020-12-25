@@ -93,12 +93,12 @@
             
             $pass = $data['password'];
             $token = $data['token'];
-            $this->db->query("UPDATE user SET password=:password WHERE token= :token");
+            $this->db->query("UPDATE user SET `password`=:`password` WHERE token= :token");
             $this->db->bind(':password', $pass);
             $this->db->bind(':token', $token);
             if($this->db->execute())
             {
-                $this->db->query('UPDATE user3 SET token = null WHERE token= :token');
+                $this->db->query('UPDATE user SET token = null WHERE token= :token');
                 $this->db->bind(':token', $token);
                 if($this->db->execute()) return true;
                 return true;

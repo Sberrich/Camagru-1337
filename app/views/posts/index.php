@@ -1,5 +1,23 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 <div class="container">
+
+<div class="pagination justify-content-center">
+
+          <nav aria-label="Page navigation example">
+              <ul class="pagination flex-wrap justify-content-center">
+                <li class="page-item"><a class="page-link" href="http://192.168.99.101:8088/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
+                echo $_GET['page'] - 1;
+                else{
+                    echo $_GET['page'];}?>">Previous</a></li>
+                <?php for($i = 1; $i <= $data['nbrPages']; $i++) { ?>
+                <li class="page-item "><a class="page-link" href="http://192.168.99.101:8088/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
+                <?php }?>
+                <li class="page-item"><a class="page-link" href="http://192.168.99.101:8088/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
+                else{
+                    echo $_GET['page'];}?>">Next</a></li>
+              </ul>
+            </nav>
+        </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
           <?php if(is_array($data['posts']))
@@ -19,35 +37,38 @@
             </div>
             <div class="card-body">
               <div class="text-muted h7 mb-2">
-                <i class="fa fa-clock-o"></i><?php echo ' ' . $post->imgedate;?></div>
+                <i class="fa fa-clock"></i><?php echo ' ' . $post->imgedate;?></div>
                 <img src="<?php echo $post->imgurl;?>" class="img img-fluid" width="500" height="500" >
             </div>
               <div class="card-footer">
                 <!-- like    -->
-                <?php
-              $liked = false;
-              if(is_array($data['likes']))
-                      {
-              foreach ($data['likes'] as $like) {
-                if ($like->userid == $_SESSION['id'] && $like->imgid == $post->imgid) {
-                  $liked = true; ?>
-                  <i  onclick="like(event)"
-                      class = "fas fa-heart"
-                      data-post_id="<?php echo $post->imgid; ?>"
-                      data-user_id="<?php echo $_SESSION['id']; ?>"
-                      data-like_nbr="<?php echo $post->likes;?>"
-                      id="li_<?php echo $post->imgid; ?>">  
-                  </i>
                   <?php
+                    $liked = false;
+                    if(is_array($data['likes']))
+                    {
+                          foreach ($data['likes'] as $like) 
+                          {
+                                if ($like->userid == $_SESSION['id'] && $like->imgid == $post->imgid)
+                                {
+                                    $liked = true; ?>
+                                      <i  onclick="like(event)"
+                                          class = "fas fa-heart"
+                                          data-post_id="<?php echo $post->imgid; ?>"
+                                          data-user_id="<?php echo $_SESSION['id']; ?>"
+                                          data-like_nbr="<?php echo $post->likes;?>"
+                                          id="li_<?php echo $post->imgid; ?>">  
+                                      </i>
+                      <?php
+                                }
+                          }
                     }
-                }
-              }
-                if ($liked === false) {?>
+                if ($liked === false) 
+                {?>
                     <i onclick="like(event)"
                     class = "far fa-heart"
                     data-post_id="<?php echo $post->imgid;  ?>"
                     data-like_nbr="<?php echo $post->likes;?>"
-                    data-user_id="<?php echo $_SESSION['user_id']; ?>"
+                    data-user_id="<?php echo $_SESSION['id']; ?>"
                     id="li_<?php echo $post->imgid ;?>"></i>
                 <?php }
                 ?>
@@ -95,24 +116,6 @@
         <?php endforeach ;}?>
         </div>
       </div>
-      <div class="pagination justify-content-center">
-
-          <nav aria-label="Page navigation example">
-          <ul class="pagination flex-wrap justify-content-center">
-            <li class="page-item"><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
-            echo $_GET['page'] - 1;
-            else{
-                echo $_GET['page'];}?>">Previous</a></li>
-            <?php for($i = 1; $i <= $data['nbrPages']; $i++) { ?>
-            <li class="page-item "><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
-            <?php }?>
-            <li class="page-item"><a class="page-link" href="http://192.168.99.100:8088/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
-            else{
-                echo $_GET['page'];}?>">Next</a></li>
-          </ul>
-    </nav>
-    </div>
-  
 </div>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 

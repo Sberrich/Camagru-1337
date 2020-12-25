@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark  py-2" style="background-color: #000; height: 3em; display: flex; align-items: center;">
+<nav class="navbar navbar-expand-lg navbar-dark  py-2" style="background-color: #000;">
   <div class="container">
       <a class="navbar-brand" href="<?php echo URLROOT;?>/Posts/index">
           <svg width="70" height="20" viewBox="0 0 76 20" fill="none">
@@ -18,10 +18,10 @@
             <!-- Navbar Group one -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active pr-3">
-              <a class="nav-link" href="<?php echo URLROOT;?>/posts/index"><i class="fas fa-index mr-1" aria-hidden="true"></i>Home</a>
+              <a class="nav-link" href="<?php echo URLROOT;?>/posts/index">Home</a>
             </li>
             <li class="nav-item active pr-3">
-              <a class="nav-link" href="<?php echo URLROOT;?>/pages/about"><i class="fa fa-info-circle mr-2" aria-hidden="true"></i>About </a>
+              <a class="nav-link" href="<?php echo URLROOT;?>/pages/about">About </a>
             </li>
           </ul>
             <!-- Navbar Group two -->
