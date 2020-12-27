@@ -48,6 +48,18 @@
             return false;
           }
         }
+        //Find User By id
+        public function findUserById()
+        {
+          $this->db->query('SELECT * FROM user WHERE id = :id');
+          $this->db->bind(':id', $_SESSION['id']);
+          $row = $this->db->single();
+          if($this->db->rowCount() > 0){
+              return true;
+          }else{
+            return false;
+          }
+        }
         //Get User by Token
         public function getUserByToken($token)
         {

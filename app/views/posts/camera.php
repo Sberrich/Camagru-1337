@@ -1,10 +1,26 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
+<link rel="stylesheet" href="<?php echo URLROOT;?>/css/profile.css">    
+
 <div class="container">
-	<div class="row " >	
+	<div class="row " >
+		
 		<div class="col-8">
+		<br>
 			<div class="card">
+			<h2 style="text-align: center;">Welcome To Camagru Studio</h2>
+				<!-- Actions Buttons -->
+				<div class="btn-group">
+											<a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-outline-dark"><i class="fas fa-backward"  aria-hidden="true"></i> Back</a>
+											<button id="btn-start" type="button" class="btn btn-outline-success"><i class="fas fa-play"  aria-hidden="true"></i></button>
+											<button id="btn-stop" type="button" class="btn btn-outline-danger"><i class="fas fa-pause"  aria-hidden="true"></i></button>
+											<button class="btn btn-outline-danger" id="clear" role="button" ><i class="fas fa-trash" aria-hidden="true"></i></button>
+											<button class="btn btn-outline-dark" id="snap" disabled><i class="fas fa-camera"  aria-hidden="true"></i></button>
+											<button class="btn btn-outline-primary" id="save" role="button" ><i class="fas fa-save"  aria-hidden="true"></i></button>
+											<button type="button" role=button class="btn btn-outline-info" onclick="{takeAuto()}"><i class="fas fa-hourglass-start"  aria-hidden="true"></i></button>
+											<input type=number id="myInterval" class="col-2 text-center btn btn-outline-dark" value="5">
+							</div>
 					<div class="card-header">
-						<h2 style="text-align: center;">Welcome To Camagru Studio</h2>
+						
 						<img src="../public/imgs/svg/studio.svg" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg"/>
 					</div>
 					<!--scoller-->
@@ -40,18 +56,7 @@
 							</div>
 						<!-- finscrol -->
 						</div>
-						<!-- Actions Buttons -->
-						<div class="btn-group">
-											<a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-outline-dark"><i class="fas fa-backward"  aria-hidden="true"></i> Back</a>
-											<button id="btn-start" type="button" class="btn btn-outline-success"><i class="fas fa-play"  aria-hidden="true"></i></button>
-
-											<button id="btn-stop" type="button" class="btn btn-outline-danger"><i class="fas fa-pause"  aria-hidden="true"></i></button>
-											<button class="btn btn-outline-danger" id="clear" role="button" ><i class="fas fa-trash" aria-hidden="true"></i></button>
-											<button class="btn btn-outline-dark" id="snap" disabled><i class="fas fa-camera"  aria-hidden="true"></i></button>
-											<button class="btn btn-outline-primary" id="save" role="button" ><i class="fas fa-save"  aria-hidden="true"></i></button>
-											<button type="button" role=button class="btn btn-outline-info" onclick="{takeAuto()}"><i class="fas fa-hourglass-start"  aria-hidden="true"></i></button>
-											<input type=number id="myInterval" class="col-2 text-center btn btn-outline-dark" value="5">
-									</div>
+						
 							<div class="card-body">
 									<div  style='position: relative;'>
 									<div id="counter" style="position: absolute;width: 100%;height: 100%;text-align: center; font-size: 10vw; color: white;"></div>
@@ -71,17 +76,19 @@
 									
 									
 							</div>		
+				</div>
+				<br>
 					</div>
-			</div>
 			<div class="card col-4">
-					<div style="width:100%;height: 1000px; overflow-y:auto; overflow-x:hidden;">
-								<div class="card-header">
+			<div class="card-header">
 									<img src="../public/imgs/svg/album.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
 								</div>
+					<div style="width:100%;height: 1000px; overflow-y:auto; overflow-x:hidden;">
+								
 								<div class="card-body auto">
 									<?php foreach($data['posts'] as $post):?>
 										<div class="container">
-											<a  class="d-block mb-4 h-100">
+											<a  class="d-block mb-4 h-100" id="profile">
 												<img class="img-fluid img-thumbnail" src="<?php echo $post->imgurl;?>" >
 											</a>
 										</div>		

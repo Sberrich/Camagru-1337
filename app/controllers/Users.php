@@ -11,10 +11,10 @@
         public function register()
         {      
             //Check If the User is login or Not
-            if(!$this->isloggedIn())
+            if(!isloggedIn())
             {
                     //Check If the User is login or not
-                if($this->isloggedIn())
+                if(isloggedIn())
                 {
                     redirect('pages/index');
                 }
@@ -101,7 +101,7 @@
                                 <body style= " background-color: lightblue;">
                                     <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                     <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.101:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.102:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                                 </body>
                             </html>                    
                             ';
@@ -144,7 +144,7 @@
         //Login Method
         public function login()
         {    
-            if(!$this->isloggedIn())
+            if(!isloggedIn())
             {
                   //Check the Post
                 if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -192,7 +192,7 @@
                              if($loggedInUser)
                             {
                                 //create session
-                               $this->createUserSession($loggedInUser);
+                               createUserSession($loggedInUser);
                                
                             }else{
                                 $data['password_err'] = "Password incorrect";
@@ -238,26 +238,8 @@
                 else
                     $this->view("users/login");
         }
-        // Logout Method
-        public function logout()
-        {
-                    unset($_SESSION['id']);
-                    unset($_SESSION['username']);
-                    unset($_SESSION['email']);
-                    unset($_SESSION['notification']);
-                    session_destroy();
-                    redirect('users/login');
-        }
-        // check if user login or not
-        public function isloggedIn()
-        {
-             if(isset($_SESSION['id']))
-            {
-                  return true;
-            }else{
-                  return false;
-                }
-        }
+        
+        
         //Forgot Password Method
         public function fgpass()
         {   //check For the Post
@@ -298,7 +280,7 @@
                             <head>
                             </head>
                             <body>
-                                <p>To recover your account click here <a href="http://192.168.99.101:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                <p>To recover your account click here <a href="http://192.168.99.102:8088/Camagru/users/changepass/?token='. $token .'"><button 
                                 type="button" class="btn btn-primary">Change Password</button></a></p>
                             </body>
                             </html>
@@ -552,17 +534,6 @@
             $this->view("users/token", $page);
         
         }
-        //Create User Session
-        public function createUserSession($user)
-        {
-          $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
-          $_SESSION['token'] = $token;
-
-          $_SESSION['id'] = $user->id;
-          $_SESSION['username'] = $user->username;
-          $_SESSION['email'] = $user->email;
-          $_SESSION['notification'] = $user->notification;
-          redirect('pages/index');          
-        }
+        
     }
 ?>
