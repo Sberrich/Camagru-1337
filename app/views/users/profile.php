@@ -35,7 +35,7 @@
             if(confirm("Are you sure you want to delete this Photo??"))
             {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open('POST', 'http://192.168.99.102:8088/camagru/Posts/delImage');
+                xhttp.open('POST', 'http://localhost/camagru/Posts/delImage');
                 
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.onreadystatechange = function(){

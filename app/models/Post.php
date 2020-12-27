@@ -4,16 +4,13 @@ class Post{
     protected $limit;
     public function __construct()
     {
-        $start = '';
-        $per_page = '';
         $this->db = new Database;
-        $this->limit = ' LIMIT '. $start.','.$per_page;
     }
 
     public function addImage($info){
       $userid = $info['userid'];
       $pic = $info['imgurl'];
-      echo $pic;
+    echo $pic;
       $this->db->query('INSERT INTO `Img`(`userid`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
       $this->db->bind(':userid', $userid);
       $this->db->bind(':imgurl', $pic);
@@ -143,7 +140,7 @@ class Post{
     
     
     public function user_by_email($imgid){
-        $this->db->query('SELECT `notification`, email from img_user where imgid = :imgid');
+        $this->db->query('SELECT * from user join Img on Img.userid = user.id where Img.imgid = :imgid and confirmed = 1');
         $this->db->bind(':imgid', $imgid);
         $row = $this->db->single();
         return ($row);
@@ -157,12 +154,5 @@ class Post{
             $row = $this->db->resultSet();
             return ($row);
         }
-        
-    public function getPost($id){
-        $this->db->query('SELECT * FROM img WHERE userid = :user_id ORDER BY imgedate DESC');
-        $this->db->bind(':userid', $id);
-        $result = $this->db->resultSet();
-        return ($result);
-    }
-
+       
 }
