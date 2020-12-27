@@ -48,18 +48,6 @@
             return false;
           }
         }
-        //Find User By id
-        public function findUserById()
-        {
-          $this->db->query('SELECT * FROM user WHERE id = :id');
-          $this->db->bind(':id', $_SESSION['id']);
-          $row = $this->db->single();
-          if($this->db->rowCount() > 0){
-              return true;
-          }else{
-            return false;
-          }
-        }
         //Get User by Token
         public function getUserByToken($token)
         {
@@ -105,12 +93,12 @@
             
             $pass = $data['password'];
             $token = $data['token'];
-            $this->db->query("UPDATE user SET `password`=:`password` WHERE token= :token");
+            $this->db->query("UPDATE user SET `password`= :password WHERE token= :token");
             $this->db->bind(':password', $pass);
             $this->db->bind(':token', $token);
             if($this->db->execute())
             {
-                $this->db->query('UPDATE user SET token = null WHERE token= :token');
+                $this->db->query('UPDATE user SET token = null WHERE token = :token');
                 $this->db->bind(':token', $token);
                 if($this->db->execute()) return true;
                 return true;
