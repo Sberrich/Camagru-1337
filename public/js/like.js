@@ -1,5 +1,3 @@
-//----------------------------------------------------------------------------------------------------
-
 document.addEventListener("DOMContentLoaded", function()
 {
   var likes = document.getElementsByName("liket");
@@ -19,11 +17,11 @@ document.addEventListener("DOMContentLoaded", function()
                   var userid = (event.target && event.target.getAttribute('data-userid'));
                    if(userid == "")
                   {
-                      window.location.href = "http://localhost/Camagru/users/login";
+                      window.location.href = "http://192.168.99.102:8088/Camagru/users/login";
                   }
                   var xhttp = new XMLHttpRequest();
                   var params = "imgid="+imgid+"&userid="+userid;
-                  xhttp.open('POST', 'http://localhost/Camagru/Posts/addlikes');
+                  xhttp.open('POST', 'http://192.168.99.102:8088/Camagru/Posts/addlikes');
                   xhttp.withCredentials = true;
                   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                   xhttp.onreadystatechange = function(){
@@ -43,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function()
                   
                   var xhttp = new XMLHttpRequest();
                   var params = "imgid="+imgid+"&userid="+userid;
-                  xhttp.open('POST', 'http://localhost/Camagru/Posts/dellikes');
+                  xhttp.open('POST', 'http://192.168.99.102:8088/Camagru/Posts/dellikes');
                   xhttp.withCredentials = true;
                   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                   xhttp.onreadystatechange = function(){
@@ -56,35 +54,38 @@ document.addEventListener("DOMContentLoaded", function()
       }}
      
     }
-     //comment
-     for(var i=0; i < comment.length; i++){ 
-        comment[i].onclick = function(event){
-             var imgid = (event.target && event.target.getAttribute('data-imgid'));
-                var userid = (event.target && event.target.getAttribute('data-userid'));
-                if(userid == "")
-                { window.location.replace("http://localhost/Camagru/users/login");
-                }
-                var test = (event.target && event.target.parentElement);
-                var val = test.firstElementChild;
-                var cmnt = document.querySelector('p[data-iid="' + imgid + '"]');
-                var xhttp = new XMLHttpRequest();
-                    var params = "imgid="+imgid+"&userid="+userid+"&comment="+val.value;  
-                xhttp.open('POST', 'http://localhost/Camagru/Posts/addComments');
-                xhttp.withCredentials = true;
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.onreadystatechange = function(){
-                    if (this.readyState == 4 && this.status == 200){
-                        location.reload();
-                        
-                    }    
-                }
-                xhttp.send(params);
-             
+    
+
+ //comment
+ for(var i=0; i < comment.length; i++)
+ { 
+    comment[i].onclick = function(event)
+    {
+         var imgid = (event.target && event.target.getAttribute('data-imgid'));
+            var userid = (event.target && event.target.getAttribute('data-userid'));
+            if(userid == "")
+            { window.location.replace("http://192.168.99.102:8088/Camagru/users/login");
+            }
+            var test = (event.target && event.target.parentElement);
+            var val = test.firstElementChild;
+            var cmnt = document.querySelector('p[data-iid="' + imgid + '"]');
+            var xhttp = new XMLHttpRequest();
+                var params = "imgid="+imgid+"&userid="+userid+"&comment="+val.value;  
+            xhttp.open('POST', 'http://192.168.99.102:8088/Camagru/Posts/addComments');
+            xhttp.withCredentials = true;
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    location.reload();
+                    
+                }    
+            }
+            xhttp.send(params);
+         
+     }
     }
-}
 
 
 });  
-
-//----------------------------------------------------------------------------------------------------
-

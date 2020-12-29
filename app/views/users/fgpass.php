@@ -4,6 +4,7 @@
         <div class="row justify-content-center">
             <div class="card card-body mt-5 register">
                 <div class="forgot">
+                         <?php flash("confirm_danger");?>
 	                <h2 class="text-center">Forgot your password?</h2>
                     <img src="../public/imgs/svg/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
 	                <p>Change your password in three easy steps. This will help you to secure your password!</p>
@@ -28,7 +29,7 @@
                         </div>
                     <div class="row">
                         <div class="col">
-                            <input type="submit" value="send" class="btn btn-primary btn-block py-2">
+                            <input type="submit" value="send" class="btn btn-outline-primary btn-block py-2">
                         </div>
                     </div>
                 </form>

@@ -19,7 +19,7 @@
 				<?php foreach($data['posts'] as $post):?> 
 					<li id="profile">
 						<img class="img-fluid rounded box" src="<?php echo $post->imgurl;?>" style="width: 300px; height:300px "/>
-						<button data-imgid="<?php echo $post->imgid; ?>" name="delimg"  type="button" class="btn btn-outline-danger"><i class="fas fa-close"  aria-hidden="true"></i></button>
+						<button data-imgid="<?php echo $post->imgid; ?>" name="delimg"  type="button" class="btn btn-danger btn-block py-2"><i class="fas fa-close"  aria-hidden="true"></i></button>
 					</li>					
 				<?php endforeach;?>
 			</ul>
@@ -35,7 +35,7 @@
             if(confirm("Are you sure you want to delete this Photo??"))
             {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open('POST', 'http://localhost/camagru/Posts/delImage');
+                xhttp.open('POST', 'http://192.168.99.102:8088/camagru/Posts/delImage');
                 
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.onreadystatechange = function(){

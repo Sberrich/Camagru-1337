@@ -1,7 +1,7 @@
 <?php
 class Post{
     private $db;
-    protected $limit;
+  
     public function __construct()
     {
         $this->db = new Database;
@@ -10,9 +10,9 @@ class Post{
     public function addImage($info){
       $userid = $info['userid'];
       $pic = $info['imgurl'];
-    echo $pic;
+        
       $this->db->query('INSERT INTO `Img`(`userid`, `imgedate`, `imgurl`) VALUES (:userid, NOW(), :imgurl)');
-      $this->db->bind(':userid', $userid);
+      $this->db->bind(':userid', $info['userid']);
       $this->db->bind(':imgurl', $pic);
       
       if ($this->db->execute())

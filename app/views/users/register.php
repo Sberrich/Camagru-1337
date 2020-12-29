@@ -53,7 +53,7 @@
                         </div>
                         <!-- Submit Button -->
                     <div class="form-group">
-                        <input type="submit" value="Register" class="btn btn-primary btn-block py-2">
+                        <input type="submit" value="Register" class="btn btn-outline-primary btn-block py-2">
                     </div>
                     <!-- Already Registered -->
                     <div class="text-center w-100">

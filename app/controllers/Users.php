@@ -13,11 +13,6 @@
             //Check If the User is login or Not
             if(!$this->isloggedIn())
             {
-                    //Check If the User is login or not
-                if($this->isloggedIn())
-                {
-                    redirect('pages/index');
-                }
                     //check for post
                 if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
                 {
@@ -101,7 +96,7 @@
                                 <body style= " background-color: lightblue;">
                                     <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                     <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://localhost/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.102:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                                 </body>
                             </html>                    
                             ';
@@ -177,6 +172,7 @@
                             
                         }elseif($this->userModel->checkuserconfirmed($data['username'])){
                             
+                            
                         }
                         else{
                         $data['username_err'] = 'Please Check Your Email to confirm your Account';
@@ -192,7 +188,9 @@
                              if($loggedInUser)
                             {
                                 //create session
+                                
                                $this->createUserSession($loggedInUser);
+                              
                                
                             }else{
                                 $data['password_err'] = "Password incorrect";
@@ -228,6 +226,7 @@
                     if($_GET['token'] == $row->token)
                     {
                         $page = ['title' => "Thank You"];
+                        flash("Verification_success","Your Acount Has benn Verified ");
                         $this->view("users/confirm", $page);
                         $data = ['token' => $_GET['token']];
                         $this->userModel->confirm($data);
@@ -237,6 +236,7 @@
                 }
                 else
                     $this->view("users/login");
+                   
         }
         // Logout Method
         public function logout()
@@ -260,74 +260,80 @@
         }
         //Forgot Password Method
         public function fgpass()
-        {   //check For the Post
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $data =[
-                    'email' => trim($_POST['email']),
-                    'email_err' => '' 
-                ];
-                //validate Email
-                if($this->userModel->checkemailconfirmed($data['email']) == false)
-                {
-                    $data['email_err'] = 'Please Confirm your email At first';
-                }
-                if(empty($data['email'])){
-                    $data['email_err'] = 'Please enter email';
-                }
-                elseif($this->userModel->getemailbyuser($data['email']) == false){
-                    $data['email_err'] = 'Email Not Found';
-                }
-                    if(empty($data['email_err']))
-                    {
-                        $row = $this->userModel->getemailbyuser($data['email']);
-                        if($row->token == "")
-                        {
-                            //Generate A new Token
-                            $token1 = substr(md5(openssl_random_pseudo_bytes(20)), 10);
-                            $data['token'] = $token1;
-                            $this->userModel->updateTokenbyemail($data);
-                            $row = $this->userModel->getUserByEmail($data['email']);
-                            // echo $row->token;
-                            // die();
-                            $token = $row->token;
-                            $to  = $data['email'];
-                            $subject = 'Recover account';
-                            $message = '
-                                <html>
-                                <head>
-                                </head>
-                                <body>
-                                    <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
-                                    type="button" class="btn btn-primary">Change Password</button></a></p>
-                                </body>
-                                </html>
-                            ';
-                            $headers = 'MIME-Version: 1.0'. "\r\n";
-                            $headers .= 'Content-type: text/html; charset=iso-8859-1'."\r\n";
-                            $headers .= 'To: ' . $to."\r\n";
-                            if(mail($to, $subject, $message , $headers))
-                            redirect('users/emailsend');
-                        }
-                    } else{
-                     $this->view('users/fgpass', $data);
-                }
-
-            }
-            else{
-                $data =['email' => '',
-                    'email_err' => ''];
-                $this->view('users/fgpass', $data);
+        {   
             
-                }     
+            //check For the Post
+                    if($_SERVER['REQUEST_METHOD'] == 'POST')
+                    {
+                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                        $data =[
+                            'email' => trim($_POST['email']),
+                            'email_err' => '' 
+                        ];
+                        //validate Email
+                        if($this->userModel->checkemailconfirmed($data['email']) == false)
+                        {
+                            flash("confirm_danger","Please Confirm your email At first","alert alert-danger");     
+                            $data['email_err'] = 'Please Confirm your email At first';
+                        }
+                        if(empty($data['email'])){
+                            $data['email_err'] = 'Please enter email';
+                        }
+                        elseif($this->userModel->getemailbyuser($data['email']) == false){
+                            $data['email_err'] = 'Email Not Found';
+                        }
+                            if(empty($data['email_err']))
+                            {
+                                $row = $this->userModel->getemailbyuser($data['email']);
+                                if($row->token == "")
+                                {
+                                    //Generate A new Token
+                                    $token1 = substr(md5(openssl_random_pseudo_bytes(20)), 10);
+                                    $data['token'] = $token1;
+                                    $this->userModel->updateTokenbyemail($data);
+                                    $row = $this->userModel->getUserByEmail($data['email']);
+                                
+                                    $token = $row->token;
+                                    $to  = $data['email'];
+                                    $subject = 'Recover account';
+                                    $message = '
+                                        <html>
+                                        <head>
+                                        </head>
+                                        <body>
+                                            <p>To recover your account click here <a href="http://192.168.99.102:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                            type="button" class="btn btn-primary">Change Password</button></a></p>
+                                        </body>
+                                        </html>
+                                    ';
+                                    $headers = 'MIME-Version: 1.0'. "\r\n";
+                                    $headers .= 'Content-type: text/html; charset=iso-8859-1'."\r\n";
+                                    $headers .= 'To: ' . $to."\r\n";
+                                    if(mail($to, $subject, $message , $headers))
+                                    redirect('users/emailsend');
+                                    }
+                                } else{
+                                    $this->view('users/fgpass', $data);
+                        }
+
+                    }
+                    else{
+                        $data =['email' => '',
+                            'email_err' => ''];
+                        $this->view('users/fgpass', $data);
+                        }
+                    
+
         }
         // Change Pass
         public function changepass()
-        {
+        {   if($this->isloggedIn())
+            {
             //check For the token
           
                 $data =['token' => $_GET['token']];
                 $row = $this->userModel->getUserByToken($data['token']);
+                var_dump($data['token']);
                     if($_GET['token'] == $row->token)
                     {
                         $token = $_GET['token'];
@@ -390,13 +396,20 @@
                     {
                     redirect('users/token');
                     }
+                }
                 
-                        
+                redirect("pages/index");
+                          
         }
         //Email Send
         public function emailsend(){
             $page = ['title' => "Congratulations!"];
+            if(isset($_SESSION['id']))
             $this->view("users/emailsend", $page);
+                else
+                   
+                $this->view('pages/index');
+            
         }
         // Modify
         public function modify()
@@ -433,19 +446,19 @@
                         {
                             $data['username_err'] = 'Please Enter Alphanumeric Username';
                         }
-                        elseif($this->userModel->findUserByUsername($data['username']))
+                        /*elseif($this->userModel->findUserByUsername($data['username']))
                         {
                             $data['username_err'] = 'Username Already Exist';
-                        }
+                        }*/
                         //validate Email
                         if(empty($data['email']))
                         {
                             $data['email_err'] = 'The Email Field is required.';
                         }
-                        elseif($this->userModel->getemailbyuser($data['email']))
+                       /* elseif($this->userModel->getemailbyuser($data['email']))
                         {
                             $data['email_err'] = 'Email Already Exist';
-                        }
+                        }*/
                         //validate Password
                         if(empty($data['password']))
                         {
@@ -500,10 +513,10 @@
                                     ';
                                     $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
                                     mail($to, $subject, $message , $headers);
-                                    if(mail($to, $subject, $message , $headers))
-                                        redirect('users/notification');
+                               
                                 }
                                 if ($this->userModel->modify($data)) {
+                                    
                                     redirect('users/modify');
                             } else {
                                 die('Something went wrong');
@@ -537,10 +550,13 @@
         {
             $posts = $this->postModel->getImagesbyUsr($_SESSION['id']);
             $data = ['title' => $_SESSION['username'],
-                     'posts' => $posts
-                
+                     'posts' => $posts  
             ];
-            $this->view("users/profile", $data);
+            if(isset($_SESSION['id']))
+                    $this->view('users/profile', $data);
+                else
+                   
+                $this->view('pages/index');
         }
         // Token  
         public function token()
@@ -548,7 +564,12 @@
             
             $page = ['title' => "Sorry"];
             
+           
+            if(isset($_SESSION['id']))
             $this->view("users/token", $page);
+                else
+                   
+                $this->view('pages/index');
         
         }
         //Create User Session

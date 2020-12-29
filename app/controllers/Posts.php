@@ -37,7 +37,9 @@
                     $img = str_replace(' ', '+', $img);
                     $data = base64_decode($img);
                     $file = $upload_dir . mktime().'.png';
+                    echo "will save";
                     file_put_contents($file, $data);
+                    echo "saved in $file";
                     chmod($file, 0777);
                     $sourceImage = str_replace(URLROOT, '..',  $_POST['sticker']);
                     $destImage = $file;

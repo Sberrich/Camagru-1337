@@ -5,14 +5,14 @@
 
           <nav aria-label="Page navigation example">
               <ul class="pagination flex-wrap justify-content-center">
-                <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
+                <li class="page-item"><a class="page-link" href="http://192.168.99.102:8088/Camagru/Posts/index?page=<?php if($_GET['page'] > 1)
                 echo $_GET['page'] - 1;
                 else{
                     echo $_GET['page'];}?>">Previous</a></li>
                 <?php for($i = 1; $i <= $data['nbrPages']; $i++) { ?>
-                <li class="page-item "><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
+                <li class="page-item "><a class="page-link" href="http://192.168.99.102:8088/Camagru/Posts/index?page=<?php echo $i;?>"><?php echo $i;?></a></li>
                 <?php }?>
-                <li class="page-item"><a class="page-link" href="http://localhost/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
+                <li class="page-item"><a class="page-link" href="http://192.168.99.102:8088/Camagru/Posts/index?page=<?php if($_GET['page'] < $data['nbrPages']){echo $_GET['page'] + 1;}
                 else{
                     echo $_GET['page'];}?>">Next</a></li>
               </ul>

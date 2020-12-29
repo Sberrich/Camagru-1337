@@ -196,17 +196,7 @@
                echo $_SESSION['flash'];
            unset($_SESSION['flash']);
         }
-        //Get Comment
-        public function get_commenter($userid)
-        {
-          $this->db->query('SELECT * FROM user WHERE userid = :userid');
-          $this->db->bind(':userid',$userid);
-          $result = $this->db->single();
-          if($result)
-            return ($result);
-              else
-          return false;
-        } 
+       
        
 }
 ?>

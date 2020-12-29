@@ -3,6 +3,7 @@
   <div class="row">
     <div class="col-md-8 mx-auto">
       <div class="card card-body mt-5 register">
+      <?php flash("Modify_success");?>
           <img src="../public/imgs/svg/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
           <h2 class="text-center display-5">Modify An Account</h2>
           <p>Please fill out this form to modify your compte</p>
@@ -76,7 +77,7 @@
               </div> 
               <!-- Submit Modify -->
               <div class="form-group">
-                    <input type="submit" value="modify" class="btn btn-primary btn-block py-2">
+                    <input type="submit" value="modify" class="btn btn-outline-danger btn-block py-2">
               </div>
               
           </form>

@@ -3,7 +3,7 @@
 var video = document.getElementById('video'),
     canva = document.getElementById('canvas'),
     snap = document.getElementById("snap"),
-    context = canva.getContext('2d'),
+    context = canva ? canva.getContext('2d') : null,
     h = 480,
     w = 640,
     sticker,
@@ -19,7 +19,8 @@ var video = document.getElementById('video'),
     start = document.getElementById("btn-start");
     pause = document.getElementById("btn-stop");
 
-
+if (video)
+{
   //start de stream
 start.addEventListener("click",function(event){
 
@@ -156,13 +157,13 @@ window.addEventListener('DOMContentLoaded', uploadimg);
     var imgData = canvas.toDataURL("image/png");
       var params = "image=" + imgData + "&sticker=" + sticker;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'http://localhost/camagru/posts/SaveImage');
+   xhr.open('POST', 'http://192.168.99.102:8088/camagru/posts/SaveImage');
 
-   xhr.withCredentialcanva = true;
+   xhr.withCredentials = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    if(canva == 1 && filter_checked == 1 && camera_allowed == 1)
    {
-    
+    console.log(params)
     xhr.send(params);
    }
    location.reload();
@@ -209,6 +210,6 @@ function takeAuto() {
 
 
 
-
+}
 
 
