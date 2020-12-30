@@ -96,7 +96,7 @@
                                 <body style= " background-color: lightblue;">
                                     <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                     <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.102:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://192.168.99.100:8088/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                                 </body>
                             </html>                    
                             ';
@@ -301,7 +301,7 @@
                                         <head>
                                         </head>
                                         <body>
-                                            <p>To recover your account click here <a href="http://192.168.99.102:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                            <p>To recover your account click here <a href="http://192.168.99.100:8088/Camagru/users/changepass/?token='. $token .'"><button 
                                             type="button" class="btn btn-primary">Change Password</button></a></p>
                                         </body>
                                         </html>
@@ -327,13 +327,12 @@
         }
         // Change Pass
         public function changepass()
-        {   if($this->isloggedIn())
-            {
+        {   
             //check For the token
           
                 $data =['token' => $_GET['token']];
                 $row = $this->userModel->getUserByToken($data['token']);
-                var_dump($data['token']);
+              
                     if($_GET['token'] == $row->token)
                     {
                         $token = $_GET['token'];
@@ -396,19 +395,14 @@
                     {
                     redirect('users/token');
                     }
-                }
-                
-                redirect("pages/index");
                           
         }
         //Email Send
         public function emailsend(){
             $page = ['title' => "Congratulations!"];
-            if(isset($_SESSION['id']))
+          
             $this->view("users/emailsend", $page);
-                else
-                   
-                $this->view('pages/index');
+            
             
         }
         // Modify
@@ -563,13 +557,9 @@
         {
             
             $page = ['title' => "Sorry"];
-            
-           
-            if(isset($_SESSION['id']))
+
             $this->view("users/token", $page);
-                else
-                   
-                $this->view('pages/index');
+         
         
         }
         //Create User Session

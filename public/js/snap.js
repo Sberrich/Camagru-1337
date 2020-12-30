@@ -83,20 +83,21 @@ upload_img.addEventListener("click", function()
      
   }
 );
-
-// Clear canvas
-document.getElementById('clear').addEventListener("click", clearcanvas);
 function clearcanvas(){
-   context.clearRect(0, 0, w, h);
-   imgfilter.src = "";
-   canvasfilter.src = "";
-   imgfilter.style.display = 'none';
-   canvasfilter.style.display = 'none';
-   canva = 0;
-   placefilter = imgfilter;
+  context.clearRect(0, 0, w, h);
+  imgfilter.src = "";
+  canvasfilter.src = "";
+  imgfilter.style.display = 'none';
+  canvasfilter.style.display = 'none';
+  canva = 0;
+  placefilter = imgfilter;
 
 
 };
+
+// Clear canvas
+document.getElementById('clear').addEventListener("click", clearcanvas);
+
 
 
 
@@ -125,28 +126,28 @@ function isImage(file)
        return false;
 }
 // uploading fonction
+function uploadimg(){
+  upload_img.addEventListener('change', function(ev) {
+   var file = ev.target.files[0];
+      var img = new Image;
 
+      img.onload = function () {
+           context.drawImage(img, 0, 0, w, h);
+           canva = 1;
+           camera_allowed = 1;
+           
+      }
+
+ 
+      if(file && isImage(file))
+      {
+       img.src = URL.createObjectURL(file);
+      }
+  });
+
+}
 window.addEventListener('DOMContentLoaded', uploadimg);
-  function uploadimg(){
-      upload_img.addEventListener('change', function(ev) {
-       var file = ev.target.files[0];
-          var img = new Image;
-
-          img.onload = function () {
-               context.drawImage(img, 0, 0, w, h);
-               canva = 1;
-               camera_allowed = 1;
-               
-          }
-
-     
-          if(file && isImage(file))
-          {
-           img.src = URL.createObjectURL(file);
-          }
-      });
-
-  }
+ 
 
 
 
@@ -157,17 +158,17 @@ window.addEventListener('DOMContentLoaded', uploadimg);
     var imgData = canvas.toDataURL("image/png");
       var params = "image=" + imgData + "&sticker=" + sticker;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'http://192.168.99.102:8088/camagru/posts/SaveImage');
+   xhr.open('POST', 'http://192.168.99.100:8088/camagru/posts/SaveImage');
 
    xhr.withCredentials = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    if(canva == 1 && filter_checked == 1 && camera_allowed == 1)
    {
-    console.log(params)
-    xhr.send(params);
+    
+        xhr.send(params);
+       
    }
-   location.reload();
-      
+  
 });
 
 

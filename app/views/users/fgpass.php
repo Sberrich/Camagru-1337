@@ -6,7 +6,7 @@
                 <div class="forgot">
                          <?php flash("confirm_danger");?>
 	                <h2 class="text-center">Forgot your password?</h2>
-                    <img src="../public/imgs/svg/edit.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
+                    <img src="../public/imgs/svg/login.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
 	                <p>Change your password in three easy steps. This will help you to secure your password!</p>
 	                <ol class="list-unstyled">
 	                    <li><span class="text-primary text-medium">1. </span>Enter your email address below.</li>

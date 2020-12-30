@@ -62,7 +62,7 @@ h6
 /* Decorations */
 body{
 
-  background-image: linear-gradient(to right,#2D728F, #E2C2FF);
+    background:linear-gradient(to bottom right,#2CCABA, #1EC68D));
   
   }
 
@@ -73,3 +73,4 @@ body{
 input.input.form-control.bg-white.border-md.border-left-0.pl-3 {
     border-radius: 0 .25rem .25em 0;
 }
+

@@ -29,12 +29,18 @@
 				unset($url[1]);
 			}
 			// Controller Exist
-			$controllerExist = file_exists('../app/controllers/' . $this->currentController.'.php');
+			if ($this->currentController == "Setup")
+				$controllerExist = file_exists('../app/config/' . $this->currentController.'.php');
+			else
+				$controllerExist = file_exists('../app/controllers/' . $this->currentController.'.php');
 			$methodExist = FALSE;
 			//If Controller Exist Require It
 			if($controllerExist)
 			{
-				require_once '../app/controllers/'. $this->currentController . '.php';
+				if ($this->currentController == "Setup")
+					require_once '../app/config/'. $this->currentController . '.php';
+				else
+					require_once '../app/controllers/'. $this->currentController . '.php';
 				$this->currentController = new $this->currentController;
 				// Check to see if method exists in controller
 				$methodExist = method_exists($this->currentController, $this->currentMethod);
@@ -44,6 +50,7 @@
 			//iF Not 
 			if (!$methodExist || in_array($this->currentMethod, $this->NotAllowedMethods))
 			{
+				flash("404","the requested page not found","alert alert-warning");
 				include(APPROOT.'/views/pages/notfound.php');
 				die();
 			}

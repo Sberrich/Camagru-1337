@@ -20,6 +20,12 @@
       $data = ['title'=>'Samir Berrichi'];
       $this->view('pages/about', $data);
     }
+    //About Method
+    public function setup()
+    {
+      $data = ['title'=>'Database'];
+      $this->view('pages/setup', $data);
+    }
     //Not Found Method
     public function error()
     {

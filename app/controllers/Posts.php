@@ -54,7 +54,7 @@
                         'imgurl' => $file,
                     ];
                       if($this->postModel->addImage($data) == true){
-                          $this->postModel->getImage();
+                          
                       }else
                         return false;
               }

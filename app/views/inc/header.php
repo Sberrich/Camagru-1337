@@ -18,4 +18,5 @@
     </head>
     <?php require APPROOT . '/views/inc/navbar.php';?>
     <body>
+  
 <div>

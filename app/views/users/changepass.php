@@ -4,7 +4,8 @@
         <div class="col-md-6 mx-auto">
             <div class="card card-body bg-light mt-5">
                 <h2 class="text-center">Forgot Password?</h2>
-                <img src="../public/imgs/svg/changepass.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
+                <img src="../../public/imgs/svg/fgp.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
+
                 <p>You can reset your password here.</p>
                 <form method="POST">
                      <div class="form-group">
