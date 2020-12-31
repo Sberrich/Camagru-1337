@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", function()
                   var userid = (event.target && event.target.getAttribute('data-userid'));
                    if(userid == "")
                   {
-                      window.location.href = "http://192.168.99.100:8088/Camagru/users/login";
+                      window.location.href = window.location.host + "/Camagru/users/login";
                   }
                   var xhttp = new XMLHttpRequest();
                   var params = "imgid="+imgid+"&userid="+userid;
-                  xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/addlikes');
+                  xhttp.open('POST',  window.location.host + '/Camagru/Posts/addlikes');
                   xhttp.withCredentials = true;
                   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                   xhttp.onreadystatechange = function(){
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function()
                   
                   var xhttp = new XMLHttpRequest();
                   var params = "imgid="+imgid+"&userid="+userid;
-                  xhttp.open('POST', 'http://192.168.99.100:8088/Camagru/Posts/dellikes');
+                  xhttp.open('POST',  window.location.host + '/Camagru/Posts/dellikes');
                   xhttp.withCredentials = true;
                   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                   xhttp.onreadystatechange = function(){

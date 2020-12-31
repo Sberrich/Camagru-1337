@@ -57,9 +57,12 @@ start.addEventListener("click",function(event){
 //pause the stream
 pause.addEventListener("click",function(event)
 {
-  video.srcObject.getTracks().forEach(function(video) {
+  if(video)
+  {
+    video.srcObject.getTracks().forEach(function(video) {
     video.stop();
-  });
+    });
+  }
   });
 
 //Sanp A pic
@@ -158,7 +161,7 @@ window.addEventListener('DOMContentLoaded', uploadimg);
     var imgData = canvas.toDataURL("image/png");
       var params = "image=" + imgData + "&sticker=" + sticker;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'http://192.168.99.100:8088/camagru/posts/SaveImage');
+   xhr.open('POST', window.location.host + '/camagru/posts/SaveImage');
 
    xhr.withCredentials = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
