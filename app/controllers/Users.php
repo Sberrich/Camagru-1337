@@ -34,23 +34,28 @@
                         'confirm_password_err' => ''
                     ];
                     //validate username
-                        if(empty($data['username']))
-                        {
-                            $data['username_err'] = 'The Username Field is required.';
+                    if(empty($data['username'])){
+                        $data['username_err'] = 'Please enter username';
+                    } elseif (strlen($data['username']) > 30) {
+                        $data['username_err'] = 'Long Username';
+                    }
+                    else {
+                     
+                        if($this->userModel->findUserByUsername($data['username'])){
+                            $data['username_err'] = 'Username is already taken';
                         }
-                        elseif(strlen($_POST['username']) < 6 || strlen($_POST['username']) > 8 )
-                        {
-                                    $data['username_err'] = 'To create Username, you have to meet at Mini 6 char and In max 8 char';
-                        }
-                        elseif(!ctype_alnum($data['username']) && !empty($data['username']))
-                        {
-                            $data['username_err'] = 'Please Enter Alphanumeric Username';
-                        }
-                        elseif($this->userModel->findUserByUsername($data['username']))
-                        {
-                            $data['username_err'] = 'Username Already Exist';
-                        }
-
+                    }
+                      //validate Email
+                      if(empty($data['email']))
+                      {
+                          $data['email_err'] = 'Please Enter Your Email';
+                      }
+                      elseif($this->userModel->getemailbyuser($data['email']))
+                      {
+                          $data['email_err'] = 'Email Already Exist';
+                      }else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                          $data['email_err'] = 'Email is not valid';
+                      }
                     //validate Password
                         if(empty($data['password']))
                         {
@@ -71,15 +76,7 @@
                             $data['confirm_password_err'] = 'Passwords not match';
                         }
 
-                    //validate Email
-                        if(empty($data['email']))
-                        {
-                            $data['email_err'] = 'The Email Field is required.';
-                        }
-                        elseif($this->userModel->getemailbyuser($data['email']))
-                        {
-                            $data['email_err'] = 'Email Already Exist';
-                        }
+                  
 
                     // Make sure Errors fileds are empty
                         if(empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['email_err']))
@@ -161,37 +158,31 @@
                         //validate Password
                         if(empty($data['password'])){
                             $data['password_err'] = 'Please enter Password';
-                          }elseif(strlen($_POST['password']) < 6|| ctype_lower($_POST['password'])) {
-                                      $data['password_err'] = 'To create password, you have to meet all of the following requirements:Mini 8 char,At least one special character,one number';
-                             }
+                        }
 
                         //validate and check For Username
                         if($this->userModel->findUserByUsername($data['username']) == false)
                         {
                             $data['username_err'] = 'No User Found';
                             
-                        }elseif($this->userModel->checkuserconfirmed($data['username'])){
-                            
-                            
                         }
-                        else{
-                        $data['username_err'] = 'Please Check Your Email to confirm your Account';
-                            
-                        }
-
                         //make sure Errors are Empty
                         if(empty($data['username_err']) && empty($data['password_err']))
                         {
                         // Validate And check and set Login User
                             $loggedInUser = $this->userModel->login($data['username'], $data['password']);
-                        
-                             if($loggedInUser)
+                            if($loggedInUser)
                             {
-                                //create session
-                                
-                               $this->createUserSession($loggedInUser);
-                              
-                               
+                                if($loggedInUser->confirmed == '1')
+                                {
+                                    //create session
+                                    
+                                $this->createUserSession($loggedInUser);
+                                    redirect('pages/index');
+                                }else{
+                                    flash('login_success', 'You account is not verified','alert alert-danger');
+                                    redirect('users/login');
+                                    } 
                             }else{
                                 $data['password_err'] = "Password incorrect";
                                 $this->view('users/login', $data);
@@ -240,13 +231,18 @@
         }
         // Logout Method
         public function logout()
-        {
+        { if(isset($_GET['token']))
+            {
                     unset($_SESSION['id']);
                     unset($_SESSION['username']);
                     unset($_SESSION['email']);
                     unset($_SESSION['notification']);
                     session_destroy();
                     redirect('users/login');
+            }else
+            {
+                redirect('posts/index');
+            }
         }
         // check if user login or not
         public function isloggedIn()
@@ -301,7 +297,7 @@
                                         <head>
                                         </head>
                                         <body>
-                                            <p>To recover your account click here <a href="http://192.168.99.100:8088/Camagru/users/changepass/?token='. $token .'"><button 
+                                            <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
                                             type="button" class="btn btn-primary">Change Password</button></a></p>
                                         </body>
                                         </html>
@@ -492,8 +488,8 @@
                                 }if(empty($data['email_err']))
                                 {
                                     $to = $data['email'];
-                                    print_r($data['email']);
-                                    $row = $this->userModel->getemailbyuser($data['email']);
+                                    
+                                    $row = $this->userModel->getemail($data['email']);
                                     $subject = 'Modify account';
                                     $message = '
                                     <html>
@@ -547,10 +543,13 @@
                      'posts' => $posts  
             ];
             if(isset($_SESSION['id']))
-                    $this->view('users/profile', $data);
-                else
-                   
-                $this->view('pages/index');
+             {       $this->view('users/profile', $data);
+               }  else{
+
+
+                   redirect('users/login');
+               }
+                logout();
         }
         // Token  
         public function token()

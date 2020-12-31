@@ -40,7 +40,7 @@
                     <a class="nav-link" href="<?php echo URLROOT;?>/users/modify"><i class="fas fa-edit" aria-hidden="true"></i> EditProfile </a>
                 </li>
                 <li class="nav-item active pr-3">
-                  <a class="nav-link" href="<?php echo URLROOT;?>/users/logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i>Logout</a>
+                  <a class="nav-link" href="<?php echo URLROOT; ?>/users/logout?token=<?php echo $_SESSION['token']?>"><i class="fas fa-sign-out-alt" aria-hidden="true"></i>Logout</a>
                 </li>
               <!-- User Dont have an id Session -->
               <?php else: ?>

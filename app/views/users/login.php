@@ -5,6 +5,7 @@
             <div class="card card-body mt-5 register">
                 <img src="../public/imgs/svg/login.svg" alt="" class="img-fluid mb-3 d-none m-auto d-md-block" id="svg">
                 <?php flash('register_success');?>
+                <?php flash('login_success');?>
                 <?php flash('changepass_success');?>
                 <h2 class="text-center">Login</h2>
                 <p class="font-italic text-center text-muted mb-0">Please fill in your informations to Login!</p>

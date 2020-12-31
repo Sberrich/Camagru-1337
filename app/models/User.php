@@ -68,7 +68,7 @@
                 return false;
         }
         //FindUserByEmail
-        public function getemailbyuser($email)
+        public function getemail($email)
         {
             $this->db->query('SELECT * FROM user WHERE email = :email');
             $this->db->bind(':email', $email);
@@ -106,19 +106,7 @@
             else
                 return false;
         }
-        //Check The User Confimation
-        public function checkuserconfirmed($username)
-        {
-            $this->db->query('SELECT * FROM user WHERE username = :username');
-            $this->db->bind(':username', $username);
-            $row = $this->db->single();
-            $chek = $row->confirmed;
-            if($chek == 1){
-                return true;
-            }else{
-              return false;
-            }
-        }
+
         //Check The User Confimation
         public function checkemailconfirmed($email)
         {
