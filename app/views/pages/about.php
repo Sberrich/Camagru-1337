@@ -11,7 +11,7 @@
            <h1 class="cover-heading text-center">CAMAGRU - ECOLE 1337 - 42 Network</h1>
                 Project executed out as part of our training at school 1337.
                 first project of the Web branch.
-                Camagru offers you to create a small web application allowing you to perform basic edits using your webcam and predefined images.
+                Camagru offers you to create a small web application allowing you to perform basic news using your webcam and predefined images.
             </b>
       
             

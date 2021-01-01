@@ -10,7 +10,7 @@
     {
       $data = [
         'title' => 'Welcome to Camagru',
-        'description' => 'This is a small web application allowing you to make basic photo editing using your webcam and some predefined images.',
+        'description' => 'This is a small web application allowing you to make basic photo newing using your webcam and some predefined images.',
       ];
       $this->view('pages/index', $data);
     }

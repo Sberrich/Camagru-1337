@@ -153,30 +153,61 @@
                 return false;
             }
         }
-        //Update Profile 
-        public function modify($data)
-        {
-          
-           $this->db->query('SELECT * FROM user WHERE id = :id1');
-           $this->db->bind(':id1', $data['id']);
-           $row = $this->db->single();
-           $mail = $data['email'] != "" ? $data['email'] : $row->email;
-           $pass = $data['password'] != "" ? $data['password'] : $row->password;
-           $user = $data['username'] != "" ? $data['username'] : $row->username;
-           $_SESSION['username'] = $user;
-           $this->db->query('UPDATE  `user` SET `username` = :uname1 , email = :email1 , `password` = :password1, `notification` = :notif  WHERE id = :id1');
-           $this->db->bind(':uname1', $user);
-           $this->db->bind(':email1', $mail);
-           $this->db->bind(':password1', $pass);
-           $this->db->bind(':id1', $data['id']);
-            $this->db->bind(':notif', $data['notif']);
-           // Execute
-           if ($this->db->execute()) {
-               return true;
-           } else {
-               return false;
-           }
-        }
+        // Find user by id
+        public function findUserById(){
+          $this->db->query('SELECT * FROM user WHERE id = :id');
+          $this->db->bind(':id', $_SESSION['id']);
+  
+          $row = $this->db->single();
+      
+          return $row; 
+      }
+        // Edit user
+        public function modify($data){
+          $row = $this->findUserById();
+          if($row)
+          {
+              $hashed_password = $row->password;
+              if(password_verify($data['new_password'] ,$hashed_password)){
+                  $_SESSION['notif'] = $data['notif'];
+                  if($this->update($data))
+                      return true;
+                  else 
+                      return false;
+              }
+              else
+                  return false;
+          }
+      }
+         // Update
+         public function update($data)
+         {
+             $this->db->query('SELECT * FROM user WHERE id = :id1');
+             $this->db->bind(':id1', $data['id']);
+             $row = $this->db->single();
+             $mail = $data['new_email'] != "" ? $data['new_email'] : $row->email;
+             $pass = $data['new_password'] != "" ? password_hash($data['new_password'], PASSWORD_DEFAULT) : $row->password;
+             $username = $data['new_username'] != "" ? $data['new_username'] : $row->username;
+             
+             $data['old_password'] = $pass;
+             $_SESSION['username'] = $username;
+             $_SESSION['email'] = $mail;
+             $_SESSION['password'] = $pass;
+             $this->db->query('UPDATE `user` SET 
+            `username`=:new_username,`email`=:new_email,`password`=:new_password, `notif`= :notif WHERE id = :id');
+             $this->db->bind(':new_username', $username);
+             $this->db->bind(':new_email', $mail);
+             $this->db->bind(':new_password', $pass);
+             $this->db->bind(':notif', $data['notif']);
+             $this->db->bind(':id', $data['id']);
+ 
+             if($this->db->execute()){
+                 return true;
+             }else {
+                 return false;
+             }
+         }
+ 
         //Flash Method
         public function flash($key,$value)
         {
