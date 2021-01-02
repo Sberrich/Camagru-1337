@@ -5,6 +5,7 @@
         public function __construct()
         {
             $this->db = new Database;
+           
         }
         //register Model
         public function register($data)
@@ -17,7 +18,7 @@
           if($this->db->execute()){
             return true;
            } else {
-            return false;
+            return false; 
            }
         }
         // Login Model
@@ -168,15 +169,17 @@
           if($row)
           {
               $hashed_password = $row->password;
-              if(password_verify($data['new_password'] ,$hashed_password)){
-                  $_SESSION['notif'] = $data['notif'];
+              if(password_verify($data['edit_password'] ,$hashed_password)){
+                  $_SESSION['notification'] = $data['notif'];
                   if($this->update($data))
                       return true;
                   else 
                       return false;
               }
               else
+              {
                   return false;
+              }
           }
       }
          // Update
@@ -185,11 +188,11 @@
              $this->db->query('SELECT * FROM user WHERE id = :id1');
              $this->db->bind(':id1', $data['id']);
              $row = $this->db->single();
-             $mail = $data['new_email'] != "" ? $data['new_email'] : $row->email;
-             $pass = $data['new_password'] != "" ? password_hash($data['new_password'], PASSWORD_DEFAULT) : $row->password;
-             $username = $data['new_username'] != "" ? $data['new_username'] : $row->username;
+             $mail = $data['edit_email'] != "" ? $data['edit_email'] : $row->email;
+             $pass = $data['edit_new_password'] != "" ? password_hash($data['edit_new_password'], PASSWORD_DEFAULT) : $row->password;
+             $username = $data['edit_username'] != "" ? $data['edit_username'] : $row->username;
              
-             $data['old_password'] = $pass;
+             $data['edit_password'] = $pass;
              $_SESSION['username'] = $username;
              $_SESSION['email'] = $mail;
              $_SESSION['password'] = $pass;
@@ -200,12 +203,12 @@
              $this->db->bind(':new_password', $pass);
              $this->db->bind(':notif', $data['notif']);
              $this->db->bind(':id', $data['id']);
- 
-             if($this->db->execute()){
-                 return true;
-             }else {
-                 return false;
-             }
+            echo "hello " . $data['notif'];
+            //  if($this->db->execute()){
+            //      return true;
+            //  }else {
+            //      return false;
+            //  }
          }
  
         //Flash Method

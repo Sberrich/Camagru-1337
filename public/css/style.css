@@ -31,12 +31,12 @@ h6
     border-radius: .25rem 0 0 .25rem;
 }
 
-.register .is-invalid .input-holder {
+.is-invalid .input-holder {
     border: 2px solid #dc3545;
     border-radius: .25rem;
 }
 
-.register .is-invalid .invalid-feedback{
+.is-invalid .invalid-feedback{
     display: block;
 }
 
