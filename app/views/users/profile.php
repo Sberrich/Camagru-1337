@@ -34,8 +34,10 @@
             var params = "imgid="+imgid;
             if(confirm("Are you sure you want to delete this Photo??"))
             {
-                var xhttp = new XMLHttpRequest();
-                xhttp.open('POST', 'http://localhost/camagru/Posts/delImage');
+				var xhttp = new XMLHttpRequest();
+				var path = window.location.protocol + "//" + window.location.hostname +
+                  ":" + (window.location.port)+'/camagru/posts/delImage';
+                xhttp.open('POST', path);
                 
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.onreadystatechange = function(){

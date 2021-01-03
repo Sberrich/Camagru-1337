@@ -6,6 +6,10 @@
         {
             $this->userModel = $this->model('User');
             $this->postModel = $this->model('Post');
+            
+       
+            
+
         }
         //Register Method
         public function register()
@@ -93,7 +97,7 @@
                                 <body style= " background-color: lightblue;">
                                     <h1 style="text-align: center;text-transform: uppercase;">Welcome to Camagru</h1>
                                     <p style="font-size:48px;text-align: center;">&#128512; &#128516; &#128525;&#128151;</p>
-                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="' .$_SERVER['HTTP_HOST'] . '/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
+                                    <p style="text-indent: 50px;  text-align: justify;letter-spacing: 3px;">To activate your account please click <a href="http://'.getenv('HTTP_HOST'). '/Camagru/users/confirm/?token='. $token .'"><button color:green>Here</button></a> This is an automatic mail please do not reply</p>               
                                 </body>
                             </html>                    
                             ';
@@ -145,10 +149,12 @@
                         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                        //Init data
-                        $data =['username' => trim($_POST['username']),
-                        'password' => trim($_POST['password']),
-                        'username_err' => '',
-                        'password_err' => '',
+                        $data =
+                        [
+                            'username' => trim($_POST['username']),
+                            'password' => trim($_POST['password']),
+                            'username_err' => '',
+                            'password_err' => '',
                         ];
 
                         //validate Username
@@ -207,6 +213,23 @@
                 redirect('pages/index');
          
         }
+        // Logout Method
+        public function logout()
+        { 
+            if(isset($_GET['token']))
+            {
+                    unset($_SESSION['id']);
+                    unset($_SESSION['username']);
+                    unset($_SESSION['email']);
+                    unset($_SESSION['notification']);
+                    unset($_SESSION['created_at']);
+                    session_destroy();
+                    redirect('users/login');
+            }else
+            {
+                redirect('posts/index');
+            }
+        }
         //Confirm Acounts
         public function confirm()
         {
@@ -228,22 +251,6 @@
                 else
                     $this->view("users/login");
                    
-        }
-        // Logout Method
-        public function logout()
-        { 
-            if(isset($_GET['token']))
-            {
-                    unset($_SESSION['id']);
-                    unset($_SESSION['username']);
-                    unset($_SESSION['email']);
-                    unset($_SESSION['notification']);
-                    session_destroy();
-                    redirect('users/login');
-            }else
-            {
-                redirect('posts/index');
-            }
         }
         // check if user login or not
         public function isloggedIn()
@@ -276,12 +283,12 @@
                         if(empty($data['email'])){
                             $data['email_err'] = 'Please enter email';
                         }
-                        elseif($this->userModel->getemailbyuser($data['email']) == false){
+                        elseif($this->userModel->getemail($data['email']) == false){
                             $data['email_err'] = 'Email Not Found';
                         }
                             if(empty($data['email_err']))
                             {
-                                $row = $this->userModel->getemailbyuser($data['email']);
+                                $row = $this->userModel->getemail($data['email']);
                                 if($row->token == "")
                                 {
                                     //Generate A new Token
@@ -298,7 +305,7 @@
                                         <head>
                                         </head>
                                         <body>
-                                            <p>To recover your account click here <a href="http://localhost/Camagru/users/changepass/?token='. $token .'"><button 
+                                            <p>To recover your account click here <a href="http://'.getenv('HTTP_HOST').'/Camagru/users/changepass/?token='. $token .'"><button 
                                             type="button" class="btn btn-primary">Change Password</button></a></p>
                                         </body>
                                         </html>
@@ -403,9 +410,11 @@
             
         }
         // Modify
-        public function modify(){
+        public function modify()
+        {
             // Check for POST
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if($_SERVER['REQUEST_METHOD'] == 'POST')
+            {
                 // Process form
                 if (isset($_SESSION['token']) AND isset($_POST['token']) AND !empty($_SESSION['token']) AND !empty($_POST['token']))
                 {
@@ -422,7 +431,7 @@
                             'edit_new_password' => $_POST['edit_new_password'],
                             'new_confirm_password' => trim($_POST['new_confirm_password']),
                             'edit_password' => $_POST['edit_password'],
-                            'checkbox_send_notif' =>0,
+                            'checkbox_send_notif' =>$_POST['checkbox_send_notif'],
                             
                             'edit_username_err' => '',
                             'edit_email_err' => '',
@@ -454,7 +463,7 @@
                         //validate Password
                         if($data['edit_new_password'])
                         {
-                                $data['edit_new_password_err'] = 'The Password Field is required.';
+                                
                             
                             if(strlen($_POST['edit_new_password']) < 6 || ctype_lower($_POST['edit_new_password']))
                             {
@@ -487,6 +496,7 @@
                                 $data['checkbox_send_notif'] = 0;
                                 
                             if($this->userModel->modify($data)){
+                                
                                 flash('edit_success', 'Your account has been successfully edited');
                                 redirect('users/modify');
                             }else{
@@ -507,10 +517,10 @@
                 $data = [
                     'id' =>'',
                     'edit_username' => '',
-                            'edit_email' =>'',
-                            'edit_new_password' =>'',
-                            'new_confirm_password' => '',
-                            'edit_password' =>'',
+                    'edit_email' =>'',
+                    'edit_new_password' =>'',
+                    'new_confirm_password' => '',
+                    'edit_password' =>'',
                             
     
                 ];
@@ -519,8 +529,7 @@
                 else
                     $this->view('users/login');
             }
-           }
-           
+        } 
         // Profile of users
         public function profile()
         {
@@ -533,9 +542,9 @@
                }  else{
 
 
-                   redirect('users/login');
-               }
                 $this->logout();
+               }
+                
         }
         // Token  
         public function token()
@@ -558,6 +567,7 @@
           $_SESSION['username'] = $user->username;
           $_SESSION['email'] = $user->email;
           $_SESSION['notification'] = $user->notification;
+          $_SESSION['created_at'] = $user->created_at;
           redirect('pages/index');          
         }
     }

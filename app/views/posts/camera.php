@@ -47,7 +47,7 @@
 
 											<button id="btn-stop" type="button" class="btn btn-outline-danger"><i class="fas fa-pause"  aria-hidden="true"></i></button>
 											<button class="btn btn-outline-danger" id="clear" role="button" ><i class="fas fa-trash" aria-hidden="true"></i></button>
-											<button class="btn btn-outline-dark" id="snap" disabled><i class="fas fa-camera"  aria-hidden="true"></i></button>
+											<button class="btn btn-outline-dark" id="snap"><i class="fas fa-camera"  aria-hidden="true"></i></button>
 											<button class="btn btn-outline-primary" id="save" role="button" ><i class="fas fa-save"  aria-hidden="true"></i></button>
 											<button type="button" role=button class="btn btn-outline-info" onclick="{takeAuto()}"><i class="fas fa-hourglass-start"  aria-hidden="true"></i></button>
 											<input type=number id="myInterval" class="col-2 text-center btn btn-outline-dark" value="5">

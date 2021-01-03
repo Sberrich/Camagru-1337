@@ -22,12 +22,17 @@
         {
             // Set DSN (database source name)
             $chaine = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+            $options = array(
+				PDO::ATTR_PERSISTENT => true,
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+			);
+           
             try{
-                $this->cn = new PDO($chaine, $this->usr, $this->pass);
+                $this->cn = new PDO($chaine, $this->usr, $this->pass, $options);
             }catch (PDOException $e){
                 $this->error = $e->getMessage();
                 echo $this->error;
-                print_r($this->db->errorInfo());
+               
             }
         }
         // Query Method
@@ -62,8 +67,7 @@
         //Execute Method
         public function execute()
         {
-           
-            $this->req->execute();
+            return $this->req->execute();
         }
         //Set Result Method
         public function resultSet()

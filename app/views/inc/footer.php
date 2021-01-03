@@ -2,7 +2,7 @@
     </body>
     <script type="text/javascript" src="<?php echo URLROOT;?>/js/snap.js"></script>
     <script type="text/javascript" src="<?php echo URLROOT;?>/js/like.js"></script>
-    <script type="text/javascript" src="<?php echo URLROOT;?>/js/comment.js"></script>
+  
 
 
 

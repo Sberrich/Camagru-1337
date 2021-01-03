@@ -57,19 +57,30 @@ start.addEventListener("click",function(event){
 //pause the stream
 pause.addEventListener("click",function(event)
 {
+  
   if(video)
   {
+    if(camera_allowed == 1){
     video.srcObject.getTracks().forEach(function(video) {
-    video.stop();
-    });
+        video.stop();
+     
+    }); }
   }
   });
 
 //Sanp A pic
 snap.addEventListener("click", function()
 {
+  if(filter_checked == 1){
+   
+  
     context.drawImage(video, 0, 0, w, h);
     canva = 1;          
+     }
+     else
+     {
+       alert("Choose Stickers Bro");
+     }
   }
 );
 //Upload img
@@ -81,7 +92,7 @@ upload_img.addEventListener("click", function()
   sticker = "";
   placefilter = canvasfilter;
   filter_checked = 1;
-  snap.disabled = true;
+ 
   
      
   }
@@ -113,7 +124,7 @@ for (var j= 0; j <= 11; j++)
   sticker = this.value;
   filter_checked = 1;
   placefilter.src = sticker;
-  snap.disabled = false;
+ 
 }
 }
 
@@ -161,14 +172,17 @@ window.addEventListener('DOMContentLoaded', uploadimg);
     var imgData = canvas.toDataURL("image/png");
       var params = "image=" + imgData + "&sticker=" + sticker;
    var xhr = new XMLHttpRequest();
-   xhr.open('POST', window.location.host + '/camagru/posts/SaveImage');
-
+   var path = window.location.protocol + "//" + window.location.hostname +
+              ":" + (window.location.port)+'/camagru/posts/SaveImage';
+   xhr.open('POST', path);
    xhr.withCredentials = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    if(canva == 1 && filter_checked == 1 && camera_allowed == 1)
    {
     
         xhr.send(params);
+        window.location.replace(window.location.protocol + "//" + window.location.hostname +
+            ":" + (window.location.port)+"/Camagru/posts/camera");
        
    }
   
@@ -194,7 +208,7 @@ function takeAuto() {
   var counter = parseInt(document.getElementById('myInterval').value)
   var interval
   interval = setInterval(function() {
-    
+ 
     if(--counter == 0)
     {
       document.getElementById('counter').style.display = 'none'

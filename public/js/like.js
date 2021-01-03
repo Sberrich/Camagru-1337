@@ -21,7 +21,9 @@ document.addEventListener("DOMContentLoaded", function()
                   }
                   var xhttp = new XMLHttpRequest();
                   var params = "imgid="+imgid+"&userid="+userid;
-                  xhttp.open('POST',  window.location.host + '/Camagru/Posts/addlikes');
+                  var path = window.location.protocol + "//" + window.location.hostname +
+                  ":" + (window.location.port)+'/camagru/posts/addlikes';
+                  xhttp.open('POST', path);
                   xhttp.withCredentials = true;
                   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                   xhttp.onreadystatechange = function(){
@@ -41,7 +43,9 @@ document.addEventListener("DOMContentLoaded", function()
                   
                   var xhttp = new XMLHttpRequest();
                   var params = "imgid="+imgid+"&userid="+userid;
-                  xhttp.open('POST',  window.location.host + '/Camagru/Posts/dellikes');
+                  var path = window.location.protocol + "//" + window.location.hostname +
+                  ":" + (window.location.port)+'/camagru/posts/dellikes';
+                  xhttp.open('POST', path);
                   xhttp.withCredentials = true;
                   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                   xhttp.onreadystatechange = function(){
@@ -64,14 +68,17 @@ document.addEventListener("DOMContentLoaded", function()
          var imgid = (event.target && event.target.getAttribute('data-imgid'));
             var userid = (event.target && event.target.getAttribute('data-userid'));
             if(userid == "")
-            { window.location.replace("http://localhost/Camagru/users/login");
+            { window.location.replace(window.location.protocol + "//" + window.location.hostname +
+            ":" + (window.location.port)+"/Camagru/users/login");
             }
             var test = (event.target && event.target.parentElement);
             var val = test.firstElementChild;
             var cmnt = document.querySelector('p[data-iid="' + imgid + '"]');
             var xhttp = new XMLHttpRequest();
+            var path = window.location.protocol + "//" + window.location.hostname +
+                  ":" + (window.location.port)+'/camagru/posts/addComments';
                 var params = "imgid="+imgid+"&userid="+userid+"&comment="+val.value;  
-            xhttp.open('POST', 'http://localhost/Camagru/Posts/addComments');
+            xhttp.open('POST',path);
             xhttp.withCredentials = true;
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.onreadystatechange = function()
