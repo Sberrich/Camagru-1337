@@ -27,11 +27,13 @@
             }catch (PDOException $e){
                 $this->error = $e->getMessage();
                 echo $this->error;
+                print_r($this->db->errorInfo());
             }
         }
         // Query Method
         public function query($sql)
         {
+            
             $this->req = $this->cn->prepare($sql);
         }
         // Bind Method
@@ -60,7 +62,8 @@
         //Execute Method
         public function execute()
         {
-            return $this->req->execute();
+           
+            $this->req->execute();
         }
         //Set Result Method
         public function resultSet()

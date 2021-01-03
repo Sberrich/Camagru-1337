@@ -163,54 +163,61 @@
       
           return $row; 
       }
-        // Edit user
+
+         // Edit user
         public function modify($data){
           $row = $this->findUserById();
+          var_dump($this->findUserById());
           if($row)
           {
-              $hashed_password = $row->password;
-              if(password_verify($data['edit_password'] ,$hashed_password)){
-                  $_SESSION['notification'] = $data['notif'];
-                  if($this->update($data))
-                      return true;
-                  else 
-                      return false;
+            $hashed_password = $row->password;
+            
+            if(password_verify($data['edit_password'] ,$hashed_password)){
+                $_SESSION['notification'] = $data['checkbox_send_notif'];
+                echo"ready";
+                var_dump($_SESSION['notification']);
+                if($this->update($data))
+                    return true;
+                else 
+                    return false;
               }
               else
-              {
                   return false;
-              }
           }
       }
-         // Update
-         public function update($data)
-         {
-             $this->db->query('SELECT * FROM user WHERE id = :id1');
-             $this->db->bind(':id1', $data['id']);
-             $row = $this->db->single();
-             $mail = $data['edit_email'] != "" ? $data['edit_email'] : $row->email;
-             $pass = $data['edit_new_password'] != "" ? password_hash($data['edit_new_password'], PASSWORD_DEFAULT) : $row->password;
-             $username = $data['edit_username'] != "" ? $data['edit_username'] : $row->username;
-             
-             $data['edit_password'] = $pass;
-             $_SESSION['username'] = $username;
-             $_SESSION['email'] = $mail;
-             $_SESSION['password'] = $pass;
-             $this->db->query('UPDATE `user` SET 
-            `username`=:new_username,`email`=:new_email,`password`=:new_password, `notif`= :notif WHERE id = :id');
-             $this->db->bind(':new_username', $username);
-             $this->db->bind(':new_email', $mail);
-             $this->db->bind(':new_password', $pass);
-             $this->db->bind(':notif', $data['notif']);
-             $this->db->bind(':id', $data['id']);
-            echo "hello " . $data['notif'];
-            //  if($this->db->execute()){
-            //      return true;
-            //  }else {
-            //      return false;
-            //  }
-         }
- 
+
+      // Update
+      public function update($data)
+      {
+          $this->db->query('SELECT * FROM user WHERE id = :id');
+          $this->db->bind(':id', $data['id']);
+          echo "1";
+          $row = $this->db->single();
+          $mail = $data['edit_email'] != "" ? $data['edit_email'] : $row->email;
+          $pass = $data['edit_new_password'] != "" ? hash('whirlpool',$data['edit_new_password']) : $row->password;
+          $username = $data['edit_username'] != "" ? $data['edit_username'] : $row->username;
+          echo"ready";
+          
+          $data['edit_password'] = $pass;
+          $_SESSION['username'] = $username;
+          $_SESSION['email'] = $mail;
+          $_SESSION['password'] = $pass;
+          $this->db->query('UPDATE `user` SET 
+          `username`=:edit_username,`email`=:edit_email,`password`=:edit_new_password, `notif`= :n WHERE id = :id');
+          $this->db->bind(':edit_username', $username);
+          $this->db->bind(':edit_email', $mail);
+          $this->db->bind(':edit_new_password', $pass);
+          $this->db->bind(':n', $data['checkbox_send_notif']);
+          $this->db->bind(':id', $data['id']);
+          echo "hi";
+          if($this->db->execute()){
+            echo "ok";
+            return true;
+          }else {
+            
+              return false;
+          }
+      }
         //Flash Method
         public function flash($key,$value)
         {
