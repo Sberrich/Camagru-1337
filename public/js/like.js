@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", function()
                   var userid = (event.target && event.target.getAttribute('data-userid'));
                    if(userid == "")
                   {
-                      window.location.href = window.location.host + "/Camagru/users/login";
+                      window.location.href = window.location.protocol + "//" + window.location.hostname +
+                      ":" + (window.location.port) + "/Camagru/users/login";
                   }
                   var xhttp = new XMLHttpRequest();
                   var params = "imgid="+imgid+"&userid="+userid;
