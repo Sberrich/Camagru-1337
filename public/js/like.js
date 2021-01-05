@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function()
   var comment = document.getElementsByName("cmntbtn");
  
   //like
-  
   for (var i=0; i < likes.length; i++)
    {
       likes[i].onclick = function(event) 
@@ -34,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function()
                   xhttp.send(params);
                   event.target.className = "fa fa-heart";
               }
-              //unlike
+//unlike
           else if (event.target.className == "fa fa-heart")
               {
                   var imgid = (event.target && event.target.getAttribute('data-imgid'));
@@ -61,15 +60,15 @@ document.addEventListener("DOMContentLoaded", function()
     
 
  //comment
- for(var i=0; i < comment.length; i++)
+ for(var i = 0; i < comment.length; i++)
  { 
     comment[i].onclick = function(event)
     {
          var imgid = (event.target && event.target.getAttribute('data-imgid'));
-            var userid = (event.target && event.target.getAttribute('data-userid'));
+         var userid = (event.target && event.target.getAttribute('data-userid'));
             if(userid == "")
             { window.location.replace(window.location.protocol + "//" + window.location.hostname +
-            ":" + (window.location.port)+"/Camagru/users/login");
+                 ":" + (window.location.port)+"/Camagru/users/login");
             }
             var test = (event.target && event.target.parentElement);
             var val = test.firstElementChild;

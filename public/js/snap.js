@@ -2,6 +2,8 @@
 
 var video = document.getElementById('video'),
     canva = document.getElementById('canvas'),
+
+
     snap = document.getElementById("snap"),
     context = canva ? canva.getContext('2d') : null,
     h = 480,
@@ -18,7 +20,8 @@ var video = document.getElementById('video'),
     save = document.getElementById("save");
     start = document.getElementById("btn-start");
     pause = document.getElementById("btn-stop");
-
+    canva.width = w;
+    canva.height = h;
 if (video)
 {
   //start de stream
@@ -208,7 +211,10 @@ function takeAuto() {
   var counter = parseInt(document.getElementById('myInterval').value)
   var interval
   interval = setInterval(function() {
- 
+    if(counter <= 0)
+    {
+      counter = 1;
+    }
     if(--counter == 0)
     {
       document.getElementById('counter').style.display = 'none'
@@ -219,8 +225,7 @@ function takeAuto() {
       document.getElementById('counter').innerHTML = counter
     }
   }, 1000);
- setTimeout(function(){     
-    console.log('set interval')                                                                                    
+ setTimeout(function(){                                                                                      
      takeSnapshot()
  }, document.getElementById('myInterval').value * 1000);
 }

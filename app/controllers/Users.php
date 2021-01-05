@@ -4,12 +4,9 @@
         // Construct
         public function __construct()
         {
+            parent::__construct();
             $this->userModel = $this->model('User');
             $this->postModel = $this->model('Post');
-            
-       
-            
-
         }
         //Register Method
         public function register()
@@ -24,10 +21,11 @@
                     $token = substr(md5(openssl_random_pseudo_bytes(20)), 10);
 
                     //Sanitize Post Data
-                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                    
+
 
                     //Init Data
-                    $data =['username' => trim($_POST['username']),
+                    $data =['username' => trim(($_POST['username'])),
                         'password' => trim($_POST['password']),
                         'confirm_password' => trim($_POST['confirm_password']),
                         'email' => trim($_POST['email']),
@@ -146,8 +144,6 @@
                 if($_SERVER['REQUEST_METHOD'] == 'POST')
                  {
                         // sanitize the Post Data
-                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
                        //Init data
                         $data =
                         [
@@ -269,7 +265,6 @@
             //check For the Post
                     if($_SERVER['REQUEST_METHOD'] == 'POST')
                     {
-                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                         $data =[
                             'email' => trim($_POST['email']),
                             'email_err' => '' 
@@ -342,7 +337,6 @@
                         $token = $_GET['token'];
                         if($_SERVER['REQUEST_METHOD'] == 'POST')
                         {
-                            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                             $data  =[
                                     'password' => trim($_POST['password']),
                                     'confirm_password' => trim($_POST['confirm_password']),
@@ -421,7 +415,6 @@
                     if ($_SESSION['token'] == $_POST['token'])
                     {
                         // Sanitize POST data
-                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                         // Init data
                         $data = [

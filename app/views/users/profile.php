@@ -11,19 +11,25 @@
 				<br>
 				<a class="font-weight-bold text-dark"> Email:<?php echo $_SESSION['email'];?></a>
 				
-		</div>	
-		<h1 class="text-center text-white">Yoo! Gallery</h1>
-		<hr class="mt-2 mb-5">
-		<div class="row">
-			<ul id="prof"> 
-				<?php foreach($data['posts'] as $post):?> 
-					<li id="profile">
-						<img class="img-fluid rounded box" src="<?php echo $post->imgurl;?>" style="width: 300px; height:300px "/>
-						<button data-imgid="<?php echo $post->imgid; ?>" name="delimg"  type="button" class="btn btn-danger btn-block py-2"><i class="fas fa-close"  aria-hidden="true"></i></button>
-					</li>					
-				<?php endforeach;?>
-			</ul>
-		</div>
+			</div>
+
+			<div class="container">
+
+							<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Yoo! Gallery</h1>
+							<hr class="mt-2 mb-5">
+							
+
+							<div class="row text-center text-lg-left">
+							<?php foreach($data['posts'] as $post):?>
+								<div class="col-lg-3 col-md-4 col-6">
+								<a href="#" class="d-block mb-4 h-100" id="rmimg">
+									
+									<img onmouseout="ok(this)" onmouseover="danger(this)"  data-imgid="<?php echo $post->imgid; ?>"  name="delimg" class="img-fluid img-thumbnail" src="<?php echo $post->imgurl;?>" 
+									></a>
+								</div>
+								<?php endforeach;?>
+							</div>
+			</div>		
 </div>
 <script>
    var delimg = document.getElementsByName("delimg");
@@ -50,6 +56,21 @@
            
         }
 }
+
+
+
+function danger(x) {
+	
+	x.style.filter = "blur(2px)";
+	x.style.background = 'red';
+}
+
+function ok(x) {
+	
+	x.style.filter = "blur(0)";
+	x.style.background = 'white';
+}
+
 </script>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

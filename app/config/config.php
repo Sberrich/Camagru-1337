@@ -5,6 +5,7 @@
   define('DB_USER', 'root');
   define('DB_PASS', 'tiger');
   define('DB_NAME', 'camagru');
+  
 
  
   // App Root

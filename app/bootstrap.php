@@ -1,6 +1,9 @@
 <?php
   // Load Config
   require_once 'config/config.php';
+    // Load Setup
+    require_once 'config/setup.php';
+ 
  
 
   require_once 'helpers/url_helper.php';

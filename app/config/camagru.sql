@@ -97,8 +97,7 @@ CREATE TABLE `user` (
   `token` varchar(255) DEFAULT NULL,
   `confirmed` int(11) NOT NULL DEFAULT '0',
   `notification` int(11) NOT NULL DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `bio` varchar(255) DEFAULT NULL
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

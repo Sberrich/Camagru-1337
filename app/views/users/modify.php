@@ -50,7 +50,7 @@
                                               <span class="icon input-group-text bg-white px-4 border-md border-right-0">
                                                   <i class="fa fa-user text-muted"></i>
                                               </span>
-                                              <input type="text"  placeholder="Your Username" name="edit_username" class="input form-control bg-white border-md border-left-0 pl-3" value="<?php echo $data['edit_username']; ?>">
+                                              <input type="text"  placeholder="<?php echo $_SESSION['username'];?>" name="edit_username" class="input form-control bg-white border-md border-left-0 pl-3" value="<?php echo $data['edit_username']; ?>">
                                           </div>
                                           <span class="invalid-feedback"><?php echo $data['edit_username_err']; ?></span>
                                         </div>   
@@ -65,21 +65,14 @@
                                               <span class="input-group-text bg-white px-4 border-md border-right-0">
                                               <i class="fa fa-envelope text-muted"></i>
                                           </span>
-                                          <input type="email"  placeholder="Your Email" name="edit_email" class="form-control bg-white border-left-0 border-md" 
+                                          <input type="email"  placeholder="<?php echo $_SESSION['email'];?>" name="edit_email" class="form-control bg-white border-left-0 border-md" 
                                           value="<?php echo $data['edit_email']; ?>">
                                       </div>
                                       <span class="invalid-feedback"><?php echo $data['edit_email_err']; ?></span>
                                     </div>                            
                                   </div>
                                 </div>
-                                <div class="row"> 
-                                    <div class="col mb-3">
-                                        <div class="form-group">
-                                            <label>My Bio</label>
-                                            <textarea class="form-control" rows="5" placeholder=""></textarea>
-                                        </div>
-                                      </div>
-                                </div>
+                                
                               </div>
                             </div>
                           <div class="row">
@@ -93,7 +86,7 @@
                                                           <span class="input-group-text bg-white px-4 border-md border-right-0">
                                                               <i class="fa fa-lock text-muted"></i>
                                                           </span>
-                                                          <input type="password"  name="edit_password" placeholder="Edit Password" class="form-control bg-white border-left-0 border-md" value="<?php echo $data['edit_password']; ?>">
+                                                          <input type="password"  name="edit_password" placeholder="Enter your password" class="form-control bg-white border-left-0 border-md" value="<?php echo $data['edit_password']; ?>">
                                                     </div>
                                                       <span class="invalid-feedback"><?php echo $data['edit_password_err']; ?></span>
                                                   </div>

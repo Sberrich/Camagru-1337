@@ -2,8 +2,9 @@
     class Posts extends Controller{
         public function __construct()
         {
-             $this->postModel = $this->model('Post');
-             $this->userModel = $this->model('User');
+            parent::__construct();
+            $this->postModel = $this->model('Post');
+            $this->userModel = $this->model('User');
         }
         public function index(){
             if (!isset($_GET['page']))
@@ -30,16 +31,13 @@
         {
               if(isset($_POST['image']) && isset($_POST['sticker']))
               {
-                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                     $upload_dir = "../public/imgs/photos/";
                     $img = $_POST['image'];
                     $img = str_replace('data:image/png;base64,', '', $img);
                     $img = str_replace(' ', '+', $img);
                     $data = base64_decode($img);
                     $file = $upload_dir . mktime().'.png';
-                    echo "will save";
                     file_put_contents($file, $data);
-                    echo "saved in $file";
                     chmod($file, 0777);
                     $sourceImage = str_replace(URLROOT, '..',  $_POST['sticker']);
                     $destImage = $file;

@@ -74,7 +74,7 @@
 					</div>
 			</div>
 			<div class="card col-4">
-					<div style="width:100%;height: 1000px; overflow-y:auto; overflow-x:hidden;">
+					<div style="width:100%;height: 1200px; overflow-y:auto; overflow-x:hidden;">
 								<div class="card-header">
 									<img src="../public/imgs/svg/album.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
 								</div>
