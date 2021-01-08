@@ -61,13 +61,13 @@
 
 function danger(x) {
 	
-	x.style.filter = "blur(2px)";
+	
 	x.style.background = 'red';
 }
 
 function ok(x) {
 	
-	x.style.filter = "blur(0)";
+	
 	x.style.background = 'white';
 }
 

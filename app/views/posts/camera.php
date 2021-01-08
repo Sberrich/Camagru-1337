@@ -41,7 +41,7 @@
 						<!-- finscrol -->
 						</div>
 						<!-- Actions Buttons -->
-						<div class="btn-group">
+						<div class="btn-group camera">
 											<a href="<?php echo URLROOT; ?>/pages/index" class="btn btn-outline-dark"><i class="fas fa-backward"  aria-hidden="true"></i> Back</a>
 											<button id="btn-start" type="button" class="btn btn-outline-success"><i class="fas fa-play"  aria-hidden="true"></i></button>
 
@@ -73,7 +73,7 @@
 							</div>		
 					</div>
 			</div>
-			<div class="card col-4">
+			<div class="card col-4 library">
 					<div style="width:100%;height: 1200px; overflow-y:auto; overflow-x:hidden;">
 								<div class="card-header">
 									<img src="../public/imgs/svg/album.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>

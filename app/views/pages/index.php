@@ -1,8 +1,7 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 <div class="container">
         <div class="text-center">
-        <img src="../public/imgs/svg/studio.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
-            
+                  <img src="../public/imgs/svg/welcome.svg" class="img-fluid mb-3 d-none m-auto d-md-block"/>
                     <h1 class="display-2 text-warning" ><?php echo $data['title']; ?></h1>
                     <p class="lead"><?php echo $data['description']; ?></p>
            

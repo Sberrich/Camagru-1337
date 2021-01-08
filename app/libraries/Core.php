@@ -29,17 +29,13 @@
 				unset($url[1]);
 			}
 			// Controller Exist
-			if ($this->currentController == "Setup")
-				$controllerExist = file_exists('../app/config/' . $this->currentController.'.php');
-			else
-				$controllerExist = file_exists('../app/controllers/' . $this->currentController.'.php');
+	
+			$controllerExist = file_exists('../app/controllers/' . $this->currentController.'.php');
 			$methodExist = FALSE;
 			//If Controller Exist Require It
 			if($controllerExist)
 			{
-				if ($this->currentController == "Setup")
-					require_once '../app/config/'. $this->currentController . '.php';
-				else
+				
 					require_once '../app/controllers/'. $this->currentController . '.php';
 				$this->currentController = new $this->currentController;
 				// Check to see if method exists in controller

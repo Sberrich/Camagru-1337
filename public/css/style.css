@@ -87,3 +87,15 @@ input.input.form-control.bg-white.border-md.border-left-0.pl-3 {
     border-radius: 0 .25rem .25em 0;
 }
 
+@media (max-width: 789px) {
+    .library .card-body {
+        padding: 0;
+        margin-top: 15px;
+    }
+    .library .container {
+        padding: 0;
+    }
+    .btn-group.camera {
+        display: block;
+    }
+}

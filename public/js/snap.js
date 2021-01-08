@@ -1,11 +1,10 @@
 //initialisation de var 
 
 var video = document.getElementById('video'),
-    canva = document.getElementById('canvas'),
-
-
+    canvac = document.getElementById('canvas'),
+    
     snap = document.getElementById("snap"),
-    context = canva ? canva.getContext('2d') : null,
+    context = canvac ? canvac.getContext('2d') : null,
     h = 480,
     w = 640,
     sticker,
@@ -20,8 +19,7 @@ var video = document.getElementById('video'),
     save = document.getElementById("save");
     start = document.getElementById("btn-start");
     pause = document.getElementById("btn-stop");
-    canva.width = w;
-    canva.height = h;
+ 
 if (video)
 {
   //start de stream
@@ -75,13 +73,13 @@ pause.addEventListener("click",function(event)
 snap.addEventListener("click", function()
 {
   if(filter_checked == 1){
-   
-  
+    canvac.setAttribute("width", w);
+    canvac.setAttribute("height", h);
     context.drawImage(video, 0, 0, w, h);
     canva = 1;          
-     }
-     else
-     {
+  }
+  else
+  {
        alert("Choose Stickers Bro");
      }
   }
@@ -166,34 +164,22 @@ function uploadimg(){
 window.addEventListener('DOMContentLoaded', uploadimg);
  
 
-
-
-
 // save a pic
-  save.addEventListener("click", function(event) {
+save.addEventListener("click", function(event) {
     
     var imgData = canvas.toDataURL("image/png");
-      var params = "image=" + imgData + "&sticker=" + sticker;
-   var xhr = new XMLHttpRequest();
-   var path = window.location.protocol + "//" + window.location.hostname +
+    var params = "image=" + imgData + "&sticker=" + sticker;
+    var xhr = new XMLHttpRequest();
+    var path = window.location.protocol + "//" + window.location.hostname +
               ":" + (window.location.port)+'/camagru/posts/SaveImage';
    xhr.open('POST', path);
    xhr.withCredentials = true;
    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    if(canva == 1 && filter_checked == 1 && camera_allowed == 1)
    {
-    
-        xhr.send(params);
-        window.location.replace(window.location.protocol + "//" + window.location.hostname +
-            ":" + (window.location.port)+"/Camagru/posts/camera");
-       
+      xhr.send(params);
    }
-  
 });
-
-
-
-
 
 
 ///////////Take Evry
@@ -229,10 +215,6 @@ function takeAuto() {
      takeSnapshot()
  }, document.getElementById('myInterval').value * 1000);
 }
-
-
-
-
 }
 
 

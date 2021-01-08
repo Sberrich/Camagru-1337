@@ -16,9 +16,6 @@
       
             
       </div>
-        
-
-        
             <!-- Objectives -->
             <h1 class="cover-heading">Objectives:</h1>
             <ul class="list-group">

@@ -15,14 +15,7 @@
                     if(is_array($_POST[$key]))
                         $_POST[$key] = "     ";
                 }
-               /* $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-                if($_SERVER['REQUEST_METHOD'] == 'GET')
-                    foreach($_GET as $key => $val)
-                    {
-                        if(is_array($_GET[$key]))
-                            $_GET[$key] = "     ";
-                    }
-               */
+              
             
         }
         // Load model
